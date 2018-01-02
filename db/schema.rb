@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 3) do
 
-  create_table "allegiences", force: :cascade do |t|
+  create_table "allegiances", force: :cascade do |t|
     t.integer "character_id"
     t.integer "house_id"
   end
