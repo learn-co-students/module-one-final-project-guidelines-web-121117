@@ -50,7 +50,3 @@ audio_feature_objects.each do |song_object|
 
   Song.create(name: name, tempo: tempo, key: key, mode: mode, time_signature: time_signature, danceability: danceability, valence: valence, acousticness: acousticness, energy: energy, instrumentalness: instrumentalness)
 end
-
-
-# {"audio_features"=>[
-#   {"danceability"=>0.225, "energy"=>0.537, "key"=>4, "loudness"=>-13.602, "mode"=>0, "speechiness"=>0.0422, "acousticness"=>0.981, "instrumentalness"=>0.875, "liveness"=>0.0922, "valence"=>0.591, "tempo"=>192.968, "type"=>"audio_features", "id"=>"3h64C58s1P6WsNu7ZMa0QY", "uri"=>"spotify:track:3h64C58s1P6WsNu7ZMa0QY", "track_href"=>"https://api.spotify.com/v1/tracks/3h64C58s1P6WsNu7ZMa0QY", "analysis_url"=>"https://api.spotify.com/v1/audio-analysis/3h64C58s1P6WsNu7ZMa0QY", "duration_ms"=>269093, "time_signature"=>3}
