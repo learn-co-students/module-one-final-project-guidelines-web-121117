@@ -100,14 +100,11 @@ def tv_show_menu(user)
       if show.reviews.empty?
         puts " "
         puts "The show has no reviews."
-        puts "Do you want to add a 'review' or do you want to pick another 'show'?"
-        puts "Input anything else to go back to the main menu"
+        puts "\nPick another show?(y/n)?"
         puts " "
         inp3 = user_input.downcase
 
-        if inp3 == 'review'
-          add_review(user)
-        elsif inp3 == "show"
+        if inp3 == 'y'
           tv_show_menu(user)
         else
           main_menu(user)
@@ -118,7 +115,15 @@ def tv_show_menu(user)
           count += 1
           puts "#{count}.'#{rev.review}' by #{rev.user.name}"
         end
-        tv_show_menu(user)
+        puts "\nGet another show?(y/n)"
+        puts " "
+        inp3 = user_input.downcase
+
+        if inp3 == 'y'
+          tv_show_menu(user)
+        else
+          main_menu(user)
+        end
       end
     else
       puts "Unknown option! Try again..."
@@ -145,14 +150,18 @@ def add_review(user)
 
   if all_tv_show_names.include?(name)
     show = TvShow.find_by(name: name)
-    puts "Insert a review for the show #{name}:"
+    puts "Insert a review for the show #{name}, or 'back' to go back to the main menu"
     inp2 = user_input
-    rev = Review.create(review: "#{inp2}")
-    show.reviews << rev
-    user.reviews << rev
-    puts "\nReview has been added!"
-    main_menu(user)
-  elsif name == "Back"
+    if inp2.downcase == "back"
+      main_menu(user)
+    else
+      rev = Review.create(review: "#{inp2}")
+      show.reviews << rev
+      user.reviews << rev
+      puts "\nReview has been added!"
+      main_menu(user)
+    end
+  elsif name == "back"
     main_menu(user)
   else
     puts "Couldn't find the show! Try again..."
