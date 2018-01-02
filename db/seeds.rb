@@ -10,6 +10,5 @@ def self.get_all_characters
     page_characters.each do |character|
       new_char = Character.find_or_create_by(name: character["name"], url: character["url"])
     end
-    page += 1
   end
 end
