@@ -19,12 +19,12 @@ ActiveRecord::Schema.define(version: 3) do
 
   create_table "characters", force: :cascade do |t|
     t.string "name"
-    t.string "image"
+    t.string "url"
   end
 
   create_table "houses", force: :cascade do |t|
     t.string "name"
-    t.string "image"
+    t.string "url"
   end
 
 end
