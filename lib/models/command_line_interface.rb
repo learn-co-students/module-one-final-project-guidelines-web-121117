@@ -42,7 +42,7 @@ def tv_show_menu(user)
   puts "\nAll Shows:"
   list_all(all_tv_show_names)
   puts "\nBack"
-  puts "\nEnter a show's number to get it's information"
+  puts "\nEnter a show's name to get it's information"
   inp = user_input.downcase
 
   str = inp.split(" ")
@@ -50,11 +50,12 @@ def tv_show_menu(user)
 
   if all_tv_show_names.include?(name)
     show = TvShow.find_by(name: name)
-    puts "\n'rating', 'status' or 'reviews'"
+    puts "\n'rating', 'genre', 'status' or 'reviews'"
     inp2 = user_input.downcase
 
     if inp2 == 'rating'
       if show.rating
+        puts " "
         puts show.rating
         puts "\nGet another show?(y/n)"
         puts " "
@@ -66,10 +67,24 @@ def tv_show_menu(user)
           main_menu(user)
         end
       else
+        puts " "
         puts "The show hasn't been rated yet."
         tv_show_menu(user)
       end
+    elsif inp2 == "genre"
+      puts " "
+      puts show.genre
+      puts "\nGet another show?(y/n)"
+      puts " "
+      inp3 = user_input.downcase
+
+      if inp3 == 'y'
+        tv_show_menu(user)
+      else
+        main_menu(user)
+      end
     elsif inp2 == 'status'
+      puts " "
       puts show.status
       puts "\nGet another show?(y/n)"
       puts " "
@@ -83,9 +98,22 @@ def tv_show_menu(user)
     elsif inp2 == 'reviews'
       count = 0
       if show.reviews.empty?
+        puts " "
         puts "The show has no reviews."
-        tv_show_menu(user)
+        puts "Do you want to add a 'review' or do you want to pick another 'show'?"
+        puts "Input anything else to go back to the main menu"
+        puts " "
+        inp3 = user_input.downcase
+
+        if inp3 == 'review'
+          add_review(user)
+        elsif inp3 == "show"
+          tv_show_menu(user)
+        else
+          main_menu(user)
+        end
       else
+        puts " "
         show.reviews.each do |rev|
           count += 1
           puts "#{count}.'#{rev.review}' by #{rev.user.name}"
@@ -99,6 +127,7 @@ def tv_show_menu(user)
   elsif inp == 'back'
     main_menu(user)
   else
+    puts " "
     puts "Can't find show"
     tv_show_menu(user)
   end
@@ -149,13 +178,15 @@ end
 
 ################################ 'LOGIN MENU' ###############################
 def login_menu
-  puts "\nWelcome to the login menu. Type your user name to log-in:"
+  puts "\nWelcome to the login menu. Type your user name to log-in, or 'exit' to quit:"
   list_all(user_names)
   puts " "
   inp = user_input
   if user_names.include?(inp)
     user = User.find_by(name: inp)
     main_menu(user)
+  elsif inp.downcase == "exit"
+    puts "Goodbye!"
   else
     puts "The user doesn't exists! Do you want to create a user with this username? (#{inp})(y/n)"
     inp2 = user_input

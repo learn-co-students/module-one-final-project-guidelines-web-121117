@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180102203334) do
+ActiveRecord::Schema.define(version: 20180102215814) do
 
   create_table "reviews", force: :cascade do |t|
     t.text    "review"
@@ -19,9 +19,10 @@ ActiveRecord::Schema.define(version: 20180102203334) do
   end
 
   create_table "tv_shows", force: :cascade do |t|
-    t.string  "name"
-    t.integer "rating"
-    t.string  "status"
+    t.string "name"
+    t.float  "rating"
+    t.string "status"
+    t.string "genre"
   end
 
   create_table "users", force: :cascade do |t|
