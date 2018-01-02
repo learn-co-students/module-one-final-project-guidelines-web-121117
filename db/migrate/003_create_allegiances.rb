@@ -1,4 +1,4 @@
-class CreateAllegiences < ActiveRecord::Migration[4.2]
+class CreateAllegiances < ActiveRecord::Migration[4.2]
   def change
     create_table :allegiances do |t|
       t.integer :character_id
