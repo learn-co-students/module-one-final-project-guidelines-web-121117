@@ -9,7 +9,7 @@ module ApiParse
     characters = RestClient.get("https://anapioficeandfire.com/api/characters?page=#{page}&pageSize=50")
     while !JSON.parse(characters).empty?
       page_characters = JSON.parse(characters)
-      page_characters.take(10).each do |character|
+      page_characters.each do |character|
         # binding.pry
         new_char = Character.find_or_create_by(name: character["name"], url: character["url"])
         if !character["allegiances"].empty?
