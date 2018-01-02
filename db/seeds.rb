@@ -12,3 +12,4 @@ def self.get_all_characters
     end
   end
 end
+end
