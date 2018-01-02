@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 9) do
+ActiveRecord::Schema.define(version: 10) do
 
   create_table "allegiances", force: :cascade do |t|
     t.integer "character_id"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 9) do
 
   create_table "books", force: :cascade do |t|
     t.string "name"
+    t.string "url"
   end
 
   create_table "character_books", force: :cascade do |t|
