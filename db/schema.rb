@@ -10,11 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 3) do
+ActiveRecord::Schema.define(version: 9) do
 
   create_table "allegiances", force: :cascade do |t|
     t.integer "character_id"
     t.integer "house_id"
+  end
+
+  create_table "books", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "character_books", force: :cascade do |t|
+    t.integer "book_id"
+    t.integer "character_id"
+  end
+
+  create_table "character_seasons", force: :cascade do |t|
+    t.integer "season_id"
+    t.integer "character_id"
   end
 
   create_table "characters", force: :cascade do |t|
@@ -25,6 +39,15 @@ ActiveRecord::Schema.define(version: 3) do
   create_table "houses", force: :cascade do |t|
     t.string "name"
     t.string "url"
+    t.integer "region_id"
+  end
+
+  create_table "regions", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "seasons", force: :cascade do |t|
+    t.string "name"
   end
 
 end

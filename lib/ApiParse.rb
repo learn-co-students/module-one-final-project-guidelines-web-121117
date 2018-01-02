@@ -12,7 +12,6 @@ module ApiParse
     page = 1
     while !self.search_character_page.empty?
       page_characters = self.search_character_page(page)
-      binding.pry
       page_characters.each do |character|
         new_char = Character.find_or_create_by(name: character["name"], url: character["url"])
         if !character["allegiances"].empty?
