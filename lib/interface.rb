@@ -350,11 +350,12 @@ class Interface
       pre_find_region
       input = gets.chomp
       region = find_region(input)
-      characters = find_characters(region)
+      houses = find_allegiances(region)
+      characters = find_characters(houses)
       puts "\nHere are the characters from #{region.name}:"
       show_characters(characters)
       puts "\n"
-      region_menu
+      geography_menu
     elsif input == "main menu"
       main_menu_run
     elsif input == "exit"
