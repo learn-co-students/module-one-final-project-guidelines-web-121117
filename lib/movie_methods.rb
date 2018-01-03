@@ -33,7 +33,7 @@ module MovieMethods
     puts "Average rating: ".colorize(:mode=>:bold) + "#{Movie.find_by(name: movie.name).rating}"
     movie_genres(movie)
     puts ""
-    puts "[1] ".colorize(:color=>:cyan, :mode=>:bold) + "View top actors and select a movie"
+    puts "[1] ".colorize(:color=>:cyan, :mode=>:bold) + "View top actors and their information"
     puts "[2] ".colorize(:color=>:cyan, :mode=>:bold) + "Return to main menu"
     input = gets.chomp
     case input
