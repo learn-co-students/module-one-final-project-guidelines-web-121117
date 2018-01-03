@@ -46,6 +46,42 @@ class CommandLineInterface
     end
   end
 
+  def view_menu
+    puts "View playlists based on which parameter? ([A]ll or [Q]uit)"
+    print_categories
+    input = gets.chomp
+    if input == 'A'
+      Playlist.all.each_with_index do |playlist, idx|
+        puts "#{idx + 1}. #{playlist.name}"
+      end
+    elsif input == 'Q'
+      return
+    elsif input.to_i > 0 && input.to_i < 10
+      idx = input.to_i - 1
+      parameter = CATEGORIES[idx]
+      relevant_playlists = Playlist.where(parameter.to_s)
+      if parameter == :key
+        relevant_playlists.each_with_index do |playlist, idx|
+          transalated_parameter_value = translate_key_from_api_to_user(playlist[parameter])
+          puts "#{idx + 1}. #{playlist.name} - #{parameter}: #{transalated_parameter_value}"
+        end
+      elsif parameter == :mode
+        relevant_playlists.each_with_index do |playlist, idx|
+          transalated_parameter_value = translate_mode_from_api_to_user(playlist[parameter])
+          puts "#{idx + 1}. #{playlist.name} - #{parameter}: #{transalated_parameter_value}"
+        end
+      else
+        relevant_playlists.each_with_index do |playlist, idx|
+          puts "#{idx + 1}. #{playlist.name} - #{parameter}: #{playlist[parameter]}"
+        end
+      end
+    else
+      puts "Please enter a valid choice!"
+      view_menu
+    end
+  end
+
+
   def get_string
     input = gets.chomp.titleize
   end

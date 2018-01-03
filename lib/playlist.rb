@@ -20,6 +20,9 @@ class Playlist < ActiveRecord::Base
     end
   end
 
+  def get_parameter
+    
+  end
 
 end
 
