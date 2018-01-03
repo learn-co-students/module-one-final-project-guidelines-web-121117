@@ -14,13 +14,15 @@ class CommandLineInterface
   end
 
   def menu
-    puts "--->Main Menu<---"
-    # puts "To Select: Enter by [number]"
-    puts "[1] Search by Movie Title"
-    puts "[2] Search by Actor Name"
-    puts "[3] Search by Genre Name"
-    puts "[4] Close the Program"
-    puts "Please enter a number 1-4:"
+    puts ""
+    puts "----->Main Menu<-----".colorize(:color=>:green, :mode=>:bold)
+    puts ""
+    puts "[1] ".colorize(:color=>:cyan, :mode=>:bold) + "Search by Movie Title"
+    puts "[2] ".colorize(:color=>:cyan, :mode=>:bold) + "Search by Actor Name"
+    puts "[3] ".colorize(:color=>:cyan, :mode=>:bold) + "See top 20 movies of any Genre"
+    puts "[4] ".colorize(:color=>:cyan, :mode=>:bold) + "Close the Program"
+    puts ""
+    puts "Please enter a number 1-4:".colorize(:mode=>:bold)
     input = gets.chomp
     case input
       when "1"
@@ -30,16 +32,23 @@ class CommandLineInterface
         actor = actor_name_input
         actor_options(actor)
       when "3"
+        genre_options
       when "4"
         exit
       else
-        puts "That is not a valid option, Please try again."
+        puts ""
+        puts "That is not a valid option, Please try again.".colorize(:color=>:light_red, :mode=>:bold)
         menu
     end
   end
 
   def exit
-    puts "Goodbye"
+    goodbye = "G".colorize(:color=>:red, :mode=>:bold) + "o".colorize(:color=>:light_red, :mode=>:bold) + "o".colorize(:color=>:light_yellow, :mode=>:bold) + "d".colorize(:color=>:green, :mode=>:bold) + "b".colorize(:color=>:blue, :mode=>:bold) + "y".colorize(:color=>:magenta, :mode=>:bold) + "e".colorize(:color=>:light_magenta, :mode=>:bold)
+    print "(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ "
+    print goodbye + " "
+    print goodbye + " "
+    print goodbye
+    puts ""
   end
 
 end
