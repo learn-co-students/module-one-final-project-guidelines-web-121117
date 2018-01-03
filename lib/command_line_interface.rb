@@ -2,6 +2,8 @@ require 'pry'
 
 class CommandLineInterface
   include MovieMethods
+  include ActorMethods
+  include GenreMethods
 
   def greet
     puts "Welcome to our Movie Info Database!"
@@ -25,6 +27,8 @@ class CommandLineInterface
         movie = movie_title_input
         movie_options(movie)
       when "2"
+        actor = actor_name_input
+        actor_options(actor)
       when "3"
       when "4"
         exit
