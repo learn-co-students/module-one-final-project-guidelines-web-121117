@@ -16,7 +16,13 @@ playlist_data = JSON.parse(spotify_object)
 song_id_name_hash = {}
 playlist_data["items"].each do |item|
   clean_song_id = item["track"]["uri"].split(":").last
-  song_id_name_hash[clean_song_id] = item["track"]["name"]
+  song_id_name_hash[clean_song_id] = []
+  song_id_name_hash[clean_song_id] << item["track"]["name"]
+  artist_array = []
+  item["track"]["artists"].each do |artist_name|
+    artist_array << artist_name["name"]
+    song_id_name_hash[clean_song_id] << artist_array
+  end
   # song_ids << clean_song_id
 end
 
@@ -36,7 +42,7 @@ audio_features_hash = JSON.parse(audio_feature_spotify_object)
 audio_feature_objects = audio_features_hash["audio_features"]
 
 audio_feature_objects.each do |song_object|
-  name = song_id_name_hash[song_object["id"]]
+  name = song_id_name_hash[song_object["id"]][0]
   tempo = song_object["tempo"]
   key = song_object["key"]
   mode = song_object["mode"]
@@ -46,7 +52,8 @@ audio_feature_objects.each do |song_object|
   acousticness = song_object["acousticness"]
   energy = song_object["energy"]
   instrumentalness = song_object["instrumentalness"]
-  spotify_id = song_id_name_hash.key(name)
+  spotify_id = song_id_name_hash.key(song_id_name_hash[song_object["id"]])
+  artists = song_id_name_hash[song_object["id"]][1].join(", ")
 
-  Song.create(name: name, tempo: tempo, key: key, mode: mode, time_signature: time_signature, danceability: danceability, valence: valence, acousticness: acousticness, energy: energy, instrumentalness: instrumentalness, spotify_id: spotify_id)
+  Song.create(name: name, tempo: tempo, key: key, mode: mode, time_signature: time_signature, danceability: danceability, valence: valence, acousticness: acousticness, energy: energy, instrumentalness: instrumentalness, spotify_id: spotify_id, artists: artists)
 end

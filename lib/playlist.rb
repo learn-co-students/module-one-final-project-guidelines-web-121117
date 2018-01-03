@@ -20,10 +20,11 @@ class Playlist < ActiveRecord::Base
     end
   end
 
-  def get_parameter
-    
+  def print_songs
+    self.songs.each_with_index do |song, idx|
+      puts "#{idx + 1}. #{song.name} - #{song.artists} - Spotify Id: spotify:song:#{song.spotify_id}"
+    end
   end
-
 end
 
 
