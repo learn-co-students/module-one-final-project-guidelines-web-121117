@@ -1,6 +1,6 @@
 require 'pry'
 def welcome
-  puts "Welcome to out Group project. It's a collection of 'Girl' TV Shows"
+  puts "Welcome to out Group project. We hope you enjoy!"
 end
 
 def user_input
@@ -23,8 +23,9 @@ def main_menu(user)
   puts "3.'Write a review' to write a review for a selected show"
   puts "4.'List my reviews' to see all the reviews of all the shows that you've made"
   puts "5.'Recommended' to show 5 recommended shows based on your reviews"
-  puts "\n6.'Log Out'"
-  puts "7.'Exit'"
+  puts "6. 'Top Rated' to view 10 of the top rated shows"
+  puts "\n7.'Log Out'"
+  puts "8.'Exit'"
 
   inp = user_input.downcase
 
@@ -57,6 +58,8 @@ def main_menu(user)
     recommended_shows(user)
   when "recommended"
     recommended_shows(user)
+  when "6"
+    top_rated(user)
   when "log out"
     login_menu
   when "exit"
@@ -222,7 +225,7 @@ def recommended_shows(user)
 end
 ################################ 'ADD REVIEWS' MENU ###############################
 def add_review(user)
-  puts "\nBack"
+  puts "\nType 'back' to go back to main menu"
   puts"\nEnter a number of the show you want to leave a review for:"
   inp = user_input.downcase
 
@@ -246,20 +249,23 @@ def add_review(user)
         puts "\nReview has been added!"
         main_menu(user)
       end
-    # elsif name == "back"
-    #   main_menu(user)
-    # else
-    #   puts "Couldn't find the show! Try again..."
-    #   add_review(user)
     end
   end
+end
+################################ TOP RATED SHOWS #############################
+def top_rated(user)
+  puts " "
+  sorted_array = TvShow.order(rating: :desc).limit(10)
+  final_array = sorted_array.map {|show| "#{show.name}: #{show.rating}"}
+  list_all(final_array)
+  main_menu(user)
 end
 ################################ 'REVIES MENU' #############################
 def review_menu(user)
   puts "\nALL REVIEWS BY #{user.name}:"
   puts " "
   all_reviews(user)
-  puts "\nBack"
+  puts "\nType 'back' to go back to the main menu"
   puts " "
   inp = user_input.downcase
   if inp == "back"
