@@ -6,25 +6,7 @@ class Interface
     puts "\nWelcome to the Game Of Thrones Ultimate Fan App!"
   end
 
-  def all_characters
-    Character.all.collect do |character|
-      if character.name != nil
-        character.name
-      end
-    end
-  end
-
-  def all_houses
-    House.all.collect {|house| house.name}
-  end
-
-  def all_books
-    Book.all.collect {|book| book.name}
-  end
-
-  def all_regions
-    Region.all.collect {|region| region.name}
-  end
+# BASIC MENU OPTIONS #
 
   def main_menu_options
     puts "\nChoose from one of the follow categories to proceed:"
@@ -78,15 +60,195 @@ class Interface
     input = gets.downcase.chomp
   end
 
+  # ALL COLLECTION FUNCTIONS #
+
+  def all_characters
+    Character.all.collect do |character|
+      if character.name != nil
+        character.name
+      end
+    end
+  end
+
+  def all_houses
+    House.all.collect {|house| house.name}
+  end
+
+  def all_books
+    Book.all.collect {|book| book.name}
+  end
+
+  def all_regions
+    Region.all.collect do |region|
+      if region.name != nil || region.name != "None"
+        region.name
+      end
+    end
+  end
+
+  # CHARACTER FUNCTIONS #
+
+  def pre_find_character
+    puts "\nWhich character would you like to check out?"
+    puts "\n"
+    puts all_characters
+    puts "\nType selection here:"
+  end
+
+  def find_character(input)
+    character = Character.find_by(name: input)
+    if character
+      character
+    else
+      puts "This is not currently a character in the GoT Universe. Try again."
+      puts "\n"
+      pre_find_character
+      new_input = gets.chomp
+      find_character(new_input)
+    end
+  end
+
+    def find_allegiances(input)
+      input.houses
+    end
+
+    def show_allegiances(houses)
+      houses.map {|house| puts house.name}
+    end
+
+    def find_books(character)
+      character.books
+    end
+
+    def show_books(books)
+      books.map {|book| puts book.name}
+    end
+
+    def find_seasons(character)
+      character.seasons
+    end
+
+    def show_seasons(seasons)
+      seasons.map {|season| puts season.name}
+    end
+
+  # HOUSE FUNCTIONS #
+
+  def pre_find_house
+    puts "\nWhich house would you like to check out?"
+    puts "\n"
+    puts all_houses
+    puts "\nType selection here:"
+  end
+
+  def find_house(input)
+    house = House.find_by(name: input)
+    if house
+      house
+    else
+      puts "This is not currently a house in the GoT Universe. Try again."
+      puts "\n"
+      pre_find_house
+      new_input = gets.chomp
+      find_house(new_input)
+    end
+  end
+
+  def find_characters(input)
+    input.characters
+  end
+
+  def show_characters(characters)
+    characters.map {|character| puts character.name}
+  end
+
+  def find_region(house)
+    house.region
+  end
+
+  def show_region(regions)
+    regions.map {|region| region.name}
+  end
+
+  # BOOK FUNCTIONS #
+
+  def pre_find_book
+      puts "\nWhich book would you like to check out?"
+      puts "\n"
+      puts all_books
+      puts "\nType selection here:"
+  end
+
+  def find_book(input)
+    book = Book.find_by(name: input)
+    if book
+      book
+    else
+      puts "This is not currently a book in the GoT Universe. Try Again"
+      pre_find_book
+      new_input = gets.chomp
+      find_book(new_input)
+    end
+  end
+
+  # REGION FUNCTIONS #
+  def pre_find_region
+      puts "\nWhich region would you like to check out?"
+      puts "\n"
+      puts all_regions
+      puts "\nType selection here:"
+  end
+
+  def find_region(input)
+    region = Region.find_by(name: input)
+    if region
+      region
+    else
+      puts "This is not currently a region in the GoT Universe. Try Again."
+      pre_find_region
+      new_input = gets.chomp
+      find_region(new_input)
+    end
+  end
+
+
+
+  # RUN MENUS #
+
   def characters_menu
     input = characters_menu_options
     if input == "list all characters"
+      puts "\n"
       puts all_characters
       puts "\n"
       characters_menu
     elsif input == "list character's allegiances"
+      pre_find_character
+      input = gets.chomp
+      character = find_character(input)
+      houses = find_allegiances(character)
+      puts "\nHere are the house allegiances #{character.name} is a part of:"
+      show_allegiances(houses)
+      puts "\n"
+      characters_menu
     elsif input == "list character's book appearances"
+      pre_find_character
+      input = gets.chomp
+      character = find_character(input)
+      books = find_books(character)
+      puts "\nHere are the books that #{character.name} appears in:"
+      show_books(books)
+      puts "\n"
+      characters_menu
     elsif input == "list character's tv show appearances"
+      pre_find_character
+      input = gets.chomp
+      character = find_character(input)
+      seasons = find_seasons(character)
+      puts "\nHere are the seasons that #{character.name} appears in:"
+      show_seasons(seasons)
+      puts "\n"
+      characters_menu
     elsif input == "main menu"
       main_menu_run
     elsif input == "exit"
@@ -100,12 +262,37 @@ class Interface
   def houses_menu
     input = houses_menu_options
     if input == "list all houses"
+      puts "\n"
       puts all_houses
       puts "\n"
       houses_menu
     elsif input == "list house's characters"
+      pre_find_house
+      input = gets.chomp
+      house = find_house(input)
+      characters = find_characters(house)
+      puts "\nHere are the characters with allegiances to #{house.name}:"
+      show_characters(characters)
+      puts "\n"
+      houses_menu
     elsif input == "list character allegiances"
+      pre_find_house
+      input = gets.chomp
+      house = find_house(input)
+      characters = find_characters(house)
+      puts "\nHere are the characters with allegiances to #{house.name}:"
+      show_characters(characters)
+      puts "\n"
+      houses_menu
     elsif input == "list house's location"
+      pre_find_house
+      input = gets.chomp
+      house = find_house(input)
+      regions = find_region(house)
+      puts "\nHere is the region when you can find #{house.name}"
+      show_region(regions)
+      puts "\n"
+      houses_menu
     elsif input == "main menu"
       main_menu_run
     elsif input == "exit"
@@ -119,10 +306,19 @@ class Interface
   def books_menu
     input = books_menu_options
     if input == "list all books"
+      puts "\n"
       puts all_books
       puts "\n"
       books_menu
     elsif input == "list characters in book"
+      pre_find_book
+      input = gets.chomp
+      book = find_book(input)
+      characters = find_characters(book)
+      puts "\nHere are the characters in #{book.name}"
+      show_characters(characters)
+      puts "\n"
+      books_menu
     elsif input == "main menu"
       main_menu_run
     elsif input == "exit"
@@ -137,11 +333,28 @@ class Interface
   def geography_menu
     input = geography_menu_options
     if input == "list all regions"
+      puts "\n"
       puts all_regions
       puts "\n"
       geography_menu
     elsif input == "list all houses"
+      pre_find_region
+      input = gets.chomp
+      region = find_region(input)
+      houses = find_allegiances(region)
+      puts "\nHere are the houses located in #{region.name}:"
+      show_allegiances(houses)
+      puts "\n"
+      geography_menu
     elsif input == "list all characters"
+      pre_find_region
+      input = gets.chomp
+      region = find_region(input)
+      characters = find_characters(region)
+      puts "\nHere are the characters from #{region.name}:"
+      show_characters(characters)
+      puts "\n"
+      region_menu
     elsif input == "main menu"
       main_menu_run
     elsif input == "exit"
@@ -172,6 +385,8 @@ class Interface
     elsif input == "geography"
       puts "\n\n'THEY CAN LIVE IN MY NEW WORLD, OR THEY CAN DIE IN THEIR OLD ONE' - Daenerys Targaryen".colorize(:color => :cyan)
       geography_menu
+    elsif input == "manager"
+      manager_menu
     elsif input == "exit"
       good_bye
     else
