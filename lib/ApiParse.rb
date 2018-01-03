@@ -8,15 +8,23 @@ module ApiParse
     self.find_and_parse("https://anapioficeandfire.com/api/#{target}?page=#{page}&pageSize=50")
   end
 
+  def self.populate_character_attributes(character, character_hash)
+    character.gender = character_hash["gender"]
+    character_hash["born"].empty? ? character.birth_date = "<Unknown>" : character.birth_date = character_hash["born"]
+    character_hash["died"].empty? ? character.death_date = "<Alive or Unknown>" : character.death_date = character_hash["died"]
+    character_hash["aliases"][0].empty? ? character.aliases = "<None>" : character_hash["aliases"].each{|a_lias| character.aliases << a_lias}
+    character_hash["playedBy"][0].empty? ? character.actor = "<Not in show>" : character.actor = character_hash["playedBy"][0]
+    character.save
+  end
 
   def self.find_or_create_character_books(character, character_hash)
     character_hash["books"].each do |book_url|
       book_info = self.find_and_parse(book_url)
-      character.books << Book.find_or_create_by(name: book_info["name"], url: book_info["url"])
+      character.books << Book.find_or_create_by(name: book_info["name"], url: book_info["url"], pages: book_info["numberOfPages"], release_date: book_info["released"].slice(0..10))
     end
     character_hash["povBooks"].each do |book_url|
       book_info = self.find_and_parse(book_url)
-      character.books << Book.find_or_create_by(name: book_info["name"], url: book_info["url"])
+      character.books << Book.find_or_create_by(name: book_info["name"], url: book_info["url"], pages: book_info["numberOfPages"], release_date: book_info["released"].slice(0..10))
     end
   end
 
@@ -31,9 +39,10 @@ module ApiParse
     while !self.search_pages("characters", page).empty?
       characters = self.search_pages("characters", page)
       characters.each do |character_hash|
-        new_char = Character.find_or_create_by(name: character_hash["name"], url: character_hash["url"])
-        self.find_or_create_character_books(new_char, character_hash)
-        self.find_or_create_character_seasons(new_char, character_hash)
+        character = Character.find_or_create_by(name: character_hash["name"], url: character_hash["url"])
+        self.populate_character_attributes(character, character_hash)
+        self.find_or_create_character_books(character, character_hash)
+        self.find_or_create_character_seasons(character, character_hash)
       end
       page += 1
     end
@@ -49,10 +58,11 @@ module ApiParse
     page = 1
     while !self.search_pages("houses", page).empty?
       houses = self.search_pages("houses", page)
-      houses.each do |house|
-        new_house = House.find_or_create_by(name: house["name"], url: house["url"])
-        Region.find_or_create_by(name: house["region"]).houses << new_house
-        self.add_characters_to_house(new_house, house)
+      houses.each do |house_hash|
+        house = House.find_or_create_by(name: house_hash["name"], url: house_hash["url"])
+        house.current_lord = Character.find_by(url: house_hash["currentLord"])
+        Region.find_or_create_by(name: house_hash["region"]).houses << house
+        self.add_characters_to_house( house, house_hash)
       end
       page += 1
     end
