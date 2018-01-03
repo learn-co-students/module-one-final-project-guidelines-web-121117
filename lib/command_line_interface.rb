@@ -1,6 +1,7 @@
 require 'pry'
 
 class CommandLineInterface
+  include MovieMethods
 
   def greet
     puts "Welcome to our Movie Info Database!"
@@ -11,7 +12,8 @@ class CommandLineInterface
   end
 
   def menu
-    puts "Select an option to continue"
+    puts "--->Main Menu<---"
+    # puts "To Select: Enter by [number]"
     puts "[1] Search by Movie Title"
     puts "[2] Search by Actor Name"
     puts "[3] Search by Genre Name"
@@ -20,7 +22,8 @@ class CommandLineInterface
     input = gets.chomp
     case input
       when "1"
-        movie_title_input
+        movie = movie_title_input
+        movie_options(movie)
       when "2"
       when "3"
       when "4"
@@ -33,33 +36,6 @@ class CommandLineInterface
 
   def exit
     puts "Goodbye"
-  end
-
-end
-
-
-
-class MovieMethods
-
-  def check_case(input)
-    non_capitals = ["and", "the", "of", "in", "v"]
-    input.split.map.with_index do |word, idx|
-      idx != 0 && non_capitals.include?(word) ? word.downcase : word.capitalize
-    end.join(" ")
-  end
-
-  def movie_title_input
-    puts "Type in a movie to get started"
-    input = check_case(gets.chomp)
-    result = Movie.find_by(name: input)
-    if result
-      result
-    else
-      until Movie.find_by(name: input)
-        input = check_case(gets.chomp)
-        Movie.find_by(name: input)
-      end
-    end
   end
 
 end
