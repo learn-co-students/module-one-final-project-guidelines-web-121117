@@ -165,8 +165,9 @@ def recommended_shows(user)
   if !genres.empty?
     sorted_genres = genres.sort_by {|genre| genres.count(genre)}.reverse
     most_rated_genre = sorted_genres[0]
-    recommended_array = TvShow.all.select{|show| show.genre == most_rated_genre}
-    recommended_array_names = recommended_array.map {|show| show.name}.sample(5)
+    recommended_array = TvShow.all.select{|show| show.genre == most_rated_genre}.sample(5)
+    recommended_by_rating = recommended_array.sort_by{|show| show.rating}.reverse
+    recommended_array_names = recommended_by_rating.map {|show| "#{show.name}: #{show.rating}"}
     puts " "
     list_all(recommended_array_names)
 
@@ -187,8 +188,9 @@ def recommended_shows(user)
       inp2 = user_input.downcase
       most_rated_genre = inp2.capitalize
       if all_genres_array.include?(most_rated_genre)
-        recommended_array = TvShow.all.select{|show| show.genre == most_rated_genre}
-        recommended_array_names = recommended_array.map {|show| show.name}.sample(5)
+        recommended_array = TvShow.all.select{|show| show.genre == most_rated_genre}.sample(5)
+        recommended_by_rating = recommended_array.sort_by{|show| show.rating}.reverse
+        recommended_array_names = recommended_by_rating.map {|show| "#{show.name}: #{show.rating}"}
         puts " "
         list_all(recommended_array_names)
         main_menu(user)
