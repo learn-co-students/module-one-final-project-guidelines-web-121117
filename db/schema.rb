@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 10) do
+ActiveRecord::Schema.define(version: 11) do
 
   create_table "allegiances", force: :cascade do |t|
     t.integer "character_id"
@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(version: 10) do
   create_table "books", force: :cascade do |t|
     t.string "name"
     t.string "url"
+    t.string "total_pages"
+    t.string "release_date"
   end
 
   create_table "character_books", force: :cascade do |t|
@@ -35,12 +37,18 @@ ActiveRecord::Schema.define(version: 10) do
   create_table "characters", force: :cascade do |t|
     t.string "name"
     t.string "url"
+    t.string "gender"
+    t.string "birth_date"
+    t.string "death_date"
+    t.string "alliases"
+    t.string "actor"
   end
 
   create_table "houses", force: :cascade do |t|
     t.string "name"
     t.string "url"
     t.integer "region_id"
+    t.string "current_lord"
   end
 
   create_table "regions", force: :cascade do |t|
