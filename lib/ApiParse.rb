@@ -12,13 +12,12 @@ module ApiParse
     character.gender = character_hash["gender"]
     character_hash["born"].empty? ? character.birth_date = "<Unknown>" : character.birth_date = character_hash["born"]
     character_hash["died"].empty? ? character.death_date = "<Alive or Unknown>" : character.death_date = character_hash["died"]
-    #adjust for array
-    character_hash["aliases"].empty? ? character.aliases = "<None>" : character.aliases = character_hash["aliases"]
-    character_hash["playedBy"].empty? ? character.actor = "<Not in show>" : character.actor = character_hash["playedBy"]
-    #
+    character_hash["aliases"][0].empty? ? character.aliases = "<None>" : character_hash["aliases"].each{|a_lias| character.aliases << a_lias}
+    character_hash["playedBy"][0].empty? ? character.actor = "<Not in show>" : character.actor = character_hash["playedBy"][0]
     character.save
   end
 
+  #add new book paramse
   def self.find_or_create_character_books(character, character_hash)
     character_hash["books"].each do |book_url|
       book_info = self.find_and_parse(book_url)
@@ -64,7 +63,7 @@ module ApiParse
         house = House.find_or_create_by(name: house_hash["name"], url: house_hash["url"])
         house.current_lord = Character.find_by(url: house_hash["currentLord"])
         Region.find_or_create_by(name: house_hash["region"]).houses << house
-        self.add_characters_to_house(new_house, house_hash)
+        self.add_characters_to_house( house, house_hash)
       end
       page += 1
     end
