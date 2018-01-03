@@ -13,7 +13,9 @@ module ApiParse
     if !character_hash["allegiances"].empty?
       character_hash["allegiances"].each do |house_url|
         house_info = self.find_and_parse(house_url)
-        char.houses << House.find_or_create_by(name: house_info["name"], url: house_info["url"])
+        new_house = House.find_or_create_by(name: house_info["name"], url: house_info["url"])
+        Region.find_or_create_by(name: house_info["region"]).houses << new_house
+        char.houses << new_house
       end
     end
     char
