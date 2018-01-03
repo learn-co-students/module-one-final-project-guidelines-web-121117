@@ -445,17 +445,3 @@ def dice(user, friend)
     end
   end
 end
-################################ 'BLACK-JACK RIPOFF GAME' ###############################
-# def play_black_jack(user)
-#   puts "\nDo you want to play vs 'computer' or vs 'friend'"
-#   puts "or do you want to go 'back' to the game menu"
-#   puts " "
-#   inp = user_input.downcase
-#
-#   case inp
-#   when 'computer'
-#
-#   else
-#
-#   end
-# end
