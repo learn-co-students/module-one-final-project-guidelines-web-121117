@@ -17,15 +17,14 @@ module ApiParse
     character.save
   end
 
-  #add new book paramse
   def self.find_or_create_character_books(character, character_hash)
     character_hash["books"].each do |book_url|
       book_info = self.find_and_parse(book_url)
-      character.books << Book.find_or_create_by(name: book_info["name"], url: book_info["url"])
+      character.books << Book.find_or_create_by(name: book_info["name"], url: book_info["url"], pages: book_info["numberOfPages"], release_date: book_info["released"].slice(0..10))
     end
     character_hash["povBooks"].each do |book_url|
       book_info = self.find_and_parse(book_url)
-      character.books << Book.find_or_create_by(name: book_info["name"], url: book_info["url"])
+      character.books << Book.find_or_create_by(name: book_info["name"], url: book_info["url"], pages: book_info["numberOfPages"], release_date: book_info["released"].slice(0..10))
     end
   end
 
