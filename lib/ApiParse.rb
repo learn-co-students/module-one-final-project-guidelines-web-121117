@@ -5,7 +5,7 @@ module ApiParse
   end
 
   def self.search_pages(target, page=1)
-    JSON.parse(RestClient.get("https://anapioficeandfire.com/api/#{target}?page=#{page}&pageSize=50"))
+    self.find_and_parse("https://anapioficeandfire.com/api/#{target}?page=#{page}&pageSize=50")
   end
 
 
