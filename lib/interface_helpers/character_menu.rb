@@ -3,6 +3,7 @@ module CharacterMenu
   def characters_menu_options
     puts "\n\nChoose from one of the following categories to proceed:"
     puts "     Characters".colorize(:color => :blue) + " - see all characters of the GoT Universe."
+    puts "     Specific".colorize(:color => :blue) + " - see specific traits for a character of the GoT Universe."
     puts "     Allegiances".colorize(:color => :blue) + " - see where a specific character's allegiances lie."
     puts "     Books".colorize(:color => :blue) + " - see which books a specific character appears in."
     puts "     TV".colorize(:color => :blue) + " - see which season of GoT TV show a specific character appears in."
@@ -18,6 +19,9 @@ module CharacterMenu
       puts all_characters
       puts "\n"
       characters_menu
+    elsif input == "specific"
+      puts "\n\n'FIND QUOTE".colorize(:color => :blue)
+      character_specific_run
     elsif input == "allegiances"
       pre_find_character
       input = gets.chomp

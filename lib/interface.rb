@@ -5,7 +5,10 @@ module Interface
   include MainMenu
   include RegionMenu
   include CharacterMenu
+  include CharacterSpecificMenu
   include BookMenu
+  include BookPagesMenu
+  include BookReleasesMenu
   include HouseMenu
   include InterfaceMethods
 

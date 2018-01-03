@@ -4,6 +4,8 @@ module BookMenu
     puts "\n\nChoose from one of the following categories to proceed:"
     puts "     Books".colorize(:color => :magenta) + " - see all GoT books."
     puts "     Characters".colorize(:color => :magenta) + " - see which characters appear in a specific book."
+    puts "     Pages".colorize(:color => :magenta) + " - got to pages menu."
+    puts "     Release".colorize(:color => :magenta) + " - go to release dates menu."
     puts "     Main Menu".colorize(:color => :magenta) + " - back to the main menu."
     puts "\nPlease make a selection:"
     input = gets.downcase.chomp
@@ -25,6 +27,12 @@ module BookMenu
       show_characters(characters)
       puts "\n"
       books_menu
+    elsif input == "pages"
+      puts "\n\n'FIND QUOTE".colorize(:color => :magenta)
+      book_pages_menu
+    elsif input == "release"
+      puts "\n\n'FIND QUOTE".colorize(:color => :magenta)
+      book_releases_menu
     elsif input == "main menu"
       main_menu_run
     elsif input == "exit"

@@ -138,4 +138,22 @@ module InterfaceMethods
     end.flatten
   end
 
+
+  ## NOT WORKING YET ##
+  def find_character_by_lord_url(input)
+    character = Character.find_by(url: input)
+    character.name
+  end
+
+  def find_characters_by_gender(gender, house)
+    gender_array = []
+    characters = house.characters
+    characters.each do |character|
+      if gender == character.gender
+        gender_array << character.name
+      end
+    end
+    gender_array
+  end
+
 end
