@@ -7,7 +7,7 @@ module GenreMethods
 
   def genre_options
     puts ""
-    puts "----->Genre Menu<-----".colorize(:color=>:green, :mode=>:bold)
+    puts "----->Genre Menu<-----".colorize(:color=>:green, :mode=>:bold).center(40)
     puts ""
     puts "Select one of the following options".colorize(:mode=>:bold)
     puts ""
@@ -32,10 +32,12 @@ module GenreMethods
     puts ""
     puts Genre.all.map.with_index {|genre, idx| "[#{idx+1}] ".colorize(:color=>:cyan, :mode=>:bold) + "#{genre.name}"}
 
-    input = gets.chomp.to_i
-    if input.is_a?(Integer) && input.between?(1, 20)
-      movies = Genre.all[input - 1].movies.sort_by {|movie| movie.rating}.reverse[0...20]
-      puts "Top 20 #{Genre.all[input-1].name} Movies".colorize(:mode=>:bold)
+    input = gets.chomp
+    return CommandLineInterface.new.exit if input == "exit"
+    if input.to_i.between?(1, 20)
+      filtered_movies = Genre.all[input.to_i - 1].movies.select {|movie| movie.rating_count > 500 }
+      movies = filtered_movies.sort_by {|movie| movie.rating}.reverse[0...20]
+      puts "Top #{Genre.all[input.to_i-1].name} Movies".colorize(:mode=>:bold)
       puts movies.map.with_index {|movie,idx| "[#{idx+1}] ".colorize(:color=>:cyan, :mode=>:bold) + "#{movie.name} " + "#{movie.rating}".colorize(:yellow)}
       genre_selection(movies)
     else
@@ -48,9 +50,10 @@ module GenreMethods
     puts ""
     puts "Select one of these movies to get more options".colorize(:mode=>:bold)
     puts ""
-    input = gets.chomp.to_i
-    if input.is_a?(Integer) && input.between?(1, 20)
-      movie_options(movies[input-1])
+    input = gets.chomp
+    return CommandLineInterface.new.exit if input == "exit"
+    if input.to_i.between?(1,20)
+      movie_options(movies[input.to_i-1])
     else
       puts "Please enter a valid number between 1 and 20".colorize(:color=>:light_red, :mode=>:bold)
       genre_selection(movies)

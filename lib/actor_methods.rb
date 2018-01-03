@@ -17,14 +17,15 @@ module ActorMethods
         puts ""
         puts "Could not find actor, Please enter a valid name:".colorize(:color=>:light_red, :mode=>:bold)
         input = check_case(gets.chomp)
-        Actor.find_by(name: input)
+        result = Actor.find_by(name: input)
       end
     end
+    result
   end
 
   def actor_options(actor)
     puts ""
-    puts "----->Actor Menu<-----".colorize(:color=>:green, :mode=>:bold)
+    puts "----->Actor Menu<-----".colorize(:color=>:green, :mode=>:bold).center(40)
     puts ""
     puts "You selected: ".colorize(:mode=>:bold) + "#{actor.name}".colorize(:color=>:green, :mode=>:bold)
     puts ""
@@ -56,9 +57,10 @@ module ActorMethods
     puts movies_with_index
     puts ""
     puts "Select a movie to see its options".colorize(:mode=>:bold)
-    input = gets.chomp.to_i
-    if input.is_a?(Integer) && input.between?(1, movies.count)
-      movie_options(Movie.find_by(name: movies[input -1]))
+    input = gets.chomp
+    return CommandLineInterface.new.exit if input == "exit"
+    if input.to_i.between?(1, movies.count)
+      movie_options(Movie.find_by(name: movies[input.to_i - 1]))
     else
       actor_movies(actor)
     end

@@ -18,14 +18,15 @@ module MovieMethods
       until Movie.find_by(name: input)
         puts "Could not find movie, Please enter a valid movie name:".colorize(:color=>:light_red, :mode=>:bold)
         input = check_case(gets.chomp)
-        Movie.find_by(name: input)
+        result = Movie.find_by(name: input)
       end
     end
+    result
   end
 
   def movie_options(movie)
     puts ""
-    puts "----->Movie Menu<-----".colorize(:color=>:green, :mode=>:bold)
+    puts "----->Movie Menu<-----".colorize(:color=>:green, :mode=>:bold).center(40)
     puts ""
     puts "You selected: ".colorize(:mode=>:bold) + "#{movie.name}".colorize(:color=>:green, :mode=>:bold)
     puts ""
@@ -48,11 +49,6 @@ module MovieMethods
 
   end
 
-  def movie_ratings(movie)
-    puts ""
-
-  end
-
   def movie_actors(movie)
     actors = Movie.find_by(name: movie.name).actors[0...5].map {|actor| actor.name}
     puts ""
@@ -61,9 +57,10 @@ module MovieMethods
     puts ""
     puts "Select an actor to get more information".colorize(:mode=>:bold)
     puts ""
-    input = gets.chomp.to_i
-    if input.is_a?(Integer) && input.between?(1,6)
-      actor = Actor.find_by(name: actors[input-1])
+    input = gets.chomp
+    return CommandLineInterface.new.exit if input == "exit"
+    if input.to_i.between?(1,5)
+      actor = Actor.find_by(name: actors[input.to_i-1])
       actor_options(actor)
     else
       puts "Please enter a valid number between 1 and 6:".colorize(:color=>:light_red, :mode=>:bold)
