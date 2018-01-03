@@ -1,6 +1,5 @@
 # Join table
-
-class UserDrinks < ActiveRecord::Base
+class UserDrink < ActiveRecord::Base
   belongs_to :user
   belongs_to :drink
 end
