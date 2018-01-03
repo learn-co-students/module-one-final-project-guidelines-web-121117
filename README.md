@@ -59,8 +59,9 @@ What is a contributors guide?
 Give credits if any
 
 ## Apps Used
-Stories On Board
-Cloudapp
+Stories On Board // User strories
+Cloudapp // Gifs generator
+[Shields.io](https://shields.io/) // Badge generator
 
 ## License
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)

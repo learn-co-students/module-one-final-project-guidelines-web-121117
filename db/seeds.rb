@@ -1,3 +1,26 @@
+require 'rest-client'
+require 'json'
+require 'pry'
+
+
+# cocktails_data = RestClient.get('https://raw.githubusercontent.com/teijo/iba-cocktails/master/recipes.json')
+# cocktails_array = JSON.parse(cocktails_data)
+#
+# puts cocktails_array
+#
+#
+# cocktails_array.each do |cocktails_array_element|
+#   name = cocktails_array_element["name"]
+#   category = cocktails_array_element["genres"]
+#   rating = cocktails_array_element["rating"]["average"]
+#   status = cocktails_array_element["status"]
+#
+#   TvShow.create(name: name, genre: genre, rating: rating, status: status)
+# end
+
+
+##########################################
+
 # Users
 # ------------------------------------
 oleg = User.create(name: "Oleg")
