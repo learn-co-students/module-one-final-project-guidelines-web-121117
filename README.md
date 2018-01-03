@@ -1,6 +1,6 @@
 # Cocktail Discovery CLI
 
-[![GitHub version](https://badge.fury.io/gh/google%2Fmaterial-design-lite.svg)](https://badge.fury.io/gh/google%2Fmaterial-design-lite)
+[![GitHub package version](https://img.shields.io/github/package-json/v/badges/shields.svg)](https://github.com/jaytix/module-one-final-project-guidelines-web-121117/tree/oleg)
 
 
 Table of Contents:
