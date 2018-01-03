@@ -211,6 +211,12 @@ class Interface
     end
   end
 
+  def find_characters_from_houses(house_ary)
+    house_ary.map do |house|
+      self.find_characters(house)
+    end.flatten
+  end
+
 
 
   # RUN MENUS #
@@ -288,9 +294,8 @@ class Interface
       pre_find_house
       input = gets.chomp
       house = find_house(input)
-      regions = find_region(house)
       puts "\nHere is the region when you can find #{house.name}"
-      show_region(regions)
+      puts house.region.name
       puts "\n"
       houses_menu
     elsif input == "main menu"
@@ -351,7 +356,7 @@ class Interface
       input = gets.chomp
       region = find_region(input)
       houses = find_allegiances(region)
-      characters = find_characters(houses)
+      characters = find_characters_from_houses(houses)
       puts "\nHere are the characters from #{region.name}:"
       show_characters(characters)
       puts "\n"
