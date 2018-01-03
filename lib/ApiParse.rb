@@ -10,23 +10,19 @@ module ApiParse
 
 
   def self.find_or_create_character_books(character, character_hash)
-    if !character_hash["books"].empty?
-      character_hash["books"].each do |book_url|
-        book_info = self.find_and_parse(book_url)
-        character.books << Book.find_or_create_by(name: book_info["name"], url: book_info["url"])
-      end
-      character_hash["povBooks"].each do |book_url|
-        book_info = self.find_and_parse(book_url)
-        character.books << Book.find_or_create_by(name: book_info["name"], url: book_info["url"])
-      end
+    character_hash["books"].each do |book_url|
+      book_info = self.find_and_parse(book_url)
+      character.books << Book.find_or_create_by(name: book_info["name"], url: book_info["url"])
+    end
+    character_hash["povBooks"].each do |book_url|
+      book_info = self.find_and_parse(book_url)
+      character.books << Book.find_or_create_by(name: book_info["name"], url: book_info["url"])
     end
   end
 
   def self.find_or_create_character_seasons(character, character_hash)
-    if !character_hash["tvSeries"].empty?
-      character_hash["tvSeries"].each do |season|
-        character.seasons << Season.find_or_create_by(name: season)
-      end
+    character_hash["tvSeries"].each do |season|
+      character.seasons << Season.find_or_create_by(name: season)
     end
   end
 
