@@ -1,6 +1,3 @@
-## LIST ALL GENRES THAT HAVE REVIEWS(user)
-#user.reviews.map {|review_instance| review_instance.tv_show.genre}
-
 def welcome
   puts "Welcome to out Group project. It's a collection of 'Girl' TV Shows"
 end
@@ -9,6 +6,12 @@ def user_input
   print "Input Here: "
   input = gets.chomp
   input.to_s
+end
+
+def user_integer_input
+  print "Input Here: "
+  input = gets.chomp
+  input.to_i
 end
 ################################# MAIN MENU #################################
 def main_menu(user)
@@ -27,11 +30,11 @@ def main_menu(user)
   case inp
   when "1"
     puts "\nAll Shows:"
-    list_all(all_tv_show_names)
+    list_all_tv_shows
     tv_show_menu(user)
   when "show all shows"
     puts "\nAll Shows:"
-    list_all(all_tv_show_names)
+    list_all_tv_shows
     tv_show_menu(user)
   when "2"
     tv_show_menu(user)
@@ -61,24 +64,44 @@ end
 
 ################################### TV SHOW MENU ##############################
 def tv_show_menu(user)
-  # puts "\nAll Shows:"
-  # list_all(all_tv_show_names)
+
   puts "\nBack"
-  puts "\nEnter a show's name to get it's information"
-  inp = user_input.downcase
+  puts "\nEnter a show's number to get it's information"
+  inp = user_integer_input
+  if inp <= 0 || inp > all_tv_shows.size
+    puts "Invalid index! Choose again..."
+    tv_show_menu(user)
+  else
+    show = all_tv_shows[inp - 1]
 
-  str = inp.split(" ")
-  name = str.map{|element| element.capitalize}.join(" ")
+    if all_tv_shows.include?(show)
+      puts "\nShow name: #{show.name}"
+      puts "\n'rating', 'genre', 'status', 'reviews', or 'back'"
+      inp2 = user_input.downcase
 
-  if all_tv_show_names.include?(name)
-    show = TvShow.find_by(name: name)
-    puts "\n'rating', 'genre', 'status' or 'reviews'"
-    inp2 = user_input.downcase
+      if inp2 == 'rating'
+        if show.rating
+          puts " "
+          puts show.rating
+          puts "\nGet another show?(y/n)"
+          puts " "
+          inp3 = user_input.downcase
 
-    if inp2 == 'rating'
-      if show.rating
+          if inp3 == 'y'
+            tv_show_menu(user)
+          else
+            main_menu(user)
+          end
+        else
+          puts " "
+          puts "The show hasn't been rated yet."
+          tv_show_menu(user)
+        end
+      elsif inp2 == 'back'
+        main_menu(user)
+      elsif inp2 == "genre"
         puts " "
-        puts show.rating
+        puts show.genre
         puts "\nGet another show?(y/n)"
         puts " "
         inp3 = user_input.downcase
@@ -88,55 +111,9 @@ def tv_show_menu(user)
         else
           main_menu(user)
         end
-      else
+      elsif inp2 == 'status'
         puts " "
-        puts "The show hasn't been rated yet."
-        tv_show_menu(user)
-      end
-    elsif inp2 == "genre"
-      puts " "
-      puts show.genre
-      puts "\nGet another show?(y/n)"
-      puts " "
-      inp3 = user_input.downcase
-
-      if inp3 == 'y'
-        tv_show_menu(user)
-      else
-        main_menu(user)
-      end
-    elsif inp2 == 'status'
-      puts " "
-      puts show.status
-      puts "\nGet another show?(y/n)"
-      puts " "
-      inp3 = user_input.downcase
-
-      if inp3 == 'y'
-        tv_show_menu(user)
-      else
-        main_menu(user)
-      end
-    elsif inp2 == 'reviews'
-      count = 0
-      if show.reviews.empty?
-        puts " "
-        puts "The show has no reviews."
-        puts "\nPick another show?(y/n)"
-        puts " "
-        inp3 = user_input.downcase
-
-        if inp3 == 'y'
-          tv_show_menu(user)
-        else
-          main_menu(user)
-        end
-      else
-        puts " "
-        show.reviews.each do |rev|
-          count += 1
-          puts "#{count}.'#{rev.review}' by #{rev.user.name}"
-        end
+        puts show.status
         puts "\nGet another show?(y/n)"
         puts " "
         inp3 = user_input.downcase
@@ -146,17 +123,47 @@ def tv_show_menu(user)
         else
           main_menu(user)
         end
+      elsif inp2 == 'reviews'
+        count = 0
+        if show.reviews.empty?
+          puts " "
+          puts "The show has no reviews."
+          puts "\nPick another show?(y/n)"
+          puts " "
+          inp3 = user_input.downcase
+
+          if inp3 == 'y'
+            tv_show_menu(user)
+          else
+            main_menu(user)
+          end
+        else
+          puts " "
+          show.reviews.each do |rev|
+            count += 1
+            puts "#{count}.'#{rev.review}' by #{rev.user.name}"
+          end
+          puts "\nGet another show?(y/n)"
+          puts " "
+          inp3 = user_input.downcase
+
+          if inp3 == 'y'
+            tv_show_menu(user)
+          else
+            main_menu(user)
+          end
+        end
+      else
+        puts "Unknown option! Try again..."
+        tv_show_menu(user)
       end
+    elsif inp == 'back'
+      main_menu(user)
     else
-      puts "Unknown option! Try again..."
+      puts " "
+      puts "Can't find show"
       tv_show_menu(user)
     end
-  elsif inp == 'back'
-    main_menu(user)
-  else
-    puts " "
-    puts "Can't find show"
-    tv_show_menu(user)
   end
 end
 ################################### RECOMMENDED MENU ##############################
@@ -267,6 +274,14 @@ end
 
 def all_genres_array
   TvShow.all.map {|show| show.genre}.uniq.compact
+end
+
+def all_tv_shows
+  TvShow.all.map{|show| show}
+end
+
+def list_all_tv_shows
+  TvShow.all.each_with_index {|show, ind| puts "#{ind + 1}.#{show.name}"}
 end
 
 def all_tv_show_names
