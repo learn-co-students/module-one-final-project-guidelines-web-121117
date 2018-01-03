@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 11) do
     t.string "gender"
     t.string "birth_date"
     t.string "death_date"
-    t.string "alliases"
+    t.string "aliases"
     t.string "actor"
   end
 
