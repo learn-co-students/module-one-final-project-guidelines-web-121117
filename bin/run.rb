@@ -1,2 +1,4 @@
-require_relative 'config/environment'
+require_relative '../config/environment'
 
+# Get rid of SQL debug messages.
+ActiveRecord::Base.logger.level = 1
