@@ -57,15 +57,9 @@ classic.drinks << manhattan
 modern.drinks << vrb
 
 ## User-drinks
-# marg.users << josh
-# of.users << josh
-#
-# of.users << oleg
-# manhattan.users << oleg
-# vrb.users << oleg
-josh.drinks << of
-josh.drinks << marg
+marg.users << josh
+of.users << josh
 
-oleg.drinks << of
-oleg.drinks << manhattan
-oleg.drinks << vrb
+of.users << oleg
+manhattan.users << oleg
+vrb.users << oleg
