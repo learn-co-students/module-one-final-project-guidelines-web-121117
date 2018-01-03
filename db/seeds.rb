@@ -3,7 +3,6 @@ require 'JSON'
 require 'yaml'
 require_relative '../config/environment'
 
-
 Song.destroy_all
 
 keys = YAML.load_file('keys.yml')
@@ -47,6 +46,7 @@ audio_feature_objects.each do |song_object|
   acousticness = song_object["acousticness"]
   energy = song_object["energy"]
   instrumentalness = song_object["instrumentalness"]
+  spotify_id = song_id_name_hash.key(name)
 
-  Song.create(name: name, tempo: tempo, key: key, mode: mode, time_signature: time_signature, danceability: danceability, valence: valence, acousticness: acousticness, energy: energy, instrumentalness: instrumentalness)
+  Song.create(name: name, tempo: tempo, key: key, mode: mode, time_signature: time_signature, danceability: danceability, valence: valence, acousticness: acousticness, energy: energy, instrumentalness: instrumentalness, spotify_id: spotify_id)
 end

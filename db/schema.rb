@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180102194330) do
+ActiveRecord::Schema.define(version: 20180103135045) do
 
   create_table "playlists", force: :cascade do |t|
     t.string "name"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20180102194330) do
     t.float "acousticness"
     t.float "energy"
     t.float "instrumentalness"
+    t.string "spotify_id"
   end
 
 end
