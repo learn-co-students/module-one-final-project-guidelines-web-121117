@@ -23,9 +23,10 @@ def main_menu(user)
   puts "3.'Write a review' to write a review for a selected show"
   puts "4.'List my reviews' to see all the reviews of all the shows that you've made"
   puts "5.'Recommended' to show 5 recommended shows based on your reviews"
-  puts "6. 'Top Rated' to view 10 of the top rated shows"
-  puts "\n7.'Log Out'"
-  puts "8.'Exit'"
+  puts "6.'Top Rated' to view 10 of the top rated shows"
+  puts "7.'Play' to play a game"
+  puts "\n8.'Log Out'"
+  puts "9.'Exit'"
 
   inp = user_input.downcase
 
@@ -60,6 +61,12 @@ def main_menu(user)
     recommended_shows(user)
   when "6"
     top_rated(user)
+  when "top rated"
+    top_rated(user)
+  when "7"
+    game_menu(user)
+  when 'play'
+    game_menu(user)
   when "log out"
     login_menu
   when "exit"
@@ -340,3 +347,115 @@ def login_menu
     end
   end
 end
+################################ 'GAME MENU' ###############################
+def game_menu(user)
+  puts "\n------------Game Menu------------"
+  puts "\n1.'dice' to play dice"
+  puts "\n'back' to go back to the main menu"
+  inp = user_input.downcase
+
+  case inp
+  when "dice"
+    puts "\nWelcome to the dice game"
+    play_dice(user)
+  when "1"
+    puts "\nWelcome to the dice game"
+    play_dice(user)
+  when "back"
+    main_menu(user)
+  else
+    puts "Unknown command!"
+    game_menu(user)
+  end
+end
+################################ 'DICE GAME' ###############################
+def play_dice(user)
+  puts "\nDo you want to play vs 'computer' or vs 'friend'"
+  puts "or do you want to go 'back' to the game menu"
+  puts " "
+  inp = user_input.downcase
+
+  case inp
+  when 'computer'
+    puts "#{user.name}, press 'return' to roll your dice"
+    u_input = gets.chomp
+    puts " "
+    player1 = rand(6) + 1
+    puts "#{user.name}, you rolled a #{player1}."
+    com = rand(6) + 1
+    puts "The computer rolled a #{com}."
+    if player1 > com
+      puts "\nCongratulations #{user.name}! You won!"
+      play_dice(user)
+    elsif player1 == com
+      puts "It's a DRAW! Miserable..."
+      play_dice(user)
+    else
+      puts "BOOOO #{user.name}! You lost... miserably..."
+      play_dice(user)
+    end
+  when 'friend'
+    print "\nInsert the name of your friend: "
+    friend = gets.chomp.to_s
+    dice(user, friend)
+  when 'back'
+    game_menu(user)
+  else
+    play_dice(user)
+  end
+end
+
+def dice(user, friend)
+  puts "#{friend}, press 'return' to roll your dice"
+  u_input = gets.chomp
+  puts " "
+  friend_roll = rand(6) + 1
+  puts "#{friend}, you rolled a #{friend_roll}."
+
+  puts "#{user.name}, press 'return' to roll your dice"
+  u_input = gets.chomp
+  puts " "
+  player1 = rand(6) + 1
+  puts "#{user.name}, you rolled a #{player1}."
+
+  if friend_roll > player1
+    puts "\nCongratulations #{friend}! You ROCK!"
+    inp = user_input.downcase
+    if inp == 'y'
+      dice(user, friend)
+    else
+      play_dice(user)
+    end
+  elsif friend_roll == player1
+    puts "It's a DRAW! You both suck..."
+    inp = user_input.downcase
+    if inp == 'y'
+      dice(user, friend)
+    else
+      play_dice(user)
+    end
+  else
+    puts "\nGood job #{user.name}. Don't worry #{friend} you'll get him next time!"
+    puts "\nRematch!?(y/n)"
+    inp = user_input.downcase
+    if inp == 'y'
+      dice(user, friend)
+    else
+      play_dice(user)
+    end
+  end
+end
+################################ 'BLACK-JACK RIPOFF GAME' ###############################
+# def play_black_jack(user)
+#   puts "\nDo you want to play vs 'computer' or vs 'friend'"
+#   puts "or do you want to go 'back' to the game menu"
+#   puts " "
+#   inp = user_input.downcase
+#
+#   case inp
+#   when 'computer'
+#
+#   else
+#
+#   end
+# end
