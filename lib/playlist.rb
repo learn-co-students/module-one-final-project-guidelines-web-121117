@@ -11,6 +11,11 @@ class Playlist < ActiveRecord::Base
     self
   end
 
+  def self.find_by_trait(parameter, value=true)
+    Playlist.all.select do |playlist|
+      playlist[parameter.to_sym] == value
+    end
+  end
 
 
 end
