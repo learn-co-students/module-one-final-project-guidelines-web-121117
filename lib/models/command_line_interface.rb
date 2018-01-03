@@ -1,3 +1,6 @@
+## LIST ALL GENRES THAT HAVE REVIEWS(user)
+#user.reviews.map {|review_instance| review_instance.tv_show.genre}
+
 def welcome
   puts "Welcome to out Group project. It's a collection of 'Girl' TV Shows"
 end
@@ -12,21 +15,40 @@ def main_menu(user)
   puts "\n---------Main Menu---------"
   puts "Current User: #{user.name}"
   puts "\n1.'Show all shows' to display all shows"
-  puts "2.'Write a review' to write a review for a selected show"
-  puts "\n3.'Log Out'"
-  puts "4.'Exit'"
+  puts "2.'Find a show' to search for a selected show"
+  puts "3.'Write a review' to write a review for a selected show"
+  puts "4.'List my reviews' to see all the reviews of all the shows that you've made"
+  puts "5.'Recommended' to show 5 recommended shows based on your reviews"
+  puts "\n6.'Log Out'"
+  puts "7.'Exit'"
 
   inp = user_input.downcase
 
   case inp
   when "1"
+    puts "\nAll Shows:"
+    list_all(all_tv_show_names)
     tv_show_menu(user)
   when "show all shows"
+    puts "\nAll Shows:"
+    list_all(all_tv_show_names)
     tv_show_menu(user)
   when "2"
+    tv_show_menu(user)
+  when "find a show"
+    tv_show_menu(user)
+  when "3"
     add_review(user)
   when "write a review"
     add_review(user)
+  when "4"
+    review_menu(user)
+  when "list my reviews"
+    review_menu(user)
+  when "5"
+    recommended_shows(user)
+  when "recommended"
+    recommended_shows(user)
   when "log out"
     login_menu
   when "exit"
@@ -39,8 +61,8 @@ end
 
 ################################### TV SHOW MENU ##############################
 def tv_show_menu(user)
-  puts "\nAll Shows:"
-  list_all(all_tv_show_names)
+  # puts "\nAll Shows:"
+  # list_all(all_tv_show_names)
   puts "\nBack"
   puts "\nEnter a show's name to get it's information"
   inp = user_input.downcase
@@ -100,7 +122,7 @@ def tv_show_menu(user)
       if show.reviews.empty?
         puts " "
         puts "The show has no reviews."
-        puts "\nPick another show?(y/n)?"
+        puts "\nPick another show?(y/n)"
         puts " "
         inp3 = user_input.downcase
 
@@ -137,6 +159,48 @@ def tv_show_menu(user)
     tv_show_menu(user)
   end
 end
+################################### RECOMMENDED MENU ##############################
+def recommended_shows(user)
+  genres = user.reviews.map {|review_instance| review_instance.tv_show.genre}
+  if !genres.empty?
+    sorted_genres = genres.sort_by {|genre| genres.count(genre)}.reverse
+    most_rated_genre = sorted_genres[0]
+    recommended_array = TvShow.all.select{|show| show.genre == most_rated_genre}
+    recommended_array_names = recommended_array.map {|show| show.name}.sample(5)
+    puts " "
+    list_all(recommended_array_names)
+
+    puts "\nGet 5 more recommendations?(y/n)"
+    inp = user_input.downcase
+
+    if inp == 'y'
+      recommended_shows(user)
+    else
+      main_menu(user)
+    end
+  else
+    puts "\nThere are no recommendations for you! Do you want to pick a genre?(y/n)"
+    inp = user_input.downcase
+
+    if inp == 'y'
+      puts "Existing genres: #{all_genres_array.join(", ")}"
+      inp2 = user_input.downcase
+      most_rated_genre = inp2.capitalize
+      if all_genres_array.include?(most_rated_genre)
+        recommended_array = TvShow.all.select{|show| show.genre == most_rated_genre}
+        recommended_array_names = recommended_array.map {|show| show.name}.sample(5)
+        puts " "
+        list_all(recommended_array_names)
+        main_menu(user)
+      else
+        puts "Couldn't find the selected genre!"
+        main_menu(user)
+      end
+    else
+      main_menu(user)
+    end
+  end
+end
 ################################ 'ADD REVIEWS' MENU ###############################
 def add_review(user)
   puts "\nAll Shows:"
@@ -168,13 +232,39 @@ def add_review(user)
     add_review(user)
   end
 end
+################################ 'REVIES MENU' #############################
+def review_menu(user)
+  puts "\nALL REVIEWS BY #{user.name}:"
+  puts " "
+  all_reviews(user)
+  puts "\nBack"
+  puts " "
+  inp = user_input.downcase
+  if inp == "back"
+    main_menu(user)
+  else
+    review_menu(user)
+  end
+end
 ################################ ARRAYS #############################
 def list_all(array)
-  count = 0
   array.each do |element|
-    count += 1
-    puts "#{count}. #{element}"
+    puts "- #{element}"
   end
+end
+
+def all_reviews(user)
+  if user.reviews.empty?
+    puts "You haven't rated anything yet"
+  else
+    user.reviews.each do |review_instance|
+      puts "'#{review_instance.review}': #{review_instance.tv_show.name}"
+    end
+  end
+end
+
+def all_genres_array
+  TvShow.all.map {|show| show.genre}.uniq.compact
 end
 
 def all_tv_show_names
