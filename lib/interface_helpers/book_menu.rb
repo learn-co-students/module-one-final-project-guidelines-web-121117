@@ -20,7 +20,7 @@ module BookMenu
       pre_find_book
       input = gets.chomp
       book = find_book(input)
-      characters = find_characters(book)
+      characters = book.characters
       puts "\nHere are the characters in #{book.name}"
       show_characters(characters)
       puts "\n"

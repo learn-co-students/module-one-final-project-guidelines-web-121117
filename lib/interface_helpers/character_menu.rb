@@ -22,7 +22,7 @@ module CharacterMenu
       pre_find_character
       input = gets.chomp
       character = find_character(input)
-      houses = find_allegiances(character)
+      houses = character.houses
       puts "\nHere are the house allegiances #{character.name} is a part of:"
       show_allegiances(houses)
       puts "\n"
@@ -31,7 +31,7 @@ module CharacterMenu
       pre_find_character
       input = gets.chomp
       character = find_character(input)
-      books = find_books(character)
+      books = character.books
       puts "\nHere are the books that #{character.name} appears in:"
       show_books(books)
       puts "\n"
@@ -40,7 +40,7 @@ module CharacterMenu
       pre_find_character
       input = gets.chomp
       character = find_character(input)
-      seasons = find_seasons(character)
+      seasons = character.seasons
       puts "\nHere are the seasons that #{character.name} appears in:"
       show_seasons(seasons)
       puts "\n"

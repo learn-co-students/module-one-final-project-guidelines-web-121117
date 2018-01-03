@@ -54,24 +54,12 @@ module InterfaceMethods
     character
   end
 
-  def find_allegiances(input)
-    input.houses
-  end
-
   def show_allegiances(houses)
     houses.map {|house| puts house.name}
   end
 
-  def find_books(character)
-    character.books
-  end
-
   def show_books(books)
     books.map {|book| puts book.name}
-  end
-
-  def find_seasons(character)
-    character.seasons
   end
 
   def show_seasons(seasons)
@@ -98,16 +86,8 @@ module InterfaceMethods
     end
   end
 
-  def find_characters(input)
-    input.characters
-  end
-
   def show_characters(characters)
     characters.map {|character| puts character.name}
-  end
-
-  def find_region(house)
-    house.region
   end
 
   def show_region(regions)
@@ -154,7 +134,7 @@ module InterfaceMethods
 
   def find_characters_from_houses(house_ary)
     house_ary.map do |house|
-      self.find_characters(house)
+      house.characters
     end.flatten
   end
 

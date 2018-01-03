@@ -21,7 +21,7 @@ module RegionMenu
       pre_find_region
       input = gets.chomp
       region = find_region(input)
-      houses = find_allegiances(region)
+      houses = region.houses
       puts "\nHere are the houses located in #{region.name}:"
       show_allegiances(houses)
       puts "\n"
@@ -30,7 +30,7 @@ module RegionMenu
       pre_find_region
       input = gets.chomp
       region = find_region(input)
-      houses = find_allegiances(region)
+      houses = region.houses
       characters = find_characters_from_houses(houses)
       puts "\nHere are the characters from #{region.name}:"
       show_characters(characters)

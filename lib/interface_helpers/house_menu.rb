@@ -22,16 +22,7 @@ module HouseMenu
       pre_find_house
       input = gets.chomp
       house = find_house(input)
-      characters = find_characters(house)
-      puts "\nHere are the characters with allegiances to #{house.name}:"
-      show_characters(characters)
-      puts "\n"
-      houses_menu
-    elsif input == "list character allegiances"
-      pre_find_house
-      input = gets.chomp
-      house = find_house(input)
-      characters = find_characters(house)
+      characters = house.characters
       puts "\nHere are the characters with allegiances to #{house.name}:"
       show_characters(characters)
       puts "\n"
