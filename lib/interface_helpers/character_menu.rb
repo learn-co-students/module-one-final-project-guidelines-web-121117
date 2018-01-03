@@ -2,10 +2,10 @@ module CharacterMenu
 
   def characters_menu_options
     puts "\n\nChoose from one of the following categories to proceed:"
-    puts "     List All Characters".colorize(:color => :blue) + " - explore the characters of the GoT Universe."
-    puts "     List Character's Allegiances".colorize(:color => :blue) + " - see where a specific character's allegiances lie."
-    puts "     List Character's Book Appearances".colorize(:color => :blue) + " - see which books a specific character appears in."
-    puts "     List Character's TV Show Appearances".colorize(:color => :blue) + " - see which season a specific character appears in."
+    puts "     Characters".colorize(:color => :blue) + " - see all characters of the GoT Universe."
+    puts "     Allegiances".colorize(:color => :blue) + " - see where a specific character's allegiances lie."
+    puts "     Books".colorize(:color => :blue) + " - see which books a specific character appears in."
+    puts "     TV".colorize(:color => :blue) + " - see which season of GoT TV show a specific character appears in."
     puts "     Main Menu".colorize(:color => :blue) + " - back to the main menu."
     puts "\nPlease make a selection:"
     input = gets.downcase.chomp
@@ -13,12 +13,12 @@ module CharacterMenu
 
   def characters_menu
     input = characters_menu_options
-    if input == "list all characters"
+    if input == "characters"
       puts "\n"
       puts all_characters
       puts "\n"
       characters_menu
-    elsif input == "list character's allegiances"
+    elsif input == "allegiances"
       pre_find_character
       input = gets.chomp
       character = find_character(input)
@@ -27,7 +27,7 @@ module CharacterMenu
       show_allegiances(houses)
       puts "\n"
       characters_menu
-    elsif input == "list character's book appearances"
+    elsif input == "books"
       pre_find_character
       input = gets.chomp
       character = find_character(input)
@@ -36,7 +36,7 @@ module CharacterMenu
       show_books(books)
       puts "\n"
       characters_menu
-    elsif input == "list character's tv show appearances"
+    elsif input == "tv"
       pre_find_character
       input = gets.chomp
       character = find_character(input)

@@ -2,10 +2,9 @@ module HouseMenu
 
   def houses_menu_options
     puts "\n\nChoose from one of the following categories to proceed:"
-    puts "     List All Houses".colorize(:color => :green) + " - explore the houses of the GoT Universe."
-    puts "     List House's Characters".colorize(:color => :green) + " - see who belongs to what house."
-    puts "     List Character Allegiances".colorize(:color => :green) + " - see which characters hold allegiances to a specific house."
-    puts "     List House's Location".colorize(:color => :green) + " - see what region a house is located."
+    puts "     Houses".colorize(:color => :green) + " - see all houses of the GoT Universe."
+    puts "     Characters".colorize(:color => :green) + " - see which characters belong to a specific house."
+    puts "     Region".colorize(:color => :green) + " - see what region a house is located."
     puts "     Main Menu".colorize(:color => :green) + " - back to the main menu."
     puts "\nPlease make a selection:"
     input = gets.downcase.chomp
@@ -13,12 +12,12 @@ module HouseMenu
 
   def houses_menu
     input = houses_menu_options
-    if input == "list all houses"
+    if input == "houses"
       puts "\n"
       puts all_houses
       puts "\n"
       houses_menu
-    elsif input == "list house's characters"
+    elsif input == "characters"
       pre_find_house
       input = gets.chomp
       house = find_house(input)
@@ -27,7 +26,7 @@ module HouseMenu
       show_characters(characters)
       puts "\n"
       houses_menu
-    elsif input == "list house's location"
+    elsif input == "region"
       pre_find_house
       input = gets.chomp
       house = find_house(input)
