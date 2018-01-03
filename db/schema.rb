@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180103135045) do
+ActiveRecord::Schema.define(version: 20180103143242) do
 
   create_table "playlists", force: :cascade do |t|
     t.string "name"
+    t.float "tempo"
+    t.integer "key"
+    t.integer "mode"
+    t.integer "time_signature"
+    t.float "danceability"
+    t.float "valence"
+    t.float "acousticness"
+    t.float "energy"
+    t.float "instrumentalness"
   end
 
   create_table "song_playlists", force: :cascade do |t|
