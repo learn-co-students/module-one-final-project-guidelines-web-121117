@@ -15,6 +15,10 @@ module ApiParse
         book_info = self.find_and_parse(book_url)
         character.books << Book.find_or_create_by(name: book_info["name"], url: book_info["url"])
       end
+      character_hash["povBooks"].each do |book_url|
+        book_info = self.find_and_parse(book_url)
+        character.books << Book.find_or_create_by(name: book_info["name"], url: book_info["url"])
+      end
     end
   end
 
