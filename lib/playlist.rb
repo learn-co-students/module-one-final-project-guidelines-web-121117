@@ -8,6 +8,9 @@ class Playlist < ActiveRecord::Base
     feature_hash[parameter.to_sym] = value
     new_playlist = self.create(feature_hash)
     relevant_songs = Song.select_by(parameter, value)
+    relevant_songs.each do |song|
+      new_playlist.songs << song
+    end
     self
   end
 
