@@ -1,3 +1,4 @@
+require 'pry'
 def welcome
   puts "Welcome to out Group project. It's a collection of 'Girl' TV Shows"
 end
@@ -41,8 +42,12 @@ def main_menu(user)
   when "find a show"
     tv_show_menu(user)
   when "3"
+    puts "\nAll Shows:"
+    list_all(all_tv_show_names)
     add_review(user)
   when "write a review"
+    puts "\nAll Shows:"
+    list_all(all_tv_show_names)
     add_review(user)
   when "4"
     review_menu(user)
@@ -66,23 +71,46 @@ end
 def tv_show_menu(user)
 
   puts "\nBack"
-  puts "\nEnter a show's number to get it's information"
-  inp = user_integer_input
-  if inp <= 0 || inp > all_tv_shows.size
-    puts "Invalid index! Choose again..."
-    tv_show_menu(user)
+  puts "\nEnter a show's number to get it's information, or 'back' to go back to the menu"
+  inp = user_input.downcase
+  if inp == 'back'
+    main_menu(user)
   else
-    show = all_tv_shows[inp - 1]
+    inp = inp.to_i
+    if inp <= 0 || inp > all_tv_shows.size
+      puts "Invalid index! Choose again..."
+      tv_show_menu(user)
+    else
+      show = all_tv_shows[inp - 1]
 
-    if all_tv_shows.include?(show)
-      puts "\nShow name: #{show.name}"
-      puts "\n'rating', 'genre', 'status', 'reviews', or 'back'"
-      inp2 = user_input.downcase
+      if all_tv_shows.include?(show)
+        puts "\nShow name: #{show.name}"
+        puts "\n'rating', 'genre', 'status', 'reviews', or 'back'"
+        inp2 = user_input.downcase
 
-      if inp2 == 'rating'
-        if show.rating
+        if inp2 == 'rating'
+          if show.rating
+            puts " "
+            puts show.rating
+            puts "\nGet another show?(y/n)"
+            puts " "
+            inp3 = user_input.downcase
+
+            if inp3 == 'y'
+              tv_show_menu(user)
+            else
+              main_menu(user)
+            end
+          else
+            puts " "
+            puts "The show hasn't been rated yet."
+            tv_show_menu(user)
+          end
+        elsif inp2 == 'back'
+          main_menu(user)
+        elsif inp2 == "genre"
           puts " "
-          puts show.rating
+          puts show.genre
           puts "\nGet another show?(y/n)"
           puts " "
           inp3 = user_input.downcase
@@ -92,77 +120,59 @@ def tv_show_menu(user)
           else
             main_menu(user)
           end
-        else
+        elsif inp2 == 'status'
           puts " "
-          puts "The show hasn't been rated yet."
+          puts show.status
+          puts "\nGet another show?(y/n)"
+          puts " "
+          inp3 = user_input.downcase
+
+          if inp3 == 'y'
+            tv_show_menu(user)
+          else
+            main_menu(user)
+          end
+        elsif inp2 == 'reviews'
+          count = 0
+          if show.reviews.empty?
+            puts " "
+            puts "The show has no reviews."
+            puts "\nPick another show?(y/n)"
+            puts " "
+            inp3 = user_input.downcase
+
+            if inp3 == 'y'
+              tv_show_menu(user)
+            else
+              main_menu(user)
+            end
+          else
+            puts " "
+            show.reviews.each do |rev|
+              count += 1
+              puts "#{count}.'#{rev.review}' by #{rev.user.name}"
+            end
+            puts "\nGet another show?(y/n)"
+            puts " "
+            inp3 = user_input.downcase
+
+            if inp3 == 'y'
+              tv_show_menu(user)
+            else
+              main_menu(user)
+            end
+          end
+        else
+          puts "Unknown option! Try again..."
           tv_show_menu(user)
         end
-      elsif inp2 == 'back'
+      elsif inp == 'back'
         main_menu(user)
-      elsif inp2 == "genre"
-        puts " "
-        puts show.genre
-        puts "\nGet another show?(y/n)"
-        puts " "
-        inp3 = user_input.downcase
-
-        if inp3 == 'y'
-          tv_show_menu(user)
-        else
-          main_menu(user)
-        end
-      elsif inp2 == 'status'
-        puts " "
-        puts show.status
-        puts "\nGet another show?(y/n)"
-        puts " "
-        inp3 = user_input.downcase
-
-        if inp3 == 'y'
-          tv_show_menu(user)
-        else
-          main_menu(user)
-        end
-      elsif inp2 == 'reviews'
-        count = 0
-        if show.reviews.empty?
-          puts " "
-          puts "The show has no reviews."
-          puts "\nPick another show?(y/n)"
-          puts " "
-          inp3 = user_input.downcase
-
-          if inp3 == 'y'
-            tv_show_menu(user)
-          else
-            main_menu(user)
-          end
-        else
-          puts " "
-          show.reviews.each do |rev|
-            count += 1
-            puts "#{count}.'#{rev.review}' by #{rev.user.name}"
-          end
-          puts "\nGet another show?(y/n)"
-          puts " "
-          inp3 = user_input.downcase
-
-          if inp3 == 'y'
-            tv_show_menu(user)
-          else
-            main_menu(user)
-          end
-        end
       else
-        puts "Unknown option! Try again..."
+        puts " "
+        puts "Can't find show"
         tv_show_menu(user)
       end
-    elsif inp == 'back'
-      main_menu(user)
-    else
-      puts " "
-      puts "Can't find show"
-      tv_show_menu(user)
     end
   end
 end
@@ -212,33 +222,36 @@ def recommended_shows(user)
 end
 ################################ 'ADD REVIEWS' MENU ###############################
 def add_review(user)
-  puts "\nAll Shows:"
-  list_all(all_tv_show_names)
   puts "\nBack"
-  puts"\nEnter a show you want to leave a review for:"
+  puts"\nEnter a number of the show you want to leave a review for:"
   inp = user_input.downcase
 
-  str = inp.split(" ")
-  name = str.map{|element| element.capitalize}.join(" ")
-
-  if all_tv_show_names.include?(name)
-    show = TvShow.find_by(name: name)
-    puts "Insert a review for the show #{name}, or 'back' to go back to the main menu"
-    inp2 = user_input
-    if inp2.downcase == "back"
-      main_menu(user)
-    else
-      rev = Review.create(review: "#{inp2}")
-      show.reviews << rev
-      user.reviews << rev
-      puts "\nReview has been added!"
-      main_menu(user)
-    end
-  elsif name == "back"
+  if inp == 'back'
     main_menu(user)
   else
-    puts "Couldn't find the show! Try again..."
-    add_review(user)
+    inp = inp.to_i
+    if inp <= 0 || inp > all_tv_shows.size
+      puts "Invalid index! Choose again..."
+      add_review(user)
+    else
+      show = all_tv_shows[inp - 1]
+      puts "Insert a review for the show #{show.name}, or 'back' to go back to the main menu"
+      inp2 = user_input
+      if inp2.downcase == "back"
+        main_menu(user)
+      else
+        rev = Review.create(review: "#{inp2}")
+        show.reviews << rev
+        user.reviews << rev
+        puts "\nReview has been added!"
+        main_menu(user)
+      end
+    # elsif name == "back"
+    #   main_menu(user)
+    # else
+    #   puts "Couldn't find the show! Try again..."
+    #   add_review(user)
+    end
   end
 end
 ################################ 'REVIES MENU' #############################
@@ -257,8 +270,8 @@ def review_menu(user)
 end
 ################################ ARRAYS #############################
 def list_all(array)
-  array.each do |element|
-    puts "- #{element}"
+  array.each_with_index do |element, ind|
+    puts "#{ind + 1}. #{element}"
   end
 end
 
@@ -281,7 +294,14 @@ def all_tv_shows
 end
 
 def list_all_tv_shows
-  TvShow.all.each_with_index {|show, ind| puts "#{ind + 1}.#{show.name}"}
+  ind = 0
+  list = TvShow.all.collect do |show|
+    ind += 1
+    "#{ind}.#{show.name}"
+  end
+  list.each {|show| puts show}
+  list
+  # TvShow.all.each_with_index {|show, ind| puts "#{ind + 1}.#{show.name}"}
 end
 
 def all_tv_show_names
