@@ -1,5 +1,14 @@
 module InterfaceMethods
-  
+
+  def greet
+    puts "\nWelcome to the Game Of Thrones Ultimate Fan App!"
+  end
+
+  def good_bye
+    puts "\nUntil next time...".colorize(:color => :red)
+    puts "\n"
+  end
+
   def all_characters
     Character.all.collect do |character|
       if character.name != nil
