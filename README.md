@@ -1,6 +1,11 @@
 # Cocktail Discovery CLI
 
-[![GitHub package version](https://img.shields.io/github/package-json/v/badges/shields.svg)](https://github.com/jaytix/module-one-final-project-guidelines-web-121117/tree/oleg)
+[![GitHub package version](https://img.shields.io/badge/Version-0.0.1-brightgreen.svg)](https://github.com/jaytix/module-one-final-project-guidelines-web-121117/tree/oleg)
+[![GitHub package version](https://img.shields.io/badge/License-CC%20BY%204.0-brightgreen.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![GitHub package version](https://img.shields.io/badge/School-Flatiron%20School-brightgreen.svg)](https://flatironschool.com/)
+[![GitHub package version](https://img.shields.io/badge/Class-web--121117-brightgreen.svg)](https://github.com/jaytix/module-one-final-project-guidelines-web-121117/tree/oleg)
+[![GitHub package version](https://img.shields.io/badge/Team-Josh%20%7C%20Oleg-brightgreen.svg)](https://github.com/jaytix/module-one-final-project-guidelines-web-121117/tree/oleg)
+
 
 
 Table of Contents:
