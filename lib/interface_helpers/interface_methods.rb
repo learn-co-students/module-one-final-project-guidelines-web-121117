@@ -41,16 +41,17 @@ module InterfaceMethods
   end
 
   def find_character(input)
-    character = Character.find_by(name: input)
-    if character
-      character
-    else
+    character = Character.all.find do |character|
+      character.name.downcase == input.downcase
+    end
+    while !character
       puts "This is not currently a character in the GoT Universe. Try again."
       puts "\n"
       pre_find_character
       new_input = gets.chomp
       find_character(new_input)
     end
+    character
   end
 
   def find_allegiances(input)
