@@ -12,7 +12,7 @@ module ApiParse
     character.gender = character_hash["gender"]
     character_hash["born"].empty? ? character.birth_date = "<Unknown>" : character.birth_date = character_hash["born"]
     character_hash["died"].empty? ? character.death_date = "<Alive or Unknown>" : character.death_date = character_hash["died"]
-    character_hash["aliases"][0].empty? ? character.aliases = "<None>" : character.aliases = character_hash["aliases"].join(", ")
+    character_hash["aliases"][0].empty? ? character.aliases = "<None>" : character.aliases = character_hash["aliases"].to_sentence
     character_hash["playedBy"][0].empty? ? character.actor = "<Not in show>" : character.actor = character_hash["playedBy"][0]
     character.save
   end
@@ -39,7 +39,6 @@ module ApiParse
     while !self.search_pages("characters", page).empty?
       characters = self.search_pages("characters", page)
       characters.each do |character_hash|
-        binding.pry
         character = Character.find_or_create_by(name: character_hash["name"], url: character_hash["url"])
         self.populate_character_attributes(character, character_hash)
         self.find_or_create_character_books(character, character_hash)
