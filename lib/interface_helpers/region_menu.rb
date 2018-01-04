@@ -14,7 +14,6 @@ module RegionMenu
   def region_menu
     input = region_menu_options
     if input == "regions"
-      puts "\n"
       puts all_regions
       puts "\n"
       region_menu
