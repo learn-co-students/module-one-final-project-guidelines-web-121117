@@ -12,7 +12,7 @@ module ApiParse
     character.gender = character_hash["gender"]
     character_hash["born"].empty? ? character.birth_date = "<Unknown>" : character.birth_date = character_hash["born"]
     character_hash["died"].empty? ? character.death_date = "<Alive or Unknown>" : character.death_date = character_hash["died"]
-    character_hash["aliases"][0].empty? ? character.aliases = "<None>" : character.aliases = character_hash["aliases"].join(", ")
+    character_hash["aliases"][0].empty? ? character.aliases = "<None>" : character.aliases = character_hash["aliases"].to_sentence
     character_hash["playedBy"][0].empty? ? character.actor = "<Not in show>" : character.actor = character_hash["playedBy"][0]
     character.save
   end
@@ -63,7 +63,7 @@ module ApiParse
         house = House.find_or_create_by(name: house_hash["name"], url: house_hash["url"], current_lord: house_lord)
         house.current_lord = house_lord
         house.save
-        house_hash["Region"] == "" ? Region.find_or_create_by(name: "None").houses << house : Region.find_or_create_by(name: house_hash["region"]).houses << house
+        house_hash["region"] == "" ? Region.find_or_create_by(name: "None").houses << house : Region.find_or_create_by(name: house_hash["region"]).houses << house
         self.add_characters_to_house(house, house_hash)
       end
       page += 1
@@ -73,6 +73,22 @@ module ApiParse
   def self.import_data
     self.import_characters_books_seasons
     self.import_houses_regions
+    "Import complete!"
+  end
+
+  def self.data_check
+    `bundle exec rake db:migrate && clear`
+    puts "Migrations: check!"
+    puts "Importing database... This will take a moment."
+    (!(Character.count == 2134) || !(Region.count == 12) || !(House.count == 444) || !(Book.count == 11) || !(Season.count == 7)) ? self.import_data : "Data already imported."
+    # find a way to make the below work?
+    #   puts "Your database is incomplete. Recreating database."
+    #   File.delete(File.open("./db/development.db"))
+    #   `bundle exec rake db:migrate`
+    #   puts "Importing data. This can take around 10 - 15 minutes."
+    #   self.import_data
+    # end
+    puts "Data: check!"
   end
 
 end
