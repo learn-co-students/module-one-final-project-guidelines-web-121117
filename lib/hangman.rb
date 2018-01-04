@@ -52,7 +52,7 @@ class Hangman
         puts ""
         puts "You ran out of lives!"
         puts "The movie was: " + @movie_name.split.map(&:capitalize).join(" ")
-        break
+        return main_menu
       end
 
       @used_letters << letter unless @used_letters.include?(letter)
