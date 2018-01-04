@@ -12,7 +12,7 @@ module ApiParse
     character.gender = character_hash["gender"]
     character_hash["born"].empty? ? character.birth_date = "<Unknown>" : character.birth_date = character_hash["born"]
     character_hash["died"].empty? ? character.death_date = "<Alive or Unknown>" : character.death_date = character_hash["died"]
-    character_hash["aliases"][0].empty? ? character.aliases = "<None>" : character_hash["aliases"].each{|a_lias| character.aliases << a_lias}
+    character_hash["aliases"][0].empty? ? character.aliases = "<None>" : character.aliases = character_hash["aliases"].join(" ")
     character_hash["playedBy"][0].empty? ? character.actor = "<Not in show>" : character.actor = character_hash["playedBy"][0]
     character.save
   end
@@ -20,11 +20,11 @@ module ApiParse
   def self.find_or_create_character_books(character, character_hash)
     character_hash["books"].each do |book_url|
       book_info = self.find_and_parse(book_url)
-      character.books << Book.find_or_create_by(name: book_info["name"], url: book_info["url"], pages: book_info["numberOfPages"], release_date: book_info["released"].slice(0..10))
+      character.books << Book.find_or_create_by(name: book_info["name"], url: book_info["url"], total_pages: book_info["numberOfPages"], release_date: book_info["released"].slice(0..10))
     end
     character_hash["povBooks"].each do |book_url|
       book_info = self.find_and_parse(book_url)
-      character.books << Book.find_or_create_by(name: book_info["name"], url: book_info["url"], pages: book_info["numberOfPages"], release_date: book_info["released"].slice(0..10))
+      character.books << Book.find_or_create_by(name: book_info["name"], url: book_info["url"], total_pages: book_info["numberOfPages"], release_date: book_info["released"].slice(0..10))
     end
   end
 
@@ -59,10 +59,13 @@ module ApiParse
     while !self.search_pages("houses", page).empty?
       houses = self.search_pages("houses", page)
       houses.each do |house_hash|
-        house = House.find_or_create_by(name: house_hash["name"], url: house_hash["url"])
-        house.current_lord = Character.find_by(url: house_hash["currentLord"])
+        house_lord = Character.find_by(url: house_hash["currentLord"])
+        house = House.find_or_create_by(name: house_hash["name"], url: house_hash["url"], current_lord: house_lord)
+        house.current_lord = house_lord
+        house.save
+        binding.pry
         Region.find_or_create_by(name: house_hash["region"]).houses << house
-        self.add_characters_to_house( house, house_hash)
+        self.add_characters_to_house(house, house_hash)
       end
       page += 1
     end

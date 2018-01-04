@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 11) do
+ActiveRecord::Schema.define(version: 12) do
 
   create_table "allegiances", force: :cascade do |t|
     t.integer "character_id"
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 11) do
     t.string "name"
     t.string "url"
     t.integer "region_id"
-    t.string "current_lord"
+    t.integer "current_lord_id"
   end
 
   create_table "regions", force: :cascade do |t|
