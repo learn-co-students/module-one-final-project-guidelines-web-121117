@@ -63,7 +63,7 @@ module ApiParse
         house = House.find_or_create_by(name: house_hash["name"], url: house_hash["url"], current_lord: house_lord)
         house.current_lord = house_lord
         house.save
-        house_hash["Region"] == "" ? Region.find_or_create_by(name: "None").houses << house : Region.find_or_create_by(name: house_hash["region"]).houses << house
+        house_hash["region"] == "" ? Region.find_or_create_by(name: "None").houses << house : Region.find_or_create_by(name: house_hash["region"]).houses << house
         self.add_characters_to_house(house, house_hash)
       end
       page += 1
@@ -73,6 +73,10 @@ module ApiParse
   def self.import_data
     self.import_characters_books_seasons
     self.import_houses_regions
+  end
+
+  def self.data_check #how to compare?
+    Character.count Region.count House.count
   end
 
 end
