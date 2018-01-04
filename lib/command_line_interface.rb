@@ -36,6 +36,8 @@ class CommandLineInterface
         annoying_google
       when "5"
         exit
+      when "6"
+        movie_games = MovieGames.new 
       else
         puts ""
         puts "That is not a valid option, Please try again.".colorize(:color=>:light_red, :mode=>:bold)
