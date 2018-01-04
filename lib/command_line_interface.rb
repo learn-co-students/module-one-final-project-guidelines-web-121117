@@ -48,16 +48,13 @@ class CommandLineInterface
       parameter = get_user_input_for_playlist_parameter
       give_parameter_specs(parameter)
       value = gets_user_input_for_parameter_value(parameter)
-      Playlist.make_new_from(name, parameter, value)
+      new_playlist = Playlist.make_new_from(name, parameter, value)
       print_blank_lines(2)
       indent(40)
       puts "Playlist Created!" + "       ♬ ♫  ᕦ(ò_óˇ)ᕤ ♬ ♫ "
-      sleep(1.5)
+      sleep(1)
       greet
-      playlist_table_data = get_data_for_relevant_playlist(parameter)
-        make_playlist_table(playlist_table_data)
-        selected_playlist = user_select_playlist
-        print_songs_from_playlist_name(selected_playlist)
+      print_songs_from_playlist_name(new_playlist)
     elsif user_input == 2
       greet
       view_menu
