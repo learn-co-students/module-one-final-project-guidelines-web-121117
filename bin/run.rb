@@ -4,5 +4,5 @@ require_relative '../config/environment'
 #
 # cli.main_menu
 
-game = MovieGames.new
-game.run
+game = CommandLineInterface.new
+game.main_menu

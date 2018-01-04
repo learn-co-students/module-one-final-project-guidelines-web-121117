@@ -19,7 +19,8 @@ class CommandLineInterface
     puts "[2] ".colorize(:color=>:cyan, :mode=>:bold) + "Search by Actor Name"
     puts "[3] ".colorize(:color=>:cyan, :mode=>:bold) + "See top 20 movies of any Genre"
     puts "[4] ".colorize(:color=>:cyan, :mode=>:bold) + "Google Search any Movie"
-    puts "[5] ".colorize(:color=>:cyan, :mode=>:bold) + "Close the Program"
+    puts "[5] ".colorize(:color=>:cyan, :mode=>:bold) + "Play Movie Hangman"
+    puts "[6] ".colorize(:color=>:cyan, :mode=>:bold) + "Close the Program"
     puts ""
     puts "Please enter a number 1-5:".colorize(:mode=>:bold)
     input = gets.chomp
@@ -35,9 +36,9 @@ class CommandLineInterface
       when "4"
         annoying_google
       when "5"
-        exit
+        Hangman.new.run
       when "6"
-        movie_games = MovieGames.new 
+        exit
       else
         puts ""
         puts "That is not a valid option, Please try again.".colorize(:color=>:light_red, :mode=>:bold)

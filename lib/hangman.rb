@@ -1,8 +1,7 @@
-class MovieGames
+class Hangman
   attr_accessor :movie_name
 
   def initialize
-    @turn = 0
     @lives = 6
     @used_letters = []
     @alphabet = ("a".."z").to_a
