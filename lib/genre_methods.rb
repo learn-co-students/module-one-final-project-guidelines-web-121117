@@ -1,5 +1,6 @@
 module GenreMethods
   include MovieMethods
+  include HelperMethods
 
   def check_case(input)
     input.split.map { |word| word.downcase == "tv" ? word.upcase : word.capitalize }.join(" ")
@@ -18,8 +19,7 @@ module GenreMethods
       when "1"
         genre_movies
       when "2"
-        cli = CommandLineInterface.new
-        cli.menu
+        main_menu
       else
         puts "Please enter a valid number 1 or 2".colorize(:color=>:light_red, :mode=>:bold)
         genre_options
@@ -33,7 +33,7 @@ module GenreMethods
     puts Genre.all.map.with_index {|genre, idx| "[#{idx+1}] ".colorize(:color=>:cyan, :mode=>:bold) + "#{genre.name}"}
 
     input = gets.chomp
-    return CommandLineInterface.new.exit if input == "exit"
+    return exit_program if input == "exit"
     if input.to_i.between?(1, 20)
       filtered_movies = Genre.all[input.to_i - 1].movies.select {|movie| movie.rating_count > 500 }
       movies = filtered_movies.sort_by {|movie| movie.rating}.reverse[0...20]
@@ -51,7 +51,7 @@ module GenreMethods
     puts "Select one of these movies to get more options".colorize(:mode=>:bold)
     puts ""
     input = gets.chomp
-    return CommandLineInterface.new.exit if input == "exit"
+    return exit_program if input == "exit"
     if input.to_i.between?(1,20)
       movie_options(movies[input.to_i-1])
     else

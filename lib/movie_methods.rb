@@ -1,4 +1,5 @@
 module MovieMethods
+  include HelperMethods
 
   def check_case(input)
     non_capitals = ["and", "the", "of", "in", "v"]
@@ -40,8 +41,7 @@ module MovieMethods
       when "1"
         movie_actors(movie)
       when "2"
-        new = CommandLineInterface.new
-        new.menu
+        main_menu
       else
         puts "Please enter a valid number 1 or 2:".colorize(:color=>:light_red, :mode=>:bold)
         movie_options(movie)
@@ -58,12 +58,12 @@ module MovieMethods
     puts "Select an actor to get more information".colorize(:mode=>:bold)
     puts ""
     input = gets.chomp
-    return CommandLineInterface.new.exit if input == "exit"
+    return exit_program if input == "exit"
     if input.to_i.between?(1,5)
       actor = Actor.find_by(name: actors[input.to_i-1])
       actor_options(actor)
     else
-      puts "Please enter a valid number between 1 and 6:".colorize(:color=>:light_red, :mode=>:bold)
+      puts "Please enter a valid number between 1 and 5:".colorize(:color=>:light_red, :mode=>:bold)
       movie_actors(movie)
     end
 

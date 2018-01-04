@@ -1,5 +1,6 @@
 module ActorMethods
   include MovieMethods
+  include HelperMethods
 
   def check_case(input)
     input.split.map { |word| word.capitalize }.join(" ")
@@ -39,8 +40,7 @@ module ActorMethods
       when "2"
         actor_ratings(actor)
       when "3"
-        new = CommandLineInterface.new
-        new.menu
+        main_menu
       else
         puts "Please enter a valid number between 1 and 3:".colorize(:color=>:light_red, :mode=>:bold)
         actor_options(actor)
@@ -58,7 +58,7 @@ module ActorMethods
     puts ""
     puts "Select a movie to see its options".colorize(:mode=>:bold)
     input = gets.chomp
-    return CommandLineInterface.new.exit if input == "exit"
+    return exit_program if input == "exit"
     if input.to_i.between?(1, movies.count)
       movie_options(Movie.find_by(name: movies[input.to_i - 1]))
     else
