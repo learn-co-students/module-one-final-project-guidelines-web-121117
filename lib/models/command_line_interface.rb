@@ -85,8 +85,8 @@ end
 ################################### TV SHOW MENU ##############################
 def tv_show_menu(user)
 
-  puts "\n'Back' to go back to the main menu"
-  puts "\nEnter a show's number to get it's information,\n'list' to list all shows, or 'back' to go back to the menu"
+  puts "\n'Back'".colorize(:light_blue)+" to go back to the main menu"
+  puts "\nEnter a show's number to get it's information,\n"+"'list'".colorize(:light_blue)+" to list all shows, or "+"'back'".colorize(:light_blue)+" to go back to the menu"
   inp = user_input.downcase
   if inp == 'back'
     main_menu(user)
@@ -103,14 +103,14 @@ def tv_show_menu(user)
 
       if all_tv_shows.include?(show)
         puts "\nShow name: #{show.name}"
-        puts "\n'rating', 'genre', 'status', 'reviews', or 'back'"
+        puts "\n'rating'".colorize(:light_blue)+", "+"'genre'".colorize(:light_blue)+", "+"'status'".colorize(:light_blue)+", "+"'reviews'".colorize(:light_blue)+", or "+"'back'".colorize(:light_blue)
         inp2 = user_input.downcase
 
         if inp2 == 'rating'
           if show.rating
             puts " "
             puts show.rating
-            puts "\nGet another show?(y/n)"
+            puts "\nGet another show?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
             puts " "
             inp3 = user_input.downcase
 
@@ -129,7 +129,7 @@ def tv_show_menu(user)
         elsif inp2 == "genre"
           puts " "
           puts show.genre
-          puts "\nGet another show?(y/n)"
+          puts "\nGet another show?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
           puts " "
           inp3 = user_input.downcase
 
@@ -141,7 +141,7 @@ def tv_show_menu(user)
         elsif inp2 == 'status'
           puts " "
           puts show.status
-          puts "\nGet another show?(y/n)"
+          puts "\nGet another show?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
           puts " "
           inp3 = user_input.downcase
 
@@ -155,7 +155,7 @@ def tv_show_menu(user)
           if show.reviews.empty?
             puts " "
             puts "The show has no reviews."
-            puts "\nPick another show?(y/n)"
+            puts "\nGet another show?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
             puts " "
             inp3 = user_input.downcase
 
@@ -170,7 +170,7 @@ def tv_show_menu(user)
               count += 1
               puts "#{count}.'#{rev.review}' by #{rev.user.name}"
             end
-            puts "\nGet another show?(y/n)"
+            puts "\nGet another show?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
             puts " "
             inp3 = user_input.downcase
 
@@ -206,7 +206,7 @@ def recommended_shows(user)
     puts " "
     list_all(recommended_array_names)
 
-    puts "\nGet 5 more recommendations?(y/n)"
+    puts "\nGet 5 more recommendations?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
     inp = user_input.downcase
 
     if inp == 'y'
@@ -215,7 +215,7 @@ def recommended_shows(user)
       main_menu(user)
     end
   else
-    puts "\nThere are no recommendations for you! Do you want to pick a genre?(y/n)"
+    puts "\nThere are no recommendations for you! Do you want to pick a genre?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
     inp = user_input.downcase
 
     if inp == 'y'
@@ -240,7 +240,7 @@ def recommended_shows(user)
 end
 ################################ 'ADD REVIEWS' MENU ###############################
 def add_review(user)
-  puts "\nType 'back' to go back to main menu"
+  puts "\nType "+"'back'".colorize(:light_blue)+" to go back to main menu"
   puts"\nEnter a number of the show you want to leave a review for:"
   inp = user_input.downcase
 
@@ -253,7 +253,7 @@ def add_review(user)
       add_review(user)
     else
       show = all_tv_shows[inp - 1]
-      puts "Insert a review for the show #{show.name}, or 'back' to go back to the main menu"
+      puts "Insert a review for the show #{show.name}, or "+"'back'".colorize(:light_blue)+" to go back to the main menu"
       inp2 = user_input
       if inp2.downcase == "back"
         main_menu(user)
@@ -282,7 +282,7 @@ def review_menu(user)
   puts "\nALL REVIEWS BY #{user.name}:"
   puts " "
   all_reviews(user)
-  puts "\nType 'back' to go back to the main menu"
+  puts "\nType "+"'back'".colorize(:light_blue)+" to go back to the main menu"
   puts " "
   inp = user_input.downcase
   if inp == "back"
@@ -376,8 +376,8 @@ end
 ################################ 'GAME MENU' ###############################
 def game_menu(user)
   puts "\n------------Game Menu------------"
-  puts "\n1.'dice' to play dice"
-  puts "\n'back' to go back to the main menu"
+  puts "\n1".colorize(:light_red)+"."+"'Dice'".colorize(:light_blue)+" to play dice"
+  puts "\n'back'".colorize(:light_blue)+" to go back to the main menu"
   inp = user_input.downcase
 
   case inp
@@ -396,8 +396,8 @@ def game_menu(user)
 end
 ################################ 'DICE GAME' ###############################
 def play_dice(user)
-  puts "\nDo you want to play vs 'computer' or vs 'friend'"
-  puts "or do you want to go 'back' to the game menu"
+  puts "\nDo you want to play vs "+"'computer'".colorize(:light_blue)+" or vs "+"'friend'".colorize(:light_blue)+""
+  puts "or do you want to go "+"'back'".colorize(:light_blue)+" to the game menu"
   puts " "
   inp = user_input.downcase
 
@@ -427,6 +427,7 @@ def play_dice(user)
   when 'back'
     game_menu(user)
   else
+    puts "Unknown option!"
     play_dice(user)
   end
 end
@@ -446,7 +447,7 @@ def dice(user, friend)
 
   if friend_roll > player1
     puts "\nCongratulations #{friend}! You ROCK!"
-    puts "\nRematch!?(y/n)"
+    puts "\nRematch!?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
     inp = user_input.downcase
     if inp == 'y'
       dice(user, friend)
@@ -455,7 +456,7 @@ def dice(user, friend)
     end
   elsif friend_roll == player1
     puts "It's a DRAW! You both suck..."
-    puts "\nRematch!?(y/n)"
+    puts "\nRematch!?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
     inp = user_input.downcase
     if inp == 'y'
       dice(user, friend)
@@ -464,7 +465,7 @@ def dice(user, friend)
     end
   else
     puts "\nGood job #{user.name}. Don't worry #{friend} you'll get him next time!"
-    puts "\nRematch!?(y/n)"
+    puts "\nRematch!?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
     inp = user_input.downcase
     if inp == 'y'
       dice(user, friend)
