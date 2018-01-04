@@ -25,8 +25,6 @@ G:::::G    GGGGG::::G    O:::::O     O:::::O          T:::::T
 
   def good_bye
     banner = "
-
-
 WWWWWWWW                           WWWWWWWW  IIIIIIIIII  NNNNNNNN        NNNNNNNN  TTTTTTTTTTTTTTTTTTTTTTT  EEEEEEEEEEEEEEEEEEEEEE  RRRRRRRRRRRRRRRRR
 W::::::W                           W::::::W  I::::::::I  N:::::::N       N::::::N  T:::::::::::::::::::::T  E::::::::::::::::::::E  R::::::::::::::::R
 W::::::W                           W::::::W  I::::::::I  N::::::::N      N::::::N  T:::::::::::::::::::::T  E::::::::::::::::::::E  R::::::RRRRRR:::::R
@@ -44,7 +42,6 @@ W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::
            W:::W           W:::W             I::::::::I  N::::::N        N::::::N        T:::::::::T        E::::::::::::::::::::E  R::::::R     R:::::R
             WWW             WWW              IIIIIIIIII  NNNNNNNN         NNNNNNN        TTTTTTTTTTT        EEEEEEEEEEEEEEEEEEEEEE  RRRRRRRR     RRRRRRR
 
-
                                                                     IIIIIIIIII     SSSSSSSSSSSSSSS
                                                                     I::::::::I   SS:::::::::::::::S
                                                                     I::::::::I  S:::::SSSSSS::::::S
@@ -61,8 +58,6 @@ W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::
                                                                     I::::::::I  S::::::SSSSSS:::::S
                                                                     I::::::::I  S:::::::::::::::SS
                                                                     IIIIIIIIII   SSSSSSSSSSSSSSS
-
-
 
                   CCCCCCCCCCCCC       OOOOOOOOO       MMMMMMMM               MMMMMMMM  IIIIIIIIII  NNNNNNNN        NNNNNNNN          GGGGGGGGGGGGG
                CCC::::::::::::C     OO:::::::::OO     M:::::::M             M:::::::M  I::::::::I  N:::::::N       N::::::N       GGG::::::::::::G
@@ -191,7 +186,7 @@ W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::
       book.name.downcase == input.downcase
     end
     while !book
-      puts "This is not currently a book in the GoT Universe. Try Again"
+      puts "\nThis is not currently a book in the GoT Universe. Try Again"
       pre_find_book
       new_input = gets.chomp
       book = find_book(new_input)
