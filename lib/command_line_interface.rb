@@ -22,11 +22,14 @@ class CommandLineInterface
   def greet
     clear_screen
     a = Artii::Base.new
-    puts Rainbow(a.asciify('( ( (   Playlist Creator')).green.bright
+    puts Rainbow(a.asciify('               ( ( (   Playlist Creator')).green.bright
   end
 
   def goodbye
-    puts "goodbye"
+    print_blank_lines(3)
+    indent(40)
+    puts "(" + Rainbow("づ").blink + "｡◕ ‿ ◕｡)" + Rainbow("づ  ♬ ♫ ♬ ♩ ♫ ♬ ♩ ").blink
+    print_blank_lines(5)
   end
 
   def main_menu
@@ -46,15 +49,24 @@ class CommandLineInterface
       give_parameter_specs(parameter)
       value = gets_user_input_for_parameter_value(parameter)
       Playlist.make_new_from(name, parameter, value)
+      print_blank_lines(2)
+      indent(40)
+      puts "Playlist Created!" + "       ♬ ♫  ᕦ(ò_óˇ)ᕤ ♬ ♫ "
+      sleep(2)
+      greet
+      main_menu
     elsif user_input == 2
       greet
       view_menu
     elsif user_input == 3
-      
+      greet
+      delete_menu
     elsif user_input == 4
       return
     end
   end
+
+
 
   def view_menu
     puts "View playlists based on which parameter? ([A]ll or [Q]uit)"
@@ -65,6 +77,7 @@ class CommandLineInterface
       Playlist.all.each_with_index do |playlist, idx|
         puts "#{idx + 1}. #{playlist.name}"
       end
+      print_songs_from_playlist_name
     elsif input == 'Q'
       return
     elsif input.to_i > 0 && input.to_i < 10
@@ -97,30 +110,47 @@ class CommandLineInterface
     end
   end
 
+  def delete_menu
+    Playlist.all.each_with_index do |playlist, idx|
+      puts "#{idx + 1}. #{playlist.name}"
+    end
+    selected_playlist = nil
+    until selected_playlist != nil
+      print "Enter name of playlist to delete: "
+      name_input = get_string.titleize
+      selected_playlist = Playlist.find_by(name: name_input)
+    end
+      Playlist.destroy(selected_playlist.id)
+      puts "Playlist Deleted!" + "(╯°□°）╯︵ ┻━┻"
+  end
+
+
   def print_songs_from_playlist_name
     selected_playlist = nil
     until selected_playlist != nil
+      print_blank_lines(2)
+      indent(20)
       print "Enter playlist name to see songs: "
       name_input = get_string.titleize
       selected_playlist = Playlist.find_by(name: name_input)
     end
     table_data = selected_playlist.create_songs_table
     print_table(table_data)
-    song_choice = get_song_choice(table_data)
-    song_choice.is_a?(Integer) ? open_song_in_web(song_choice) : return
-
+    song_choice = get_song_choice_from_user(table_data)
+    song_choice ? open_song_in_web(song_choice) : return
   end
 
-  def get_song_choice(table_data)
+  def get_song_choice_from_user(table_data)
     input = 0
     until (input > 0 && input <= table_data.length) || (input == "q" or input == "Q")
+      print_blank_lines(2)
       print "Enter Song Number to open in your browser (or Q to quit): "
       input = gets.chomp
       if input == "q" || input == "Q"
-        return
+        return nil
       else
-        input.to_i
-    end
+        input = input.to_i
+      end
     end
     relevant_song = table_data.find { |song_array| song_array[:index] == input}
   end
@@ -220,7 +250,6 @@ class CommandLineInterface
     else
       "minor"
     end
-
   end
 
   def translate_mode_from_user_to_api(input)
@@ -230,6 +259,7 @@ class CommandLineInterface
       0
     end
   end
+
   def clear_screen
     system ("clear")
   end
@@ -265,6 +295,7 @@ class CommandLineInterface
 
 
   def logo
+    print_blank_lines(5)
     indent(40)
     puts "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░"
     indent(40)
