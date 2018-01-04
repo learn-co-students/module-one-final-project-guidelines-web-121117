@@ -81,6 +81,7 @@ W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::
                CCC::::::::::::C     OO:::::::::OO     M::::::M               M::::::M  I::::::::I  N::::::N        N::::::N       GGG::::::GGG:::G
                   CCCCCCCCCCCCC       OOOOOOOOO       MMMMMMMM               MMMMMMMM  IIIIIIIIII  NNNNNNNN         NNNNNNN          GGGGGG   GGGG
 "
+
     puts banner.colorize(:blue)
     puts "\nUntil next time...".colorize(:color => :red)
     puts "\n"
