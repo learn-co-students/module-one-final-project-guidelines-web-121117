@@ -6,6 +6,34 @@ module CharacterSpecificMenu
     character = find_character(character_choice)
   end
 
+  def search_character_options
+    puts "\nDo you know which character you would like to search? Put 'Y' or 'N'."
+    user_input = gets.downcase.chomp
+    if user_input == 'y'
+      puts "\nPlease type character name to search:"
+      character_choice = gets.chomp
+      character = find_character(character_choice)
+      character
+    elsif user_input == 'n'
+      puts "\nWould you like to see a full list of characters to select from, or search by first letter? Puts 'All' or 'First':"
+      user_search = gets.downcase.chomp
+      if user_search == 'all'
+        character = user_character_selection
+        character
+      elsif user_search == 'first'
+        character = user_character_selection
+        character
+      else
+        puts "\nThat is not an option. Going back to the character menu."
+        characters_menu
+      end
+    else
+      puts "\nThat is not an option. Going back to the character menu."
+      characters_menu
+    end
+  end
+
+
   def character_specifics_menu_options
     puts "\nSEARCH CHARACTER MENU".colorize(:blue).underline
     puts "Choose from one of the following categories to proceed:"
@@ -14,8 +42,11 @@ module CharacterSpecificMenu
     puts "     Death".colorize(:blue) + " - find death year of a specific character."
     puts "     Alive".colorize(:blue) + " - find out if a specific character is alive."
     puts "     Aliases".colorize(:blue) + " - find all known aliases of a specific character."
+    puts "     Allegiances".colorize(:blue) + " - see where a specific character's allegiances lie."
+    puts "     Books".colorize(:blue) + " - see which books a specific character appears in."
+    puts "     TV".colorize(:blue) + " - see which season of GoT TV show a specific character appears in."
     puts "     Actor".colorize(:blue) + " - find the name of the actor portraying a specific character."
-    puts "     Character Menu".colorize(:blue) + " - back to the book menu."
+    puts "     Character Menu".colorize(:blue) + " - back to the character menu."
     puts "     Main Menu".colorize(:blue) + " - back to the main menu."
     puts "\nPlease make a selection:"
     user_input = gets.downcase.chomp
@@ -87,6 +118,28 @@ module CharacterSpecificMenu
         puts "\n"
       end
       continue_with_character(character)
+    elsif user_input == "allegiances"
+      houses = character.houses
+      if houses.empty?
+        puts "\nThere are no known allegiances for #{character.name}."
+      else
+        puts "\nHere are the house allegiances #{character.name} is a part of:"
+        show_allegiances(houses)
+        puts "\n"
+      end
+      continue_with_character(character)
+    elsif user_input == "books"
+      books = character.books
+      puts "\nHere are the books that #{character.name} appears in:"
+      show_books(books)
+      puts "\n"
+      continue_with_character(character)
+    elsif user_input == "tv"
+      seasons = character.seasons
+      puts "\nHere are the seasons that #{character.name} appears in:"
+      show_seasons(seasons)
+      puts "\n"
+      continue_with_character(character)
     elsif user_input == "actor"
       if character.actor == "<Not in show>"
         puts "\n#{character.name} currently does not appear on the GoT Show."
@@ -96,6 +149,10 @@ module CharacterSpecificMenu
         puts "\n"
       end
       continue_with_character(character)
+    elsif user_input == 'character menu'
+      characters_menu
+    elsif user_input == 'main menu'
+      main_menu_run
     else
       puts "\nThat's not one of the choices. Please try again."
       character_specifics_menu(character)
@@ -111,6 +168,7 @@ module CharacterSpecificMenu
     elsif user_input == "main menu"
       main_menu_run
     elsif user_input == "exit"
+      system("clear")
       good_bye
     else
       user_character_selections_main_options(user_input, character_specific)
@@ -118,7 +176,7 @@ module CharacterSpecificMenu
   end
 
   def character_specific_run
-    character = user_character_selection
+    character = search_character_options
     puts "\nYou are now searching for #{character.name}"
     character_specifics_menu(character)
   end

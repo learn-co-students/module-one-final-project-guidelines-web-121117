@@ -26,10 +26,11 @@ module MainMenu
       books_menu
     elsif input == "regions"
       puts "\n\n'THEY CAN LIVE IN MY NEW WORLD, OR THEY CAN DIE IN THEIR OLD ONE' - Daenerys Targaryen".colorize(:cyan)
-      region_menu
+      regions_menu
     elsif input == "manager"
       manager_menu
     elsif input == "exit"
+      system("clear")
       good_bye
     else
       puts "\nWhile Cersei would have you killed for that choice, we'll give you another chance.".colorize(:red)
