@@ -28,9 +28,13 @@ module CharacterMenu
       input = gets.chomp
       character = find_character(input)
       houses = character.houses
-      puts "\nHere are the house allegiances #{character.name} is a part of:"
-      show_allegiances(houses)
-      puts "\n"
+      if houses.empty?
+        puts "\nThere are no known allegiances for #{character.name}."
+      else
+        puts "\nHere are the house allegiances #{character.name} is a part of:"
+        show_allegiances(houses)
+        puts "\n"
+      end
       characters_menu
     elsif input == "books"
       pre_find_character

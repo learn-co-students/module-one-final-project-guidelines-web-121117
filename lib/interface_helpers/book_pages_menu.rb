@@ -23,24 +23,21 @@ module BookPagesMenu
       book_pages_menu
     elsif input == "most"
       books = Book.all
-      books.each do |book|
-        book.total_pages
-      end
-      most_pages = books.sort_by(book.total_pages).last
-      puts "\n#{book.name} contains the most pages at #{book.most_pages}"
+      sorted_books = sort_books_by_page_number(books)
+      most_pages = sorted_books.last
+      puts "\n#{most_pages.name} contains the most pages at #{most_pages.total_pages}."
+      book_pages_menu
     elsif input == "least"
       books = Book.all
-      least_pages = books.total_pages.first
-      puts "\n#{book.name} contains the most pages at #{book.least_pages}"
+      sorted_books = sort_books_by_page_number(books)
+      least_pages = sorted_books.first
+      puts "\n#{least_pages.name} contains the least pages at #{least_pages.total_pages}."
+      book_pages_menu
     elsif input == "total"
-      total_pages = []
       books = Book.all
-      books.each do |book|
-        total = book.total_pages.to_i
-        total_pages << total
-      end
-      final_number = total_pages.sum
-      puts "\nThe total pages written for the GoT series currently is #{final_number}."
+      total_arr = books_pages_to_integer(books)
+      puts "\nThe total number of pages written for the GoT series currently is #{total_arr.sum}."
+      book_pages_menu
     elsif input == "book menu"
       books_menu
     elsif input == "main menu"

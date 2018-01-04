@@ -16,7 +16,7 @@ module BookMenu
     input = books_menu_options
     if input == "books"
       puts "\n"
-      puts all_books
+      all_books_with_info.order(:release_date)
       puts "\n"
       books_menu
     elsif input == "characters"

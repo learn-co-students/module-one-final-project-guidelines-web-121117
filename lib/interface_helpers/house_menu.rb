@@ -44,17 +44,19 @@ module HouseMenu
       pre_find_house
       input = gets.chomp
       house = find_house(input)
-      character_url = house.current_lord
-      character_name = find_character_by_lord_url(house.current_lord)
-      puts "\nThe current lord of #{house.name} is #{character_name}"
-      puts "\n"
+      if house.current_lord_id == nil
+        puts "\nThere is no current lord for #{house.name}."
+      else
+        character = Character.find(house.current_lord_id)
+        puts "\nThe current lord of #{house.name} is #{character.name}."
+        puts "\n"
+      end
       houses_menu
     elsif input == "region"
       pre_find_house
       input = gets.chomp
       house = find_house(input)
-      puts "\nHere is the region when you can find #{house.name}"
-      puts house.region.name
+      puts "\nThe region where you can find #{house.name} is #{house.region.name}."
       puts "\n"
       houses_menu
     elsif input == "main menu"

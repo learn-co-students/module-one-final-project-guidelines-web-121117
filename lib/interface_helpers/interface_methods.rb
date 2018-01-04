@@ -103,6 +103,12 @@ W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::
     Book.all.collect {|book| book.name}
   end
 
+  def all_books_with_info
+    Book.all.each do |book|
+      puts "#{book.id}. #{book.name} - total pages: #{book.total_pages}, release date: #{book.release_date}."
+    end
+  end
+
   def all_regions
     Region.all.collect do |region|
       if region.name != nil || region.name != "None" || region.name != " "
@@ -219,19 +225,37 @@ W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::
     end.flatten
   end
 
-
-  ## NOT WORKING YET ##
-  def find_character_by_lord_url(input)
-    character = Character.find_by(url: input)
-    character.name
-  end
-
-  def find_characters_by_gender(characters, gender)
-    characters.map do |character|
-      if gender == character.gender
+  def find_characters_by_gender(characters, input)
+    gender = characters.select do |character|
+      character.gender.downcase == input.downcase
+    end.sort_by{|character| character.name}
+    if gender.empty?
+      puts "\nThere is no known character with that gender."
+    else
+      gender.each do |character|
         puts character.name
       end
     end
   end
+
+  def sort_books_by_page_number(books)
+    books.sort_by do |book|
+      book.total_pages.to_i
+    end
+  end
+
+  def sort_books_by_release_date(books)
+    books.sort_by do |book|
+      book.release_date.to_date
+    end
+  end
+
+  def books_pages_to_integer(books_arr)
+    books_arr.map do |book|
+      book.total_pages.to_i
+    end
+  end
+
+
 
 end

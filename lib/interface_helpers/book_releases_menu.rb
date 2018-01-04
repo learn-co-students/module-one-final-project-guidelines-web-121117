@@ -18,18 +18,20 @@ module BookReleasesMenu
       pre_find_book
       input = gets.chomp
       book = find_book(input)
-      puts "\n#{book.name} was released on #{book.release_date}"
+      puts "\n#{book.name} was released on #{book.release_date}."
       book_releases_menu
     elsif input == "newest"
       books = Book.all
-      newest_book = books.release_date.last
-      puts "\n#{book.name} is the newest book released on #{book.release_date}"
+      sorted_books = sort_books_by_release_date(books)
+      newest_book = sorted_books.last
+      puts "\n#{newest_book.name} is the newest book released on #{newest_book.release_date}."
       puts "\n"
       book_releases_menu
     elsif input == "oldest"
       books = Book.all
-      oldest_book = books.release_date.last
-      puts "\n#{book.name} is the oldest book released on #{book.release_date}"
+      sorted_books = sort_books_by_release_date(books)
+      newest_book = sorted_books.first
+      puts "\n#{newest_book.name} is the oldest book released on #{newest_book.release_date}."
       puts "\n"
       book_releases_menu
     elsif input == "book menu"
