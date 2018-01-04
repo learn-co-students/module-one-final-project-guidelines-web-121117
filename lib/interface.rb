@@ -14,6 +14,7 @@ module Interface
 
   def run
     greet
+    ApiParse.data_check
     main_menu_run
   end
 

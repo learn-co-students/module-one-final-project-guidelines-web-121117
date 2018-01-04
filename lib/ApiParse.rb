@@ -39,6 +39,7 @@ module ApiParse
     while !self.search_pages("characters", page).empty?
       characters = self.search_pages("characters", page)
       characters.each do |character_hash|
+        binding.pry
         character = Character.find_or_create_by(name: character_hash["name"], url: character_hash["url"])
         self.populate_character_attributes(character, character_hash)
         self.find_or_create_character_books(character, character_hash)
@@ -73,10 +74,22 @@ module ApiParse
   def self.import_data
     self.import_characters_books_seasons
     self.import_houses_regions
+    "Import complete!"
   end
 
-  def self.data_check #how to compare?
-    Character.count Region.count House.count
+  def self.data_check
+    `bundle exec rake db:migrate && clear`
+    puts "Migrations: check!"
+    puts "Importing database... This will take a moment."
+    (!(Character.count == 2134) || !(Region.count == 12) || !(House.count == 444) || !(Book.count == 11) || !(Season.count == 7)) ? self.import_data : "Data already imported."
+    # find a way to make the below work?
+    #   puts "Your database is incomplete. Recreating database."
+    #   File.delete(File.open("./db/development.db"))
+    #   `bundle exec rake db:migrate`
+    #   puts "Importing data. This can take around 10 - 15 minutes."
+    #   self.import_data
+    # end
+    puts "Data: check!"
   end
 
 end
