@@ -84,7 +84,12 @@ class CommandLineInterface
       else
         make_playlist_table(playlist_table_data)
         selected_playlist = user_select_playlist
-        print_songs_from_playlist_name(selected_playlist)
+        continue = true
+        while continue
+          clear_screen
+          greet
+          continue = print_songs_from_playlist_name(selected_playlist)
+        end
       end
     else
       puts "Please enter a valid choice!"
@@ -139,7 +144,7 @@ class CommandLineInterface
     table_data = selected_playlist.create_songs_table
     print_table(table_data)
     song_choice = get_song_choice_from_user(table_data)
-    song_choice ? open_song_in_web(song_choice) : return
+    open_song_in_web(song_choice)
   end
 
   def print_categories
@@ -193,7 +198,12 @@ class CommandLineInterface
   end
 
   def open_song_in_web(song_array)
-    Launchy.open("https://open.spotify.com/track/#{song_array[:spotify_id]}")
+    if song_array
+      Launchy.open("https://open.spotify.com/track/#{song_array[:spotify_id]}")
+      return true
+    else
+      return false
+    end
   end
 
 ############# GET USER INPUT
