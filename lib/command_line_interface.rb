@@ -22,7 +22,7 @@ class CommandLineInterface
     puts "[5] ".colorize(:color=>:cyan, :mode=>:bold) + "Play Movie Hangman"
     puts "[6] ".colorize(:color=>:cyan, :mode=>:bold) + "Close the Program"
     puts ""
-    puts "Please enter a number 1-5:".colorize(:mode=>:bold)
+    puts "Please enter a number 1-6:".colorize(:mode=>:bold)
     input = gets.chomp
     case input
       when "1"
