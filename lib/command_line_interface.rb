@@ -85,9 +85,18 @@ class CommandLineInterface
       idx = input.to_i - 1
       parameter = CATEGORIES[idx]
       playlist_table_data = get_data_for_relevant_playlist(parameter)
+      if playlist_table_data == nil
+        print_blank_lines(5)
+        indent(30)
+        puts "No #{parameter} playlists exist! Why not make one!" + "   ｢(ﾟﾍﾟ)"
+        sleep(3)
+        greet
+        main_menu
+      else
         make_playlist_table(playlist_table_data)
         selected_playlist = user_select_playlist
         print_songs_from_playlist_name(selected_playlist)
+      end
     else
       puts "Please enter a valid choice!"
       view_menu
@@ -96,24 +105,28 @@ class CommandLineInterface
 
   def get_data_for_relevant_playlist(parameter)
     relevant_playlists = Playlist.where("#{parameter} IS NOT null")
-    playlist_table_data = []
-    if parameter == :key
-      relevant_playlists.each_with_index do |playlist, idx|
-        translated_parameter_value = translate_key_from_api_to_user(playlist[parameter])
-        playlist_table_data << {index: idx + 1, name: playlist.name, parameter: parameter, parameter_value: translated_parameter_value}
-      end
-    elsif parameter == :mode
-      relevant_playlists.each_with_index do |playlist, idx|
-        translated_parameter_value = translate_mode_from_api_to_user(playlist[parameter])
-        playlist_table_data << {index: idx + 1, name: playlist.name, parameter: parameter, parameter_value: translated_parameter_value}
-      end
+    if relevant_playlists.length == 0
+      return nil
     else
-      relevant_playlists.each_with_index do |playlist, idx|
-        translated_parameter_value = playlist[parameter]
-        playlist_table_data << {index: idx + 1, name: playlist.name, parameter: parameter, parameter_value: translated_parameter_value}
+      playlist_table_data = []
+      if parameter == :key
+        relevant_playlists.each_with_index do |playlist, idx|
+          translated_parameter_value = translate_key_from_api_to_user(playlist[parameter])
+          playlist_table_data << {index: idx + 1, name: playlist.name, parameter: parameter, parameter_value: translated_parameter_value}
+        end
+      elsif parameter == :mode
+        relevant_playlists.each_with_index do |playlist, idx|
+          translated_parameter_value = translate_mode_from_api_to_user(playlist[parameter])
+          playlist_table_data << {index: idx + 1, name: playlist.name, parameter: parameter, parameter_value: translated_parameter_value}
+        end
+      else
+        relevant_playlists.each_with_index do |playlist, idx|
+          translated_parameter_value = playlist[parameter]
+          playlist_table_data << {index: idx + 1, name: playlist.name, parameter: parameter, parameter_value: translated_parameter_value}
+        end
       end
+      playlist_table_data
     end
-    playlist_table_data
   end
 
 
@@ -305,7 +318,6 @@ class CommandLineInterface
     greet
     table(border: true) do
       table_data.each do |row_array|
-        # binding.pry
         row do
           column(row_array[:index], width: 3)
           column(row_array[:song_name], width: 40, color: 'green')
