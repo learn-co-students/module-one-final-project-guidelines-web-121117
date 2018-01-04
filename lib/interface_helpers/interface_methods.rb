@@ -1,10 +1,87 @@
 module InterfaceMethods
 
   def greet
-    puts "\nWelcome to the Game Of Thrones Ultimate Fan App!"
+    banner = "
+      GGGGGGGGGGGGG           OOOOOOOOO       TTTTTTTTTTTTTTTTTTTTTTT
+    GGG::::::::::::G        OO:::::::::OO     T:::::::::::::::::::::T
+   GG:::::::::::::::G     OO:::::::::::::OO   T:::::::::::::::::::::T
+  G:::::GGGGGGGG::::G    O:::::::OOO:::::::O  T:::::TT:::::::TT:::::T
+ G:::::G       GGGGGG    O::::::O   O::::::O  TTTTTT  T:::::T  TTTTTT
+G:::::G                  O:::::O     O:::::O          T:::::T
+G:::::G                  O:::::O     O:::::O          T:::::T
+G:::::G    GGGGGGGGGG    O:::::O     O:::::O          T:::::T
+G:::::G    G::::::::G    O:::::O     O:::::O          T:::::T
+G:::::G    GGGGG::::G    O:::::O     O:::::O          T:::::T
+ G:::::G        G::::G   O:::::O     O:::::O          T:::::T
+  G:::::G       G::::G   O::::::O   O::::::O          T:::::T
+   G:::::GGGGGGGG::::G   O:::::::OOO:::::::O        TT:::::::TT
+    GG:::::::::::::::G    OO:::::::::::::OO         T:::::::::T
+     GGG::::::GGG:::G       OO:::::::::OO           T:::::::::T
+        GGGGGG  GGGG          OOOOOOOOO             TTTTTTTTTTT
+    "
+    puts banner.colorize(:color => :red)
+    puts "\n~~~~~~~~ Welcome to the Game Of Thrones Ultimate Fan App! ~~~~~~~~".colorize(:color => :red)
   end
 
   def good_bye
+    banner = "
+
+
+WWWWWWWW                           WWWWWWWW  IIIIIIIIII  NNNNNNNN        NNNNNNNN  TTTTTTTTTTTTTTTTTTTTTTT  EEEEEEEEEEEEEEEEEEEEEE  RRRRRRRRRRRRRRRRR
+W::::::W                           W::::::W  I::::::::I  N:::::::N       N::::::N  T:::::::::::::::::::::T  E::::::::::::::::::::E  R::::::::::::::::R
+W::::::W                           W::::::W  I::::::::I  N::::::::N      N::::::N  T:::::::::::::::::::::T  E::::::::::::::::::::E  R::::::RRRRRR:::::R
+W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::N  T:::::TT:::::::TT:::::T  EE::::::EEEEEEEEE::::E  RR:::::R     R:::::R
+ W:::::W           WWWWW           W:::::W     I::::I    N::::::::::N    N::::::N  TTTTTT  T:::::T  TTTTTT    E:::::E       EEEEEE    R::::R     R:::::R
+  W:::::W         W:::::W         W:::::W      I::::I    N:::::::::::N   N::::::N          T:::::T            E:::::E                 R::::R     R:::::R
+   W:::::W       W:::::::W       W:::::W       I::::I    N:::::::N::::N  N::::::N          T:::::T            E::::::EEEEEEEEEE       R::::RRRRRR:::::R
+    W:::::W     W:::::::::W     W:::::W        I::::I    N::::::N N::::N N::::::N          T:::::T            E:::::::::::::::E       R:::::::::::::RR
+     W:::::W   W:::::W:::::W   W:::::W         I::::I    N::::::N  N::::N:::::::N          T:::::T            E:::::::::::::::E       R::::RRRRRR:::::R
+      W:::::W W:::::W W:::::W W:::::W          I::::I    N::::::N   N:::::::::::N          T:::::T            E::::::EEEEEEEEEE       R::::R     R:::::R
+       W:::::W:::::W   W:::::W:::::W           I::::I    N::::::N    N::::::::::N          T:::::T            E:::::E                 R::::R     R:::::R
+        W:::::::::W     W:::::::::W            I::::I    N::::::N     N:::::::::N          T:::::T            E:::::E       EEEEEE    R::::R     R:::::R
+         W:::::::W       W:::::::W           II::::::II  N::::::N      N::::::::N        TT:::::::TT        EE::::::EEEEEEEE:::::E  RR:::::R     R:::::R
+          W:::::W         W:::::W            I::::::::I  N::::::N       N:::::::N        T:::::::::T        E::::::::::::::::::::E  R::::::R     R:::::R
+           W:::W           W:::W             I::::::::I  N::::::N        N::::::N        T:::::::::T        E::::::::::::::::::::E  R::::::R     R:::::R
+            WWW             WWW              IIIIIIIIII  NNNNNNNN         NNNNNNN        TTTTTTTTTTT        EEEEEEEEEEEEEEEEEEEEEE  RRRRRRRR     RRRRRRR
+
+
+                                                                    IIIIIIIIII     SSSSSSSSSSSSSSS
+                                                                    I::::::::I   SS:::::::::::::::S
+                                                                    I::::::::I  S:::::SSSSSS::::::S
+                                                                    II::::::II  S:::::S     SSSSSSS
+                                                                      I::::I    S:::::S
+                                                                      I::::I    S:::::S
+                                                                      I::::I     S::::SSSS
+                                                                      I::::I      SS::::::SSSSS
+                                                                      I::::I        SSS::::::::SS
+                                                                      I::::I           SSSSSS::::S
+                                                                      I::::I                S:::::S
+                                                                      I::::I                S:::::S
+                                                                    II::::::II  SSSSSSS     S:::::S
+                                                                    I::::::::I  S::::::SSSSSS:::::S
+                                                                    I::::::::I  S:::::::::::::::SS
+                                                                    IIIIIIIIII   SSSSSSSSSSSSSSS
+
+
+
+                  CCCCCCCCCCCCC       OOOOOOOOO       MMMMMMMM               MMMMMMMM  IIIIIIIIII  NNNNNNNN        NNNNNNNN          GGGGGGGGGGGGG
+               CCC::::::::::::C     OO:::::::::OO     M:::::::M             M:::::::M  I::::::::I  N:::::::N       N::::::N       GGG::::::::::::G
+             CC:::::::::::::::C   OO:::::::::::::OO   M::::::::M           M::::::::M  I::::::::I  N::::::::N      N::::::N     GG:::::::::::::::G
+            C:::::CCCCCCCC::::C  O:::::::OOO:::::::O  M:::::::::M         M:::::::::M  II::::::II  N:::::::::N     N::::::N    G:::::GGGGGGGG::::G
+           C:::::C       CCCCCC  O::::::O   O::::::O  M::::::::::M       M::::::::::M    I::::I    N::::::::::N    N::::::N   G:::::G       GGGGGG
+          C:::::C                O:::::O     O:::::O  M:::::::::::M     M:::::::::::M    I::::I    N:::::::::::N   N::::::N  G:::::G
+          C:::::C                O:::::O     O:::::O  M:::::::M::::M   M::::M:::::::M    I::::I    N:::::::N::::N  N::::::N  G:::::G
+          C:::::C                O:::::O     O:::::O  M::::::M M::::M M::::M M::::::M    I::::I    N::::::N N::::N N::::::N  G:::::G    GGGGGGGGGG
+          C:::::C                O:::::O     O:::::O  M::::::M  M::::M::::M  M::::::M    I::::I    N::::::N  N::::N:::::::N  G:::::G    G::::::::G
+          C:::::C                O:::::O     O:::::O  M::::::M   M:::::::M   M::::::M    I::::I    N::::::N   N:::::::::::N  G:::::G    GGGGG::::G
+          C:::::C                O:::::O     O:::::O  M::::::M    M:::::M    M::::::M    I::::I    N::::::N    N::::::::::N  G:::::G        G::::G
+           C:::::C       CCCCCC  O::::::O   O::::::O  M::::::M     MMMMM     M::::::M    I::::I    N::::::N     N:::::::::N   G:::::G       G::::G
+            C:::::CCCCCCCC::::C  O:::::::OOO:::::::O  M::::::M               M::::::M  II::::::II  N::::::N      N::::::::N    G:::::GGGGGGGG::::G
+             CC:::::::::::::::C   OO:::::::::::::OO   M::::::M               M::::::M  I::::::::I  N::::::N       N:::::::N     GG:::::::::::::::G
+               CCC::::::::::::C     OO:::::::::OO     M::::::M               M::::::M  I::::::::I  N::::::N        N::::::N       GGG::::::GGG:::G
+                  CCCCCCCCCCCCC       OOOOOOOOO       MMMMMMMM               MMMMMMMM  IIIIIIIIII  NNNNNNNN         NNNNNNN          GGGGGG   GGGG
+"
+    puts banner.colorize(:blue)
     puts "\nUntil next time...".colorize(:color => :red)
     puts "\n"
   end

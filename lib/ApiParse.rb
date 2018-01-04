@@ -12,7 +12,7 @@ module ApiParse
     character.gender = character_hash["gender"]
     character_hash["born"].empty? ? character.birth_date = "<Unknown>" : character.birth_date = character_hash["born"]
     character_hash["died"].empty? ? character.death_date = "<Alive or Unknown>" : character.death_date = character_hash["died"]
-    character_hash["aliases"][0].empty? ? character.aliases = "<None>" : character_hash["aliases"].each{|a_lias| character.aliases << a_lias}
+    character_hash["aliases"][0].empty? ? character.aliases = "<None>" : character.aliases = character_hash["aliases"].join(" ")
     character_hash["playedBy"][0].empty? ? character.actor = "<Not in show>" : character.actor = character_hash["playedBy"][0]
     character.save
   end

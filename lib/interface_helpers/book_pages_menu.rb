@@ -1,13 +1,14 @@
 module BookPagesMenu
 
   def book_pages_menu_options
-    puts "\n\nChoose from one of the following categories to proceed:"
-    puts "     Book".colorize(:color => :magenta) + " - find the amount of pages in a specific GoT Book."
-    puts "     Most".colorize(:color => :magenta) + " - find the GoT book with the most pages."
-    puts "     Least".colorize(:color => :magenta) + " - find the GoT book with the least pages."
-    puts "     Total".colorize(:color => :magenta) + " - find the total numbers of pages written from released GoT books."
-    puts "     Book Menu".colorize(:color => :magenta) + " - back to the book menu."
-    puts "     Main Menu".colorize(:color => :magenta) + " - back to the main menu."
+    puts "\nPAGE MENU".colorize(:magenta).underline
+    puts "Choose from one of the following categories to proceed:"
+    puts "     Book".colorize(:magenta) + " - find the amount of pages in a specific GoT Book."
+    puts "     Most".colorize(:magenta) + " - find the GoT book with the most pages."
+    puts "     Least".colorize(:magenta) + " - find the GoT book with the least pages."
+    puts "     Total".colorize(:magenta) + " - find the total numbers of pages written from released GoT books."
+    puts "     Book Menu".colorize(:magenta) + " - back to the book menu."
+    puts "     Main Menu".colorize(:magenta) + " - back to the main menu."
     puts "\nPlease make a selection:"
     input = gets.downcase.chomp
   end
@@ -44,7 +45,7 @@ module BookPagesMenu
     elsif input == "exit"
       good_bye
     else
-      puts "\nFIND QUOTE OR SOMETHING FOR HERE".colorize(:color => :magenta)
+      puts "\nFIND QUOTE OR SOMETHING FOR HERE".colorize(:magenta)
       books_menu
     end
   end

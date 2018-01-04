@@ -1,12 +1,13 @@
 module BookReleasesMenu
 
   def book_releases_menu_options
-    puts "\n\nChoose from one of the following categories to proceed:"
-    puts "     Release".colorize(:color => :magenta) + " - find the release date for a specific GoT Book."
-    puts "     Newest".colorize(:color => :magenta) + " - find the newest GoT book by release date."
-    puts "     Oldest".colorize(:color => :magenta) + " - find the oldest GoT book by release date."
-    puts "     Book Menu".colorize(:color => :magenta) + " - back to the book menu."
-    puts "     Main Menu".colorize(:color => :magenta) + " - back to the main menu."
+    puts "\nRELEASE DATE MENU".colorize(:magenta).underline
+    puts "Choose from one of the following categories to proceed:"
+    puts "     Release".colorize(:magenta) + " - find the release date for a specific GoT Book."
+    puts "     Newest".colorize(:magenta) + " - find the newest GoT book by release date."
+    puts "     Oldest".colorize(:magenta) + " - find the oldest GoT book by release date."
+    puts "     Book Menu".colorize(:magenta) + " - back to the book menu."
+    puts "     Main Menu".colorize(:magenta) + " - back to the main menu."
     puts "\nPlease make a selection:"
     input = gets.downcase.chomp
   end
@@ -38,7 +39,7 @@ module BookReleasesMenu
     elsif input == "exit"
       good_bye
     else
-      puts "\nFIND QUOTE OR SOMETHING FOR HERE".colorize(:color => :magenta)
+      puts "\nFIND QUOTE OR SOMETHING FOR HERE".colorize(:magenta)
       books_menu
     end
   end

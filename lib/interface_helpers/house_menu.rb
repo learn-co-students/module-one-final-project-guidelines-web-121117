@@ -1,13 +1,14 @@
 module HouseMenu
 
   def houses_menu_options
-    puts "\n\nChoose from one of the following categories to proceed:"
-    puts "     Houses".colorize(:color => :green) + " - see all houses of the GoT Universe."
-    puts "     Characters".colorize(:color => :green) + " - see which characters belong to a specific house."
-    puts "     Gender".colorize(:color => :green) + " - see how many members of a specific gender belong to a specific house."
-    puts "     Lord".colorize(:color => :green) + " - see which character is currently the Lord of a specific house."
-    puts "     Region".colorize(:color => :green) + " - see what region a house is located."
-    puts "     Main Menu".colorize(:color => :green) + " - back to the main menu."
+    puts "\nHOUSE MENU".colorize(:green).underline
+    puts "Choose from one of the following categories to proceed:"
+    puts "     Houses".colorize(:green) + " - see all houses of the GoT Universe."
+    puts "     Characters".colorize(:green) + " - see which characters belong to a specific house."
+    puts "     Gender".colorize(:green) + " - see how many members of a specific gender belong to a specific house."
+    puts "     Lord".colorize(:green) + " - see which character is currently the Lord of a specific house."
+    puts "     Region".colorize(:green) + " - see what region a house is located."
+    puts "     Main Menu".colorize(:green) + " - back to the main menu."
     puts "\nPlease make a selection:"
     input = gets.downcase.chomp
   end
@@ -60,7 +61,7 @@ module HouseMenu
     elsif input == "exit"
       good_bye
     else
-      puts "\nPlease don't wonder beyond the wall.".colorize(:color => :green)
+      puts "\nPlease don't wonder beyond the wall.".colorize(:green)
       houses_menu
     end
   end

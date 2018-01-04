@@ -3,21 +3,26 @@ module CharacterSpecificMenu
   def user_character_selection
     pre_find_character
     character_choice = gets.chomp
-    character = find_character(character_choice)
-    puts "\nYou are now searching for #{character.name}"
+    if character_choice == "exit"
+      characters_menu
+    else
+      character = find_character(character_choice)
+      puts "\nYou are now searching for #{character.name}"
+    end
   end
 
   def character_specifics_menu_options
-    puts "\n\nChoose from one of the following categories to proceed:"
-    puts "     Gender".colorize(:color => :blue) + " - find the release date for a specific GoT Book."
-    puts "     Birth".colorize(:color => :blue) + " - find the newest GoT book by release date."
-    puts "     Death".colorize(:color => :blue) + " - find the oldest GoT book by release date."
-    puts "     Alive".colorize(:color => :blue) + " - find the oldest GoT book by release date."
-    puts "     Aliases".colorize(:color => :blue) + " - find the oldest GoT book by release date."
-    puts "     Actor".colorize(:color => :blue) + " - find the oldest GoT book by release date."
-    puts "     Change".colorize(:color => :blue) + " - change character to find out info on."
-    puts "     Character Menu".colorize(:color => :blue) + " - back to the book menu."
-    puts "     Main Menu".colorize(:color => :blue) + " - back to the main menu."
+    puts "\nSEARCH CHARACTER MENU".colorize(:blue).underline
+    puts "Choose from one of the following categories to proceed:"
+    puts "     Gender".colorize(:blue) + " - find the release date for a specific GoT Book."
+    puts "     Birth".colorize(:blue) + " - find the newest GoT book by release date."
+    puts "     Death".colorize(:blue) + " - find the oldest GoT book by release date."
+    puts "     Alive".colorize(:blue) + " - find the oldest GoT book by release date."
+    puts "     Aliases".colorize(:blue) + " - find the oldest GoT book by release date."
+    puts "     Actor".colorize(:blue) + " - find the oldest GoT book by release date."
+    puts "     Change".colorize(:blue) + " - change character to find out info on."
+    puts "     Character Menu".colorize(:blue) + " - back to the book menu."
+    puts "     Main Menu".colorize(:blue) + " - back to the main menu."
     puts "\nPlease make a selection:"
     user_input = gets.downcase.chomp
   end
