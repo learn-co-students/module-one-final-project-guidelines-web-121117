@@ -92,11 +92,11 @@ W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::
       if character.name != nil
         character.name
       end
-    end
+    end.sort!
   end
 
   def all_houses
-    House.all.collect {|house| house.name}
+    House.all.collect {|house| house.name}.sort!
   end
 
   def all_books
@@ -105,10 +105,10 @@ W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::
 
   def all_regions
     Region.all.collect do |region|
-      if region.name != nil || region.name != "None"
+      if region.name != nil || region.name != "None" || region.name != " "
         region.name
       end
-    end
+    end.sort!
   end
 
   def pre_find_character
@@ -127,7 +127,7 @@ W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::
       puts "\n"
       pre_find_character
       new_input = gets.chomp
-      find_character(new_input)
+      character = find_character(new_input)
     end
     character
   end
@@ -152,16 +152,17 @@ W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::
   end
 
   def find_house(input)
-    house = House.find_by(name: input)
-    if house
-      house
-    else
+    house = House.all.find do |house|
+      house.name.downcase == input.downcase
+    end
+    while !house
       puts "This is not currently a house in the GoT Universe. Try again."
       puts "\n"
       pre_find_house
       new_input = gets.chomp
-      find_house(new_input)
+      house = find_house(new_input)
     end
+    house
   end
 
   def show_characters(characters)
@@ -180,15 +181,16 @@ W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::
   end
 
   def find_book(input)
-    book = Book.find_by(name: input)
-    if book
-      book
-    else
+    book = Book.all.find do |book|
+      book.name.downcase == input.downcase
+    end
+    while !book
       puts "This is not currently a book in the GoT Universe. Try Again"
       pre_find_book
       new_input = gets.chomp
-      find_book(new_input)
+      book = find_book(new_input)
     end
+    book
   end
 
   def pre_find_region
@@ -199,15 +201,16 @@ W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::
   end
 
   def find_region(input)
-    region = Region.find_by(name: input)
-    if region
-      region
-    else
+    region = Region.all.find do |region|
+      region.name.downcase == input.downcase
+    end
+    while region == nil
       puts "This is not currently a region in the GoT Universe. Try Again."
       pre_find_region
-      new_input = gets.chomp
-      find_region(new_input)
+      input = gets.chomp
+      region = find_region(input)
     end
+    region
   end
 
   def find_characters_from_houses(house_ary)
@@ -223,15 +226,12 @@ W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::
     character.name
   end
 
-  def find_characters_by_gender(gender, house)
-    gender_array = []
-    characters = house.characters
-    characters.each do |character|
+  def find_characters_by_gender(characters, gender)
+    characters.map do |character|
       if gender == character.gender
-        gender_array << character.name
+        puts character.name
       end
     end
-    gender_array
   end
 
 end

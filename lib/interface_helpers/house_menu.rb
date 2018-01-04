@@ -33,10 +33,11 @@ module HouseMenu
       pre_find_house
       input = gets.chomp
       house = find_house(input)
+      characters_from_house = house.characters
       puts "\nWould you like to see the males or females of #{house.name}. Please put 'Male' or 'Female':"
       gender_input = gets.chomp
       puts "\nHere are the characters of #{house.name} who identify as #{gender_input}:"
-      find_characters_by_gender(gender_input, house)
+      find_characters_by_gender(characters_from_house, gender_input)
       puts "\n"
       houses_menu
     elsif input == "lord"

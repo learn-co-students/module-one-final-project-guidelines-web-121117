@@ -19,11 +19,14 @@ module BookPagesMenu
       pre_find_book
       input = gets.chomp
       book = find_book(input)
-      puts "\n#{book.name} contains #{book.total_pages}"
+      puts "\n#{book.name} contains #{book.total_pages} pages."
       book_pages_menu
     elsif input == "most"
       books = Book.all
-      most_pages = books.total_pages.last
+      books.each do |book|
+        book.total_pages
+      end
+      most_pages = books.sort_by(book.total_pages).last
       puts "\n#{book.name} contains the most pages at #{book.most_pages}"
     elsif input == "least"
       books = Book.all
