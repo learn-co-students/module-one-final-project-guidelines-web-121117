@@ -1,11 +1,12 @@
 module RegionMenu
 
   def region_menu_options
-    puts "\n\nChoose from one of the following categories to proceed:"
-    puts "     Regions".colorize(:color => :cyan) + " - see all regions in the GoT universe."
-    puts "     Houses".colorize(:color => :cyan) + " - see which houses are from a specific region."
-    puts "     Characters".colorize(:color => :cyan) + " - see which characters are from a specific region."
-    puts "     Main Menu".colorize(:color => :cyan) + " - back to the main menu."
+    puts "\nREGION MENU".colorize(:cyan).underline
+    puts "Choose from one of the following categories to proceed:"
+    puts "     Regions".colorize(:cyan) + " - see all regions in the GoT universe."
+    puts "     Houses".colorize(:cyan) + " - see which houses are from a specific region."
+    puts "     Characters".colorize(:cyan) + " - see which characters are from a specific region."
+    puts "     Main Menu".colorize(:cyan) + " - back to the main menu."
     puts "\nPlease make a selection:"
     input = gets.downcase.chomp
   end
@@ -41,7 +42,7 @@ module RegionMenu
     elsif input == "exit"
       good_bye
     else
-      puts "\nIn Dorne, blood may be fire, but we're not there kids.".colorize(:color => :cyan)
+      puts "\nIn Dorne, blood may be fire, but we're not there kids.".colorize(:cyan)
       region_menu
     end
   end

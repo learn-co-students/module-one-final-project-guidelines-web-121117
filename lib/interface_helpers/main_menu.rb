@@ -1,12 +1,13 @@
 module MainMenu
 
   def main_menu_options
-    puts "\nChoose from one of the follow categories to proceed:"
-    puts "     Characters".colorize(:color => :red) + " - explore the characters of the GoT Universe."
-    puts "     Houses".colorize(:color => :red) + " - explore the houses of the GoT Universe."
-    puts "     Books".colorize(:color => :red) + " - learn about the GoT Books."
-    puts "     Regions".colorize(:color => :red) + " - explore the regions of the GoT Universe."
-    puts "     Exit".colorize(:color => :red) + " - goodbye until next time."
+    puts "\n\nMAIN MENU".colorize(:red).underline
+    puts "Choose from one of the follow categories to proceed:"
+    puts "     Characters".colorize(:red) + " - explore the characters of the GoT Universe."
+    puts "     Houses".colorize(:red) + " - explore the houses of the GoT Universe."
+    puts "     Books".colorize(:red) + " - learn about the GoT Books."
+    puts "     Regions".colorize(:red) + " - explore the regions of the GoT Universe."
+    puts "     Exit".colorize(:red) + " - goodbye until next time."
     puts "\nPlease make a selection:"
     input = gets.downcase.chomp
   end
@@ -15,23 +16,23 @@ module MainMenu
     input = main_menu_options
 
     if input == "characters"
-      puts "\n\n'THE GOOD LORDS ARE DEAD, AND THE REST ARE MONSTERS.' - Brienne of Tarth".colorize(:color => :blue)
+      puts "\n\n'THE GOOD LORDS ARE DEAD, AND THE REST ARE MONSTERS.' - Brienne of Tarth".colorize(:blue)
       characters_menu
     elsif input == "houses"
-      puts "\n\n'I AM A WOLF AND WILL NOT BE AFRAID' - Arya Stark".colorize(:color => :green)
+      puts "\n\n'I AM A WOLF AND WILL NOT BE AFRAID' - Arya Stark".colorize(:green)
       houses_menu
     elsif input == "books"
-      puts "\n\n'POSSIBLY SOMETHING A BIT MORE POETIC?' - Sam Tarly".colorize(:color => :magenta)
+      puts "\n\n'POSSIBLY SOMETHING A BIT MORE POETIC?' - Sam Tarly".colorize(:magenta)
       books_menu
     elsif input == "regions"
-      puts "\n\n'THEY CAN LIVE IN MY NEW WORLD, OR THEY CAN DIE IN THEIR OLD ONE' - Daenerys Targaryen".colorize(:color => :cyan)
+      puts "\n\n'THEY CAN LIVE IN MY NEW WORLD, OR THEY CAN DIE IN THEIR OLD ONE' - Daenerys Targaryen".colorize(:cyan)
       region_menu
     elsif input == "manager"
       manager_menu
     elsif input == "exit"
       good_bye
     else
-      puts "\nWhile Cersei would have you killed for that choice, we'll give you another chance.".colorize(:color => :red)
+      puts "\nWhile Cersei would have you killed for that choice, we'll give you another chance.".colorize(:red)
       main_menu_run
     end
   end
