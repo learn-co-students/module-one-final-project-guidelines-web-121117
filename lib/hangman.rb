@@ -6,14 +6,14 @@ class Hangman
     @lives = 6
     @used_letters = []
     @alphabet = ("a".."z").to_a
-    @movie_name = Movie.all.map { |inst| inst.name }.sample.downcase
+    @movie_name = Movie.all.map { |movie_instance| movie_instance.name }.sample.downcase
   end
 
   def check_movie(movie_name)
     words = movie_name.downcase.split
     words = words.map do |word|
       word.chars.map do |char|
-        @used_letters.include?(char) ? char : "#"
+        @used_letters.include?(char) || !@alphabet.include?(char) ? char : "#"
       end.join.capitalize
     end
     words.join(" ")
