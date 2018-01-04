@@ -1,3 +1,7 @@
+
+
+
+
 class Playlist < ActiveRecord::Base
 
   has_many :song_playlists
@@ -20,10 +24,13 @@ class Playlist < ActiveRecord::Base
     end
   end
 
-  def print_songs
+  def create_songs_table
+    table_data = []
     self.songs.each_with_index do |song, idx|
-      puts "#{idx + 1}. #{song.name} - #{song.artists} - Spotify Id: spotify:song:#{song.spotify_id}"
+      table_data << {index: idx + 1, song_name: song.name, song_artists: song.artists, spotify_id: "#{song.spotify_id}"}
+      # puts "#{idx + 1}." + " #{song.name}" + " - " + "#{song.artists}" + " - " + "Spotify Id:" + " spotify:song:#{song.spotify_id}"
     end
+    table_data
   end
 end
 

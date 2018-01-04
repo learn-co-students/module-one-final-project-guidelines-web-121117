@@ -1,10 +1,17 @@
+require 'command_line_reporter'
+
 class CommandLineInterface
+
+  include CommandLineReporter
 
   CATEGORIES = [:tempo, :key, :mode, :time_signature, :danceability, :valence, :acousticness, :energy, :instrumentalness]
 
   MUSICAL_KEYS = {"C" => 0, "C\#" => 1, "Db" => 1, "D" => 2, "D\#" => 3, "Eb" => 3, "E" => 4, "F" => 5, "F\#" => 6, "Gb" => 6, "G" => 7, "G\#" => 8, "Ab" => 8, "A" => 9, "A\#" => 10, "Bb" => 10, "B" => 11}
 
   def run
+    greet
+    logo
+    sleep(3)
     greet
     main_menu
 
@@ -13,8 +20,9 @@ class CommandLineInterface
   end
 
   def greet
+    clear_screen
     a = Artii::Base.new
-    puts a.asciify('Playlist Creator')
+    puts Rainbow(a.asciify('( ( (   Playlist Creator')).green.bright
   end
 
   def goodbye
@@ -29,6 +37,7 @@ class CommandLineInterface
     puts "4. Exit"
     user_input = get_user_input_main_menu
     if user_input == 1
+      greet
       print "Please enter a name for your new playlist: "
       name = get_string
       puts "Please choose a parameter from the list to create #{name}:"
@@ -38,9 +47,10 @@ class CommandLineInterface
       value = gets_user_input_for_parameter_value(parameter)
       Playlist.make_new_from(name, parameter, value)
     elsif user_input == 2
+      greet
       view_menu
     elsif user_input == 3
-
+      
     elsif user_input == 4
       return
     end
@@ -51,15 +61,18 @@ class CommandLineInterface
     print_categories
     input = gets.chomp
     if input == 'A'
+      greet
       Playlist.all.each_with_index do |playlist, idx|
         puts "#{idx + 1}. #{playlist.name}"
       end
     elsif input == 'Q'
       return
     elsif input.to_i > 0 && input.to_i < 10
+      greet
       idx = input.to_i - 1
       parameter = CATEGORIES[idx]
       relevant_playlists = Playlist.where("#{parameter} IS NOT null")
+      table_data = []
       if parameter == :key
         relevant_playlists.each_with_index do |playlist, idx|
           translated_parameter_value = translate_key_from_api_to_user(playlist[parameter])
@@ -85,10 +98,35 @@ class CommandLineInterface
   end
 
   def print_songs_from_playlist_name
-    print "Enter playlist name to see songs: "
-    name_input = get_string.titleize
-    selected_playlist = Playlist.find_by(name: name_input)
-    selected_playlist.print_songs
+    selected_playlist = nil
+    until selected_playlist != nil
+      print "Enter playlist name to see songs: "
+      name_input = get_string.titleize
+      selected_playlist = Playlist.find_by(name: name_input)
+    end
+    table_data = selected_playlist.create_songs_table
+    print_table(table_data)
+    song_choice = get_song_choice(table_data)
+    song_choice.is_a?(Integer) ? open_song_in_web(song_choice) : return
+
+  end
+
+  def get_song_choice(table_data)
+    input = 0
+    until (input > 0 && input <= table_data.length) || (input == "q" or input == "Q")
+      print "Enter Song Number to open in your browser (or Q to quit): "
+      input = gets.chomp
+      if input == "q" || input == "Q"
+        return
+      else
+        input.to_i
+    end
+    end
+    relevant_song = table_data.find { |song_array| song_array[:index] == input}
+  end
+
+  def open_song_in_web(song_array)
+    Launchy.open("https://open.spotify.com/track/#{song_array[:spotify_id]}")
   end
 
   def get_string
@@ -192,8 +230,74 @@ class CommandLineInterface
       0
     end
   end
+  def clear_screen
+    system ("clear")
+  end
+
+  def print_blank_lines(x)
+    x.times {puts ""}
+  end
+
+  def indent(x)
+    x.times {print " "}
+  end
+
+  def double_space
+    self.print_blank_lines(1)
+    self.indent(40)
+  end
+
+  def print_table(table_data)
+    greet
+    table(border: true) do
+      table_data.each do |row_array|
+        # binding.pry
+        row do
+          column(row_array[:index], width: 3)
+          column(row_array[:song_name], width: 40, color: 'green')
+          column(row_array[:song_artists], width: 40, color: 'cyan')
+          column(row_array[:spotify_id], width: 23, color: 'green')
+        end
+      end
+    end
+  end
 
 
 
-
+  def logo
+    indent(40)
+    puts "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░"
+    indent(40)
+    puts "░░░░░░░░░░░░░░" + Rainbow("█████████████").green + "░░░░░░░░░░░░░░"
+    indent(40)
+    puts "░░░░░░░░░░" + Rainbow("█████████████████████").green + "░░░░░░░░░░"
+    indent(40)
+    puts "░░░░░░░░" + Rainbow("█████████████████████████").green + "░░░░░░░░"
+    indent(40)
+    puts "░░░░░░" + Rainbow("████████████▀▀▀▀▀████████████").green + "░░░░░░"
+    indent(40)
+    puts "░░░░░" + Rainbow("███████▀▀▔▔         ▔▔▀▀███████").green + "░░░░░"
+    indent(40)
+    puts "░░░░" + Rainbow("████▀▔   ▁▄▄▆▆██████▆▄▄▁   ▔▀████").green + "░░░░"
+    indent(40)
+    puts "░░░" + Rainbow("█████▄▄▆███████▀▀▀▀████████▆▄▄█████").green + "░░░"
+    indent(40)
+    puts "░░░" + Rainbow("█████████▀▀▔▔   ▁▁    ▔▔▀▀█████████").green + "░░░"
+    indent(40)
+    puts "░░░" + Rainbow("██████▔   ▁▄▄▆▆██████▆▄▄▁   ▔██████").green + "░░░"
+    indent(40)
+    puts "░░░░" + Rainbow("█████▆▆█████▀▀▔▔▔▔▀▀▀█████▆▆█████").green + "░░░░"
+    indent(40)
+    puts "░░░░░" + Rainbow("██████▀▔▔  ▁▁▄▆▆▆▄▄▁  ▔▔▀██████").green + "░░░░░"
+    indent(40)
+    puts "░░░░░░" + Rainbow("█████▄▄▆█████████████▆▄▄█████").green + "░░░░░░"
+    indent(40)
+    puts "░░░░░░░░" + Rainbow("█████████████████████████").green + "░░░░░░░░"
+    indent(40)
+    puts "░░░░░░░░░░" + Rainbow("█████████████████████").green + "░░░░░░░░░░"
+    indent(40)
+    puts "░░░░░░░░░░░░░░" + Rainbow("█████████████").green + "░░░░░░░░░░░░░░"
+    indent(40)
+    puts "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░"
+  end
 end
