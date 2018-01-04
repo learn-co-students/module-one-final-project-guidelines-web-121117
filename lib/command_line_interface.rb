@@ -14,23 +14,10 @@ class CommandLineInterface
     sleep(3)
     greet
     main_menu
-
-
     goodbye
   end
 
-  def greet
-    clear_screen
-    a = Artii::Base.new
-    puts Rainbow(a.asciify('               ( ( (   Playlist Creator')).green.bright
-  end
-
-  def goodbye
-    print_blank_lines(3)
-    indent(40)
-    puts "(" + Rainbow("づ").blink + "｡◕ ‿ ◕｡)" + Rainbow("づ  ♬ ♫ ♬ ♩ ♫ ♬ ♩ ").blink
-    print_blank_lines(5)
-  end
+  ########## MENUS
 
   def main_menu
     puts "What would you like to do?"
@@ -70,7 +57,6 @@ class CommandLineInterface
     print_songs_from_playlist_name(new_playlist)
   end
 
-
   def view_menu
     puts "View playlists based on which parameter? ([A]ll or [Q]uit)"
     print_categories
@@ -106,6 +92,80 @@ class CommandLineInterface
     end
   end
 
+  def delete_menu
+    Playlist.all.each_with_index do |playlist, idx|
+      puts "#{idx + 1}. #{playlist.name}"
+    end
+    selected_playlist = nil
+    until selected_playlist != nil
+      print "Enter name of playlist to delete: "
+      name_input = get_string.titleize
+      selected_playlist = Playlist.find_by(name: name_input)
+    end
+    Playlist.destroy(selected_playlist.id)
+    puts "Playlist Deleted!" + "(╯°□°）╯︵ ┻━┻"
+  end
+
+####### OUTPUT TABLES
+
+  def print_table(table_data)
+    greet
+    table(border: true) do
+      table_data.each do |row_array|
+        row do
+          column(row_array[:index], width: 3)
+          column(row_array[:song_name], width: 40, color: 'green')
+          column(row_array[:song_artists], width: 40, color: 'cyan')
+          column(row_array[:spotify_id], width: 23, color: 'green')
+        end
+      end
+    end
+  end
+
+  def make_playlist_table(playlist_table_data)
+    table(border: true) do
+      playlist_table_data.each do |row_array|
+        row do
+          column(row_array[:index], width: 3)
+          column(row_array[:name], width: 40, color: 'green')
+          column(row_array[:parameter], width: 40, color: 'white')
+          column(row_array[:parameter_value], width: 40, color: 'green')
+        end
+      end
+    end
+  end
+
+  def print_songs_from_playlist_name(selected_playlist)
+    table_data = selected_playlist.create_songs_table
+    print_table(table_data)
+    song_choice = get_song_choice_from_user(table_data)
+    song_choice ? open_song_in_web(song_choice) : return
+  end
+
+  def print_categories
+    counter = 1
+    CATEGORIES.each do |category|
+      puts "#{counter}. #{category}"
+      counter += 1
+    end
+  end
+
+################## MISC
+
+  def give_parameter_specs(parameter)
+    if parameter == :key
+      puts "Please enter desired key(example: C, Bb, A\#)"
+    elsif parameter == :mode
+      puts "Please enter major or minor."
+    elsif parameter == :time_signature
+      puts "Please enter number of beats per measure (3 - 7)"
+    elsif parameter == :tempo
+      puts "Please enter BPM"
+    else
+      puts "Please enter a decimal between 0.0 - 1.0"
+    end
+  end
+
   def get_data_for_relevant_playlist(parameter)
     relevant_playlists = Playlist.where("#{parameter} IS NOT null")
     if relevant_playlists.length == 0
@@ -132,84 +192,11 @@ class CommandLineInterface
     end
   end
 
-
-
-  def make_playlist_table(playlist_table_data)
-    table(border: true) do
-      playlist_table_data.each do |row_array|
-        row do
-          column(row_array[:index], width: 3)
-          column(row_array[:name], width: 40, color: 'green')
-          column(row_array[:parameter], width: 40, color: 'white')
-          column(row_array[:parameter_value], width: 40, color: 'green')
-        end
-      end
-    end
-  end
-
-  def delete_menu
-    Playlist.all.each_with_index do |playlist, idx|
-      puts "#{idx + 1}. #{playlist.name}"
-    end
-    selected_playlist = nil
-    until selected_playlist != nil
-      print "Enter name of playlist to delete: "
-      name_input = get_string.titleize
-      selected_playlist = Playlist.find_by(name: name_input)
-    end
-      Playlist.destroy(selected_playlist.id)
-      puts "Playlist Deleted!" + "(╯°□°）╯︵ ┻━┻"
-  end
-
-  def user_select_playlist
-    selected_playlist = nil
-    until selected_playlist != nil
-      print_blank_lines(2)
-      indent(20)
-      print "Enter playlist name to see songs: "
-      name_input = get_string.titleize
-      selected_playlist = Playlist.find_by(name: name_input)
-    end
-    selected_playlist
-  end
-
-  def print_songs_from_playlist_name(selected_playlist)
-    table_data = selected_playlist.create_songs_table
-    print_table(table_data)
-    song_choice = get_song_choice_from_user(table_data)
-    song_choice ? open_song_in_web(song_choice) : return
-  end
-
-  def get_song_choice_from_user(table_data)
-    input = 0
-    until (input > 0 && input <= table_data.length) || (input == "q" or input == "Q")
-      print_blank_lines(2)
-      print "Enter Song Number to open in your browser (or Q to quit): "
-      input = gets.chomp
-      if input == "q" || input == "Q"
-        return nil
-      else
-        input = input.to_i
-      end
-    end
-    relevant_song = table_data.find { |song_array| song_array[:index] == input}
-  end
-
   def open_song_in_web(song_array)
     Launchy.open("https://open.spotify.com/track/#{song_array[:spotify_id]}")
   end
 
-  def get_string
-    input = gets.chomp.titleize
-  end
-
-  def print_categories
-    counter = 1
-    CATEGORIES.each do |category|
-      puts "#{counter}. #{category}"
-      counter += 1
-    end
-  end
+############# GET USER INPUT
 
   def get_user_input_main_menu
     input = gets.chomp.to_i
@@ -221,6 +208,10 @@ class CommandLineInterface
     end
   end
 
+  def get_string
+    input = gets.chomp.titleize
+  end
+
   def get_user_input_for_playlist_parameter
     input = 0
     until input > 0 && input < 10
@@ -228,20 +219,6 @@ class CommandLineInterface
     end
     input -= 1
     CATEGORIES[input]
-  end
-
-  def give_parameter_specs(parameter)
-    if parameter == :key
-      puts "Please enter desired key(example: C, Bb, A\#)"
-    elsif parameter == :mode
-      puts "Please enter major or minor."
-    elsif parameter == :time_signature
-      puts "Please enter number of beats per measure (3 - 7)"
-    elsif parameter == :tempo
-      puts "Please enter BPM"
-    else
-      puts "Please enter a decimal between 0.0 - 1.0"
-    end
   end
 
   def gets_user_input_for_parameter_value(parameter)
@@ -276,6 +253,35 @@ class CommandLineInterface
     input
   end
 
+  def user_select_playlist
+    selected_playlist = nil
+    until selected_playlist != nil
+      print_blank_lines(2)
+      indent(20)
+      print "Enter playlist name to see songs: "
+      name_input = get_string.titleize
+      selected_playlist = Playlist.find_by(name: name_input)
+    end
+    selected_playlist
+  end
+
+  def get_song_choice_from_user(table_data)
+    input = 0
+    until (input > 0 && input <= table_data.length) || (input == "q" or input == "Q")
+      print_blank_lines(2)
+      print "Enter Song Number to open in your browser (or Q to quit): "
+      input = gets.chomp
+      if input == "q" || input == "Q"
+        return nil
+      else
+        input = input.to_i
+      end
+    end
+    relevant_song = table_data.find { |song_array| song_array[:index] == input}
+  end
+
+##################### API TO ENGLISH TRANSLATION
+
   def translate_key_from_api_to_user(input)
     MUSICAL_KEYS.invert[input]
   end
@@ -300,6 +306,21 @@ class CommandLineInterface
     end
   end
 
+#################### VISUAL
+
+  def greet
+    clear_screen
+    a = Artii::Base.new
+    puts Rainbow(a.asciify('               ( ( (   Playlist Creator')).green.bright
+  end
+
+  def goodbye
+    print_blank_lines(3)
+    indent(40)
+    puts "(" + Rainbow("づ").blink + "｡◕ ‿ ◕｡)" + Rainbow("づ  ♬ ♫ ♬ ♩ ♫ ♬ ♩ ").blink
+    print_blank_lines(5)
+  end
+
   def clear_screen
     system ("clear")
   end
@@ -316,22 +337,6 @@ class CommandLineInterface
     self.print_blank_lines(1)
     self.indent(40)
   end
-
-  def print_table(table_data)
-    greet
-    table(border: true) do
-      table_data.each do |row_array|
-        row do
-          column(row_array[:index], width: 3)
-          column(row_array[:song_name], width: 40, color: 'green')
-          column(row_array[:song_artists], width: 40, color: 'cyan')
-          column(row_array[:spotify_id], width: 23, color: 'green')
-        end
-      end
-    end
-  end
-
-
 
   def logo
     print_blank_lines(5)
