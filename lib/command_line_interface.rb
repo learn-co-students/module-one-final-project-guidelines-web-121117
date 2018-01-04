@@ -72,41 +72,59 @@ class CommandLineInterface
     puts "View playlists based on which parameter? ([A]ll or [Q]uit)"
     print_categories
     input = gets.chomp
-    if input == 'A'
+    if input == 'A' || input == 'a'
       greet
-      Playlist.all.each_with_index do |playlist, idx|
-        puts "#{idx + 1}. #{playlist.name}"
-      end
+      relevant_playlists = Playlist.all
+      make_playlist_table(relevant_playlists)
       print_songs_from_playlist_name
-    elsif input == 'Q'
+    elsif input == 'Q' || input == 'q'
       return
     elsif input.to_i > 0 && input.to_i < 10
       greet
       idx = input.to_i - 1
       parameter = CATEGORIES[idx]
       relevant_playlists = Playlist.where("#{parameter} IS NOT null")
-      table_data = []
       if parameter == :key
+        playlist_table_data = []
         relevant_playlists.each_with_index do |playlist, idx|
           translated_parameter_value = translate_key_from_api_to_user(playlist[parameter])
-          puts "#{idx + 1}. #{playlist.name} - #{parameter}: #{translated_parameter_value}"
+          playlist_table_data << {index: idx + 1, name: playlist.name, parameter: parameter, parameter_value: translated_parameter_value}
         end
+        make_playlist_table(playlist_table_data)
         print_songs_from_playlist_name
       elsif parameter == :mode
+        playlist_table_data = []
         relevant_playlists.each_with_index do |playlist, idx|
           translated_parameter_value = translate_mode_from_api_to_user(playlist[parameter])
-          puts "#{idx + 1}. #{playlist.name} - #{parameter}: #{translated_parameter_value}"
+          playlist_table_data << {index: idx + 1, name: playlist.name, parameter: parameter, parameter_value: translated_parameter_value}
         end
+        make_playlist_table(playlist_table_data)
         print_songs_from_playlist_name
       else
+        playlist_table_data = []
         relevant_playlists.each_with_index do |playlist, idx|
-          puts "#{idx + 1}. #{playlist.name} - #{parameter}: #{playlist[parameter]}"
+          translated_parameter_value = playlist[parameter]
+          playlist_table_data << {index: idx + 1, name: playlist.name, parameter: parameter, parameter_value: translated_parameter_value}
         end
+        make_playlist_table(playlist_table_data)
         print_songs_from_playlist_name
       end
     else
       puts "Please enter a valid choice!"
       view_menu
+    end
+  end
+
+  def make_playlist_table(playlist_table_data)
+    table(border: true) do
+      playlist_table_data.each do |row_array|
+        row do
+          column(row_array[:index], width: 3)
+          column(row_array[:name], width: 40, color: 'green')
+          column(row_array[:parameter], width: 40, color: 'white')
+          column(row_array[:parameter_value], width: 40, color: 'green')
+        end
+      end
     end
   end
 
