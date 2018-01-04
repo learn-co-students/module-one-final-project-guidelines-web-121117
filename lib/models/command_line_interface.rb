@@ -69,7 +69,11 @@ def main_menu(user)
     game_menu(user)
   when "log out"
     login_menu
+  when "8"
+    login_menu
   when "exit"
+    puts "Goodbye!"
+  when "9"
     puts "Goodbye!"
   else
     puts "Unknown option! Please try again."
@@ -420,6 +424,7 @@ def dice(user, friend)
 
   if friend_roll > player1
     puts "\nCongratulations #{friend}! You ROCK!"
+    puts "\nRematch!?(y/n)"
     inp = user_input.downcase
     if inp == 'y'
       dice(user, friend)
@@ -428,6 +433,7 @@ def dice(user, friend)
     end
   elsif friend_roll == player1
     puts "It's a DRAW! You both suck..."
+    puts "\nRematch!?(y/n)"
     inp = user_input.downcase
     if inp == 'y'
       dice(user, friend)
