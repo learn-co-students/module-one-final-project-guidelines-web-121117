@@ -359,7 +359,12 @@ def login_menu
       puts "Invalid user name!"
       login_menu
     elsif inp.match(/\d/)
-      puts "The username can't contain numbers!"
+      puts "\nThe username can't contain numbers!"
+      puts " "
+      login_menu
+    elsif inp.match(/ /)
+      puts "\nThe username can't contain spaces"
+      puts " "
       login_menu
     else
       puts "The user doesn't exists! Do you want to create a user with this username? (#{inp})(y/n)"
