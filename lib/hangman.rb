@@ -55,7 +55,7 @@ class Hangman
         puts ""
         puts "Congrats! You win!!!".colorize(:color=>:magenta, :mode=>:bold)
         puts ""
-        puts "٩(◕‿◕｡)۶".colorize(:color=>:magenta)
+        puts "٩(◕‿◕｡)۶".colorize(:color=>:blue)
         return main_menu
       end
       puts ""
