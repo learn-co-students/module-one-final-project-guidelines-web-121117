@@ -337,7 +337,7 @@ end
 
 ################################ 'LOGIN MENU' ###############################
 def login_menu
-  puts "Type your user name to log-in,\n'list' to list all users, or 'exit' to quit:"
+  puts "Type your user name to log-in,\n"+"'list'".colorize(:light_blue)+" to list all users, or "+"'exit'".colorize(:light_blue)+" to quit:"
   puts " "
   inp = user_input
   if user_names.include?(inp)
