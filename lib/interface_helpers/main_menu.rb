@@ -1,12 +1,15 @@
 module MainMenu
 
   def main_menu_options
+    system("clear")
+    greet
     puts "\n\nMAIN MENU".colorize(:red).underline
     puts "Choose from one of the follow categories to proceed:"
     puts "     Characters".colorize(:red) + " - explore the characters of the GoT Universe."
     puts "     Houses".colorize(:red) + " - explore the houses of the GoT Universe."
     puts "     Books".colorize(:red) + " - learn about the GoT Books."
     puts "     Regions".colorize(:red) + " - explore the regions of the GoT Universe."
+    puts "     Help".colorize(:red) + " - if you're having an issue, it might be the database."
     puts "     Exit".colorize(:red) + " - goodbye until next time."
     puts "\nPlease make a selection:"
     input = gets.downcase.chomp
@@ -27,6 +30,8 @@ module MainMenu
     elsif input == "regions"
       puts "\n\n'THEY CAN LIVE IN MY NEW WORLD, OR THEY CAN DIE IN THEIR OLD ONE' - Daenerys Targaryen".colorize(:cyan)
       regions_menu
+    elsif input == "help"
+      help_prompt
     elsif input == "manager"
       manager_menu
     elsif input == "exit"
