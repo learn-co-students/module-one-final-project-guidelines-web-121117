@@ -1,4 +1,5 @@
 class Hangman
+  include HelperMethods
   attr_accessor :movie_name
 
   def initialize
@@ -26,12 +27,13 @@ class Hangman
     while true
       puts ""
       puts "You have #{@lives} lives remaining!"
-      puts "Used letters: " + @used_letters.join(" ")
+      puts "Used letters: " + @used_letters.map(&:upcase).join(" ")
+      puts ""
       puts "Current Movie State: " + check_movie(@movie_name)
       puts ""
       puts "Please enter a letter:"
       letter = gets.chomp.downcase
-
+      return main_menu if letter == "exit"
       if !@movie_name.chars.include?(letter) || !@alphabet.include?(letter)
         puts "You entered an incorrect letter, YOU LOSE A LIFE!"
         @lives -= 1
@@ -50,7 +52,7 @@ class Hangman
       end
 
       @used_letters << letter
-      
+
       if check_movie(@movie_name).count("#") == 0
         puts ""
         puts check_movie(@movie_name)
