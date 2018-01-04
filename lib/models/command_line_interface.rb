@@ -1,4 +1,5 @@
 require 'pry'
+require 'colorize'
 def welcome
   puts "Welcome to out Group project. We hope you enjoy!"
 end
@@ -18,15 +19,15 @@ end
 def main_menu(user)
   puts "\n---------Main Menu---------"
   puts "Current User: #{user.name}"
-  puts "\n1.'Show all shows' to display all shows"
-  puts "2.'Find a show' to search for a selected show"
-  puts "3.'Write a review' to write a review for a selected show"
-  puts "4.'List my reviews' to see all the reviews of all the shows that you've made"
-  puts "5.'Recommended' to show 5 recommended shows based on your reviews"
-  puts "6.'Top Rated' to view 10 of the top rated shows"
-  puts "7.'Play' to play a game"
-  puts "\n8.'Log Out'"
-  puts "9.'Exit'"
+  puts "\n1".colorize(:light_red)+".'Show all shows'".colorize(:light_blue)+" to display all shows"
+  puts "2".colorize(:light_red)+".'Find a show'".colorize(:light_blue)+" to search for a selected show by it's number"
+  puts "3".colorize(:light_red)+".'Write a review'".colorize(:light_blue)+" to write a review for a selected show"
+  puts "4".colorize(:light_red)+".'List my reviews'".colorize(:light_blue)+" to see all the reviews of all the shows that you've made"
+  puts "5".colorize(:light_red)+".'Recommended'".colorize(:light_blue)+" to show 5 recommended shows based on your reviews"
+  puts "6".colorize(:light_red)+".'Top Rated'".colorize(:light_blue)+" to view 10 of the top rated shows"
+  puts "7".colorize(:light_red)+".'Play'".colorize(:light_blue)+" to play a game"
+  puts "\n8".colorize(:light_red)+".'Log Out'".colorize(:light_blue)
+  puts "9".colorize(:light_red)+".'Exit'".colorize(:light_blue)
 
   inp = user_input.downcase
 
@@ -84,11 +85,14 @@ end
 ################################### TV SHOW MENU ##############################
 def tv_show_menu(user)
 
-  puts "\nBack"
-  puts "\nEnter a show's number to get it's information, or 'back' to go back to the menu"
+  puts "\n'Back' to go back to the main menu"
+  puts "\nEnter a show's number to get it's information,\n'list' to list all shows, or 'back' to go back to the menu"
   inp = user_input.downcase
   if inp == 'back'
     main_menu(user)
+  elsif inp == 'list'
+    list_all_tv_shows
+    tv_show_menu(user)
   else
     inp = inp.to_i
     if inp <= 0 || inp > all_tv_shows.size
@@ -269,6 +273,8 @@ def top_rated(user)
   sorted_array = TvShow.order(rating: :desc).limit(10)
   final_array = sorted_array.map {|show| "#{show.name}: #{show.rating}"}
   list_all(final_array)
+  puts "\nPress 'return' to go back to the main menu"
+  inp = gets.chomp
   main_menu(user)
 end
 ################################ 'REVIES MENU' #############################
@@ -314,7 +320,7 @@ def list_all_tv_shows
   ind = 0
   list = TvShow.all.collect do |show|
     ind += 1
-    "#{ind}.#{show.name}"
+    "#{ind}".colorize(:light_red)+".#{show.name}"
   end
   list.each {|show| puts show}
   list
@@ -331,23 +337,39 @@ end
 
 ################################ 'LOGIN MENU' ###############################
 def login_menu
-  puts "\nWelcome to the login menu. Type your user name to log-in, or 'exit' to quit:"
-  list_all(user_names)
+  puts "Type your user name to log-in,\n'list' to list all users, or 'exit' to quit:"
   puts " "
   inp = user_input
   if user_names.include?(inp)
     user = User.find_by(name: inp)
     main_menu(user)
+  elsif inp.downcase == 'list'
+    puts "\nAll Users:"
+    puts " "
+    user_names.each do |user_name|
+      print "- "
+      puts "#{user_name}".colorize(:light_blue)
+    end
+    puts " "
+    login_menu
   elsif inp.downcase == "exit"
     puts "Goodbye!"
   else
-    puts "The user doesn't exists! Do you want to create a user with this username? (#{inp})(y/n)"
-    inp2 = user_input
-    if inp2 == 'y'
-      user = User.create(name: inp)
-      main_menu(user)
-    else
+    if inp.split(" ").empty?
+      puts "Invalid user name!"
       login_menu
+    elsif inp.match(/\d/)
+      puts "The username can't contain numbers!"
+      login_menu
+    else
+      puts "The user doesn't exists! Do you want to create a user with this username? (#{inp})(y/n)"
+      inp2 = user_input
+      if inp2 == 'y'
+        user = User.create(name: inp)
+        main_menu(user)
+      else
+        login_menu
+      end
     end
   end
 end
