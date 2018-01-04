@@ -52,9 +52,12 @@ class CommandLineInterface
       print_blank_lines(2)
       indent(40)
       puts "Playlist Created!" + "       ♬ ♫  ᕦ(ò_óˇ)ᕤ ♬ ♫ "
-      sleep(2)
+      sleep(1.5)
       greet
-      main_menu
+      playlist_table_data = get_data_for_relevant_playlist(parameter)
+        make_playlist_table(playlist_table_data)
+        selected_playlist = user_select_playlist
+        print_songs_from_playlist_name(selected_playlist)
     elsif user_input == 2
       greet
       view_menu
@@ -76,44 +79,47 @@ class CommandLineInterface
       greet
       relevant_playlists = Playlist.all
       make_playlist_table(relevant_playlists)
-      print_songs_from_playlist_name
+      selected_playlist = user_select_playlist
+      print_songs_from_playlist_name(selected_playlist)
     elsif input == 'Q' || input == 'q'
       return
     elsif input.to_i > 0 && input.to_i < 10
       greet
       idx = input.to_i - 1
       parameter = CATEGORIES[idx]
-      relevant_playlists = Playlist.where("#{parameter} IS NOT null")
-      if parameter == :key
-        playlist_table_data = []
-        relevant_playlists.each_with_index do |playlist, idx|
-          translated_parameter_value = translate_key_from_api_to_user(playlist[parameter])
-          playlist_table_data << {index: idx + 1, name: playlist.name, parameter: parameter, parameter_value: translated_parameter_value}
-        end
+      playlist_table_data = get_data_for_relevant_playlist(parameter)
         make_playlist_table(playlist_table_data)
-        print_songs_from_playlist_name
-      elsif parameter == :mode
-        playlist_table_data = []
-        relevant_playlists.each_with_index do |playlist, idx|
-          translated_parameter_value = translate_mode_from_api_to_user(playlist[parameter])
-          playlist_table_data << {index: idx + 1, name: playlist.name, parameter: parameter, parameter_value: translated_parameter_value}
-        end
-        make_playlist_table(playlist_table_data)
-        print_songs_from_playlist_name
-      else
-        playlist_table_data = []
-        relevant_playlists.each_with_index do |playlist, idx|
-          translated_parameter_value = playlist[parameter]
-          playlist_table_data << {index: idx + 1, name: playlist.name, parameter: parameter, parameter_value: translated_parameter_value}
-        end
-        make_playlist_table(playlist_table_data)
-        print_songs_from_playlist_name
-      end
+        selected_playlist = user_select_playlist
+        print_songs_from_playlist_name(selected_playlist)
     else
       puts "Please enter a valid choice!"
       view_menu
     end
   end
+
+  def get_data_for_relevant_playlist(parameter)
+    relevant_playlists = Playlist.where("#{parameter} IS NOT null")
+    playlist_table_data = []
+    if parameter == :key
+      relevant_playlists.each_with_index do |playlist, idx|
+        translated_parameter_value = translate_key_from_api_to_user(playlist[parameter])
+        playlist_table_data << {index: idx + 1, name: playlist.name, parameter: parameter, parameter_value: translated_parameter_value}
+      end
+    elsif parameter == :mode
+      relevant_playlists.each_with_index do |playlist, idx|
+        translated_parameter_value = translate_mode_from_api_to_user(playlist[parameter])
+        playlist_table_data << {index: idx + 1, name: playlist.name, parameter: parameter, parameter_value: translated_parameter_value}
+      end
+    else
+      relevant_playlists.each_with_index do |playlist, idx|
+        translated_parameter_value = playlist[parameter]
+        playlist_table_data << {index: idx + 1, name: playlist.name, parameter: parameter, parameter_value: translated_parameter_value}
+      end
+    end
+    playlist_table_data
+  end
+
+
 
   def make_playlist_table(playlist_table_data)
     table(border: true) do
@@ -142,8 +148,7 @@ class CommandLineInterface
       puts "Playlist Deleted!" + "(╯°□°）╯︵ ┻━┻"
   end
 
-
-  def print_songs_from_playlist_name
+  def user_select_playlist
     selected_playlist = nil
     until selected_playlist != nil
       print_blank_lines(2)
@@ -152,6 +157,10 @@ class CommandLineInterface
       name_input = get_string.titleize
       selected_playlist = Playlist.find_by(name: name_input)
     end
+    selected_playlist
+  end
+
+  def print_songs_from_playlist_name(selected_playlist)
     table_data = selected_playlist.create_songs_table
     print_table(table_data)
     song_choice = get_song_choice_from_user(table_data)
