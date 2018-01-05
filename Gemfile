@@ -8,3 +8,4 @@ gem "require_all"
 gem 'json'
 gem 'rest-client'
 gem 'colorize'
+gem 'artii'

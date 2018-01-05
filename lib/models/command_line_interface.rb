@@ -1,8 +1,11 @@
 require 'pry'
 require 'colorize'
-require_relative 'tv_show'
+
+arter = Artii::Base.new
+puts arter.asciify("welcome").colorize(:blue)
+
 def welcome
-  puts "Welcome to out Group project. We hope you enjoy!"
+  puts "Welcome to our group project. We hope you enjoy!".colorize(:light_yellow)
 end
 
 def user_input
@@ -10,17 +13,16 @@ def user_input
   input = gets.chomp
   input.to_s
 end
-
 ################################# MAIN MENU #################################
 def main_menu(user)
-  puts "\n---------Main Menu---------"
+  puts "\n---------Main Menu---------".colorize(:blue)
   puts "Current User: #{user.name}"
-  puts "\n1".colorize(:light_red)+".'Show all shows'".colorize(:light_blue)+" to display all shows"
-  puts "2".colorize(:light_red)+".'Write a review'".colorize(:light_blue)+" to write a review for a selected show"
-  puts "3".colorize(:light_red)+".'List my reviews'".colorize(:light_blue)+" to see all the reviews of all the shows that you've made"
+  puts "\n1".colorize(:light_red)+".'Show All Shows'".colorize(:light_blue)+" to display all shows"
+  puts "2".colorize(:light_red)+".'Write a Review'".colorize(:light_blue)+" to write a review for a selected show"
+  puts "3".colorize(:light_red)+".'List My Reviews'".colorize(:light_blue)+" to see all the reviews of all the shows that you've made"
   puts "4".colorize(:light_red)+".'Recommended'".colorize(:light_blue)+" to show 5 recommended shows based on your reviews"
   puts "5".colorize(:light_red)+".'Top Rated'".colorize(:light_blue)+" to view 10 of the top rated shows"
-  puts "6".colorize(:light_red)+".'Play'".colorize(:light_blue)+" to play a game"
+  puts "6".colorize(:light_red)+".'Play'".colorize(:light_blue)+" to play a game of dice"
   puts "\n7".colorize(:light_red)+".'Log Out'".colorize(:light_blue)
   puts "8".colorize(:light_red)+".'Exit'".colorize(:light_blue)
 
@@ -49,8 +51,8 @@ def main_menu(user)
   when "recommended" then recommended_shows(user)
   when "5" then top_rated(user)
   when "top rated" then top_rated(user)
-  when "6" then game_menu(user)
-  when 'play' then game_menu(user)
+  when "6" then welcome_to_dice_game(user)
+  when 'play' then welcome_to_dice_game(user)
   when "log out" then login_menu
   when "7" then login_menu
   when "exit" then puts "Goodbye!"
@@ -64,7 +66,7 @@ end
 ################################### TV SHOW MENU ##############################
 def tv_show_menu(user)
 
-  puts "\n'Back'".colorize(:light_blue)+" to go back to the main menu"
+  puts "\n'back'".colorize(:light_blue)+" to go back to the main menu"
   puts "\nEnter a show's number to get it's information,\n"+"'list'".colorize(:light_blue)+" to list all shows, or "+"'back'".colorize(:light_blue)+" to go back to the menu"
   inp = user_input.downcase
 
@@ -90,7 +92,7 @@ def tv_show_menu(user)
           if show.rating
             puts " "
             puts show.rating
-            puts "\nGet another show?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
+            puts "\nGet another show?("+"y".colorize(:green)+"/"+"n".colorize(:red)+")"
             puts " "
             inp3 = user_input.downcase
             inp3 == 'y' ? tv_show_menu(user) : main_menu(user)
@@ -104,14 +106,14 @@ def tv_show_menu(user)
         elsif inp2 == "genre"
           puts " "
           puts show.genre
-          puts "\nGet another show?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
+          puts "\nGet another show?("+"y".colorize(:green)+"/"+"n".colorize(:red)+")"
           puts " "
           inp3 = user_input.downcase
           inp3 == 'y' ? tv_show_menu(user) : main_menu(user)
         elsif inp2 == 'status'
           puts " "
           puts show.status
-          puts "\nGet another show?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
+          puts "\nGet another show?("+"y".colorize(:green)+"/"+"n".colorize(:red)+")"
           puts " "
           inp3 = user_input.downcase
           inp3 == 'y' ? tv_show_menu(user) : main_menu(user)
@@ -120,14 +122,14 @@ def tv_show_menu(user)
           if show.reviews.empty?
             puts " "
             puts "The show has no reviews."
-            puts "\nGet another show?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
+            puts "\nGet another show?("+"y".colorize(:green)+"/"+"n".colorize(:red)+")"
             puts " "
             inp3 = user_input.downcase
             inp3 == 'y' ? tv_show_menu(user) : main_menu(user)
           else
             puts " "
             show.reviews.each.with_index(1) {|rev, ind| puts "#{ind}.'#{rev.review}' by #{rev.user.name}"}
-            puts "\nGet another show?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
+            puts "\nGet another show?("+"y".colorize(:green)+"/"+"n".colorize(:red)+")"
             puts " "
             inp3 = user_input.downcase
             inp3 == 'y' ? tv_show_menu(user) : main_menu(user)
@@ -157,11 +159,11 @@ def recommended_shows(user)
     recommended_array_names = recommended_by_rating.map {|show| "#{show.name}: #{show.rating}"}
     puts " "
     list_all(recommended_array_names)
-    puts "\nGet 5 more recommendations?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
+    puts "\nGet 5 more recommendations?("+"y".colorize(:green)+"/"+"n".colorize(:red)+")"
     inp = user_input.downcase
     inp == 'y' ? recommended_shows(user) : main_menu(user)
   else
-    puts "\nThere are no recommendations for you! Do you want to pick a genre?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
+    puts "\nThere are no recommendations for you! Do you want to pick a genre?("+"y".colorize(:green)+"/"+"n".colorize(:red)+")"
     inp = user_input.downcase
 
     if inp == 'y'
@@ -219,7 +221,7 @@ def top_rated(user)
   sorted_array = TvShow.order(rating: :desc).limit(10)
   final_array = sorted_array.map {|show| "#{show.name}: #{show.rating}"}
   list_all(final_array)
-  puts "\nPress 'return' to go back to the main menu"
+  puts "\nPress "+"'back'".colorize(:light_blue)+" to go back to the main menu"
   inp = gets.chomp
   main_menu(user)
 end
@@ -235,7 +237,7 @@ def review_menu(user)
 end
 ################################ ARRAYS #############################
 def list_all(array)
-  array.each_with_index {|element, ind| puts "#{ind + 1}. #{element}"}
+  array.each_with_index {|element, ind| puts "#{ind + 1}.".colorize(:light_red)+"#{element}".colorize(:light_blue)}
 end
 
 def all_reviews(user)
@@ -288,29 +290,17 @@ def login_menu
     end
   end
 end
-################################ 'GAME MENU' ###############################
-def game_menu(user)
-  puts "\n------------Game Menu------------".colorize(:yellow)
-  puts "\n1".colorize(:light_red)+". "+"Type "+"'dice'".colorize(:light_blue)+" to play dice"
-  puts "\n'back'".colorize(:light_blue)+" to go back to the main menu"
-  inp = user_input.downcase
-
-  case inp
-  when "dice"
-    puts "\nWelcome to the dice game"
-    play_dice(user)
-  when "1"
-    puts "\nWelcome to the dice game"
-    play_dice(user)
-  when "back"
-    main_menu(user)
-  else
-    puts "Unknown command!"
-    game_menu(user)
-  end
-end
 ################################ 'DICE GAME' ###############################
-def play_dice(user)
+
+def welcome_to_dice_game(user)
+  puts " "
+  arter = Artii::Base.new
+  puts arter.asciify("welcome to dice").colorize(:yellow)
+  game(user)
+end
+
+def game(user)
+  puts "\n------------Game Menu------------".colorize(:blue)
   puts "\nDo you want to play vs "+"'computer'".colorize(:light_blue)+" or vs "+"'friend'".colorize(:light_blue)+""
   puts "or do you want to go "+"'back'".colorize(:light_blue)+" to the game menu"
   puts " "
@@ -318,61 +308,79 @@ def play_dice(user)
 
   case inp
   when 'computer'
-    puts "#{user.name}, press 'return' to roll your dice"
+    puts "#{user.name}, press"+" 'return'".colorize(:blue)+" to roll your dice"
     u_input = gets.chomp
     puts " "
     player1 = rand(6) + 1
-    puts "#{user.name}, you rolled a #{player1}."
+    puts "#{user.name}, you rolled a #{player1}.".colorize(:light_blue)
     com = rand(6) + 1
-    puts "The computer rolled a #{com}."
+    puts "The computer rolled a #{com}.".colorize(:light_yellow)
     if player1 > com
-      puts "\nCongratulations #{user.name}! You won!"
-      play_dice(user)
+      puts "\nCongratulations #{user.name}! You won!".colorize(:yellow)
+      puts " "
+      puts "  ƪ(˘⌣˘)ʃ ".colorize(:yellow)+"ƪ(˘⌣˘)┐".colorize(:yellow)+"┌(˘⌣˘)ʃ".colorize(:yellow)
+      game(user)
     elsif player1 == com
-      puts "It's a DRAW! Miserable..."
-      play_dice(user)
+      puts " "
+      puts "It's a DRAW! Miserable...(╯°□°）╯︵ ┻━┻".colorize(:yellow)
+      game(user)
     else
-      puts "BOOOO #{user.name}! You lost... miserably..."
-      play_dice(user)
+      puts " "
+      puts "BOOOO #{user.name}! You lost... miserably...(ノಠ ∩ಠ)ノ彡( o°o) ".colorize(:yellow)
+      puts " "
+      puts"    "+"████▌▄▌▄▐▐▌█████".colorize(:yellow)
+      puts"    "+"████▌▄▌▄▐▐▌▀████".colorize(:yellow)
+      puts"    "+"▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀".colorize(:yellow)
+      game(user)
     end
   when 'friend'
     print "\nInsert the name of your friend: "
+    puts " "
     friend = gets.chomp.to_s
     dice(user, friend)
-  when 'back' then game_menu(user)
+  when 'back' then main_menu(user)
   else
     puts "Unknown option!"
-    play_dice(user)
+    game(user)
   end
 end
 
 def dice(user, friend)
-  puts "#{friend}, press 'return' to roll your dice"
+  puts "#{friend}, press"+" 'return'".colorize(:blue)+" to roll your dice"
   u_input = gets.chomp
   puts " "
   friend_roll = rand(6) + 1
-  puts "#{friend}, you rolled a #{friend_roll}."
-
-  puts "#{user.name}, press 'return' to roll your dice"
+  puts "#{friend}, you rolled a #{friend_roll}.".colorize(:yellow)
+  puts " "
+  puts "#{user.name}, press"+" 'return'".colorize(:blue)+" to roll your dice"
   u_input = gets.chomp
   puts " "
   player1 = rand(6) + 1
-  puts "#{user.name}, you rolled a #{player1}."
+  puts "#{user.name}, you rolled a #{player1}.".colorize(:blue)
+  puts " "
 
   if friend_roll > player1
-    puts "\nCongratulations #{friend}! You ROCK!"
-    puts "\nRematch!?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
+    puts "\nCongratulations #{friend}! You ROCK!".colorize(:yellow)
+    puts " "
+    puts " ┗( ^o^)┛ ≡ ┏( ^o^)┓ ≡ ┗( ^o^)┛ ".colorize(:yellow)
+    puts " "
+    puts "\nRematch!?("+"y".colorize(:green)+"/"+"n".colorize(:red)+")"
     inp = user_input.downcase
-    inp == 'y' ? dice(user, friend) : play_dice(user)
+    inp == 'y' ? dice(user, friend) : game(user)
   elsif friend_roll == player1
+    puts " "
     puts "It's a DRAW! You both suck..."
-    puts "\nRematch!?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
+    puts "ヽ(#ﾟДﾟ)ﾉ┌┛Σ(ノ´Д`)ノ".colorize(:yellow)
+    puts " "
+    puts "\nRematch!?("+"y".colorize(:green)+"/"+"n".colorize(:red)+")"
     inp = user_input.downcase
-    inp == 'y' ? dice(user, friend) : play_dice(user)
+    inp == 'y' ? dice(user, friend) : game(user)
   else
-    puts "\nGood job #{user.name}. Don't worry #{friend} you'll get him next time!"
-    puts "\nRematch!?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
+    puts " "
+    puts "\nGood job #{user.name}. Don't worry #{friend} you'll get him next time!".colorize(:yellow)
+    puts " "
+    puts "\nRematch!?("+"y".colorize(:green)+"/"+"n".colorize(:red)+")"
     inp = user_input.downcase
-    inp == 'y' ? dice(user, friend) : play_dice(user)
+    inp == 'y' ? dice(user, friend) : game(user)
   end
 end
