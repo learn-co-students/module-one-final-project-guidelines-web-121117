@@ -54,7 +54,12 @@ class CommandLineInterface
     puts "Playlist Created!" + "       ♬ ♫  ᕦ(ò_óˇ)ᕤ ♬ ♫ "
     sleep(1)
     greet
-    print_songs_from_playlist_name(new_playlist)
+    continue = true
+    while continue
+      clear_screen
+      greet
+      continue = print_songs_from_playlist_name(new_playlist)
+    end
   end
 
   def view_menu
@@ -108,7 +113,10 @@ class CommandLineInterface
       selected_playlist = Playlist.find_by(name: name_input)
     end
     Playlist.destroy(selected_playlist.id)
-    puts "Playlist Deleted!" + "(╯°□°）╯︵ ┻━┻"
+    print_blank_lines(3)
+    indent(40)
+    puts "Playlist Deleted!" + "          (╯°□°）╯︵ ┻━┻"
+    print_blank_lines(5)
   end
 
 ####### OUTPUT TABLES
