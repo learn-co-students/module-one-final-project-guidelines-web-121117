@@ -202,9 +202,17 @@ W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::
   end
 
   def find_book(input)
-    book = Book.all.find do |book|
-      book.name.downcase == input.downcase
+    query = ["%",input,"%"].join
+    books = Book.where(["name LIKE ?", query])
+    while books.empty?
+      puts"Not found. Try again."
+      input = gets.chomp
+      books = Book.where(["name LIKE ?", query])
     end
+    books.each_with_index{|house, idx| puts "#{idx}. #{house.name}"}
+    puts "Enter the number of the matching house."
+    response = gets.chomp.to_i
+    book = books[response]
     while !book
       puts "\nThis is not currently a book in the GoT Universe. Try Again"
       pre_find_book
@@ -222,9 +230,18 @@ W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::
   end
 
   def find_region(input)
-    region = Region.all.find do |region|
-      region.name.downcase == input.downcase
+    query = ["%",input,"%"].join
+    regions = Region.where(["name LIKE ?", query])
+    binding.pry
+    while regions.empty?
+      puts"Not found. Try again."
+      input = gets.chomp
+      regions = Region.where(["name LIKE ?", query])
     end
+    regions.each_with_index{|house, idx| puts "#{idx}. #{house.name}"}
+    puts "Enter the number of the matching house."
+    response = gets.chomp.to_i
+    region = regions[response]
     while region == nil
       puts "This is not currently a region in the GoT Universe. Try Again."
       pre_find_region
