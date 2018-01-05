@@ -92,8 +92,8 @@ G:::::G    GGGGG::::G    O:::::O     O:::::O          T:::::T
   end
 
   def all_books_with_info
-    Book.all.each do |book|
-      puts "#{book.id}. #{book.name} - total pages: #{book.total_pages}, release date: #{book.release_date}."
+    Book.all.sort_by{|book| book.release_date}.each_with_index do |book, idx|
+      puts "#{idx + 1}. #{book.name} - total pages: #{book.total_pages}, release date: #{book.release_date}."
     end
   end
 
@@ -116,7 +116,7 @@ G:::::G    GGGGG::::G    O:::::O     O:::::O          T:::::T
     query = ["%",input,"%"].join
     characters = Character.where(["name LIKE ?", query])
     while characters.empty?
-      puts "\nWe could not find the character you put in. Try again:"
+      puts "\nWe could not find the character you put in. Please try with the first letter:"
       input = gets.chomp
       query = ["%",input,"%"].join
       characters = Character.where(["name LIKE ?", query])
@@ -162,7 +162,7 @@ G:::::G    GGGGG::::G    O:::::O     O:::::O          T:::::T
     query = ["%",input,"%"].join
     houses = House.where(["name LIKE ?", query])
     while houses.empty?
-      puts "\nWe could not find the house you put in. Try again:"
+      puts "\nWe could not find the house you put in. Please try with the first letter:"
       input = gets.chomp
       query = ["%",input,"%"].join
       houses = House.where(["name LIKE ?", query])
@@ -201,7 +201,7 @@ G:::::G    GGGGG::::G    O:::::O     O:::::O          T:::::T
     query = ["%",input,"%"].join
     books = Book.where(["name LIKE ?", query])
     while books.empty?
-      puts "\nWe could not find the book you put in. Try again:"
+      puts "\nWe could not find the book you put in. Please try with the first letter:"
       input = gets.chomp
       query = ["%",input,"%"].join
       books = Book.where(["name LIKE ?", query])
@@ -231,7 +231,7 @@ G:::::G    GGGGG::::G    O:::::O     O:::::O          T:::::T
     query = ["%",input,"%"].join
     regions = Region.where(["name LIKE ?", query])
     while regions.empty?
-      puts "\nWe could not find the region you put in. Try again:"
+      puts "\nWe could not find the region you put in. Please try with the first letter:"
       input = gets.chomp
       query = ["%",input,"%"].join
       regions = Region.where(["name LIKE ?", query])
