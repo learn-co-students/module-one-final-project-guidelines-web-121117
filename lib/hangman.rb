@@ -38,6 +38,10 @@ class Hangman
       letter = gets.chomp.downcase
       return main_menu if letter == "exit"
 
+      if @used_letters.empty?
+        hangman_man
+      end
+
       if !@movie_name.chars.include?(letter) || !@alphabet.include?(letter)
         puts "You entered an incorrect letter, YOU LOSE A LIFE!"
         @lives -= 1
