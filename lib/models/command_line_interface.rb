@@ -1,6 +1,6 @@
 require 'pry'
 require 'colorize'
-
+require_relative 'tv_show'
 def welcome
   puts "Welcome to out Group project. We hope you enjoy!"
 end
@@ -29,19 +29,19 @@ def main_menu(user)
   case inp
   when "1"
     puts "\nAll Shows:"
-    list_all_tv_shows
+    TvShow.list_all_tv_shows
     tv_show_menu(user)
   when "show all shows"
     puts "\nAll Shows:"
-    list_all_tv_shows
+    TvShow.list_all_tv_shows
     tv_show_menu(user)
   when "2"
     puts "\nAll Shows:"
-    list_all_tv_shows
+    TvShow.list_all_tv_shows
     add_review(user)
   when "write a review"
     puts "\nAll Shows:"
-    list_all_tv_shows
+    TvShow.list_all_tv_shows
     add_review(user)
   when "3" then review_menu(user)
   when "list my reviews" then review_menu(user)
@@ -71,17 +71,17 @@ def tv_show_menu(user)
   if inp == 'back'
     main_menu(user)
   elsif inp == 'list'
-    list_all_tv_shows
+    TvShow.list_all_tv_shows
     tv_show_menu(user)
   else
     inp = inp.to_i
-    if inp <= 0 || inp > all_tv_shows.size
+    if inp <= 0 || inp > TvShow.all_tv_shows.size
       puts "Invalid index! Choose again..."
       tv_show_menu(user)
     else
-      show = all_tv_shows[inp - 1]
+      show = TvShow.all_tv_shows[inp - 1]
 
-      if all_tv_shows.include?(show)
+      if TvShow.all_tv_shows.include?(show)
         puts "\nShow name: #{show.name}"
         puts "\n'rating'".colorize(:light_blue)+", "+"'genre'".colorize(:light_blue)+", "+"'status'".colorize(:light_blue)+", "+"'reviews'".colorize(:light_blue)+", or "+"'back'".colorize(:light_blue)
         inp2 = user_input.downcase
@@ -165,10 +165,10 @@ def recommended_shows(user)
     inp = user_input.downcase
 
     if inp == 'y'
-      puts "Existing genres: #{all_genres_array.join(", ")}"
+      puts "Existing genres: #{TvShow.all_genres_array.join(", ")}"
       inp2 = user_input.downcase
       most_rated_genre = inp2.capitalize
-      if all_genres_array.include?(most_rated_genre)
+      if TvShow.all_genres_array.include?(most_rated_genre)
         recommended_array = TvShow.all.select{|show| show.genre == most_rated_genre}.sample(5)
         recommended_by_rating = recommended_array.sort_by{|show| show.rating}.reverse
         recommended_array_names = recommended_by_rating.map {|show| "#{show.name}: #{show.rating}"}
@@ -194,11 +194,11 @@ def add_review(user)
     main_menu(user)
   else
     inp = inp.to_i
-    if inp <= 0 || inp > all_tv_shows.size
+    if inp <= 0 || inp > TvShow.all_tv_shows.size
       puts "Invalid index! Choose again..."
       add_review(user)
     else
-      show = all_tv_shows[inp - 1]
+      show = TvShow.all_tv_shows[inp - 1]
       puts "Insert a review for the show #{show.name}, or "+"'back'".colorize(:light_blue)+" to go back to the main menu"
       inp2 = user_input
       if inp2.downcase == "back"
@@ -245,35 +245,18 @@ def all_reviews(user)
     user.reviews.each { |review_instance| puts "'#{review_instance.review}': #{review_instance.tv_show.name}" }
   end
 end
-
-def all_genres_array
-  TvShow.all.map {|show| show.genre}.uniq.compact
-end
-
-def all_tv_shows
-  TvShow.all.map{|show| show}
-end
-
-def list_all_tv_shows
-  TvShow.all.each.with_index(1) {|show, ind| puts "#{ind}".colorize(:light_red)+".#{show.name}"}
-end
-
-def user_names
-  User.all.map {|user| user.name}
-end
-
 ################################ 'LOGIN MENU' ###############################
 def login_menu
   puts "Type your user name to log-in,\n"+"'list'".colorize(:light_blue)+" to list all users, or "+"'exit'".colorize(:light_blue)+" to quit:"
   puts " "
   inp = user_input
-  if user_names.include?(inp)
+  if User.user_names.include?(inp)
     user = User.find_by(name: inp)
     main_menu(user)
   elsif inp.downcase == 'list'
     puts "\nAll Users:"
     puts " "
-    user_names.each do |user_name|
+    User.user_names.each do |user_name|
       print "- "
       puts "#{user_name}".colorize(:light_blue)
     end
@@ -356,8 +339,7 @@ def play_dice(user)
     print "\nInsert the name of your friend: "
     friend = gets.chomp.to_s
     dice(user, friend)
-  when 'back'
-    game_menu(user)
+  when 'back' then game_menu(user)
   else
     puts "Unknown option!"
     play_dice(user)
