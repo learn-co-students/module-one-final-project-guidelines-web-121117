@@ -1,7 +1,9 @@
 module RegionMenu
 
   def regions_menu_options
-    puts "\nREGION MENU".colorize(:cyan).underline
+    m = Artii::Base.new
+    puts "\n"
+    puts m.asciify("REGION MENU").colorize(:cyan)
     puts "Choose from one of the following categories to proceed:"
     puts "     Regions".colorize(:cyan) + " - see all regions in the GoT universe."
     puts "     Specific".colorize(:cyan) + " - search a specific region of the GoT Universe."

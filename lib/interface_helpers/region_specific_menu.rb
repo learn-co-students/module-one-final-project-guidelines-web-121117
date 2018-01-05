@@ -35,7 +35,9 @@ module RegionSpecificMenu
   end
 
   def region_specifics_menu_options
-    puts "\nSEARCH REGION MENU".colorize(:cyan).underline
+    m = Artii::Base.new
+    puts "\n"
+    puts m.asciify("SEARCH REGION MENU").colorize(:cyan)
     puts "Choose from one of the following categories to proceed:"
     puts "     Characters".colorize(:cyan) + " - see which characters belong to a specific house."
     puts "     Houses".colorize(:cyan) + " - see how many members of a specific gender belong to a specific house."

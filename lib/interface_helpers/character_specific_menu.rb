@@ -36,7 +36,9 @@ module CharacterSpecificMenu
 
 
   def character_specifics_menu_options
-    puts "\nSEARCH CHARACTER MENU".colorize(:blue).underline
+    m = Artii::Base.new
+    puts "\n"
+    puts m.asciify("SEARCH CHARACTER MENU").colorize(:blue)
     puts "Choose from one of the following categories to proceed:"
     puts "     Gender".colorize(:blue) + " - find gender of a specific character."
     puts "     Birth".colorize(:blue) + " - find birth year of a specific character."

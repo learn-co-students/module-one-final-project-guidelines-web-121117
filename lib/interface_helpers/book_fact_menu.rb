@@ -1,7 +1,9 @@
 module BookFactMenu
 
   def book_facts_menu_options
-    puts "\nBOOK FACTS MENU".colorize(:magenta).underline
+    m = Artii::Base.new
+    puts "\n"
+    puts m.asciify("BOOK FACTS MENU").colorize(:magenta)
     puts "Choose from one of the following categories to proceed:"
     puts "     Most".colorize(:magenta) + " - find the GoT book with the most pages."
     puts "     Least".colorize(:magenta) + " - find the GoT book with the least pages."

@@ -36,7 +36,9 @@ module HouseSpecificMenu
 
 
   def house_specifics_menu_options
-    puts "\nSEARCH HOUSE MENU".colorize(:green).underline
+    m = Artii::Base.new
+    puts "\n"
+    puts m.asciify("SEARCH HOUSE MENU").colorize(:green)
     puts "Choose from one of the following categories to proceed:"
     puts "     Characters".colorize(:green) + " - see which characters belong to a specific house."
     puts "     Gender".colorize(:green) + " - see how many members of a specific gender belong to a specific house."

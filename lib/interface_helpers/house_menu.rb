@@ -1,7 +1,9 @@
 module HouseMenu
 
   def houses_menu_options
-    puts "\nHOUSE MENU".colorize(:green).underline
+    m = Artii::Base.new
+    puts "\n"
+    puts m.asciify("HOUSE MENU").colorize(:green)
     puts "Choose from one of the following categories to proceed:"
     puts "     Houses".colorize(:green) + " - see all houses of the GoT Universe."
     puts "     Specific".colorize(:green) + " - search a specific house of the GoT Universe."

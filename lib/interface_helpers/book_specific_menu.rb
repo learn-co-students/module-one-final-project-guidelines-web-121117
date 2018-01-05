@@ -35,7 +35,9 @@ module BookSpecificMenu
   end
 
   def book_specifics_menu_options
-    puts "\nSEARCH BOOK MENU".colorize(:magenta).underline
+    m = Artii::Base.new
+    puts "\n"
+    puts m.asciify("SEARCH BOOK MENU").colorize(:magenta)
     puts "Choose from one of the following categories to proceed:"
     puts "     Characters".colorize(:magenta) + " - see which characters appear in a specific Got book."
     puts "     Pages".colorize(:magenta) + " - find the amount of pages in a specific GoT Book."

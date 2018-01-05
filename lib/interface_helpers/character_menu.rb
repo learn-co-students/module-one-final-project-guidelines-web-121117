@@ -1,7 +1,9 @@
 module CharacterMenu
 
   def characters_menu_options
-    puts "\nCHARACTER MENU".colorize(:blue).underline
+    m = Artii::Base.new
+    puts "\n"
+    puts m.asciify("CHARACTER MENU").colorize(:blue)
     puts "Choose from one of the following categories to proceed:"
     puts "     Characters".colorize(:blue) + " - see all characters of the GoT Universe."
     puts "     Specific".colorize(:blue) + " - search a specific character of the GoT Universe."

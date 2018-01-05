@@ -1,7 +1,9 @@
 module BookMenu
 
   def books_menu_options
-    puts "\nBOOK MENU".colorize(:magenta).underline
+    m = Artii::Base.new
+    puts "\n"
+    puts m.asciify("BOOK MENU").colorize(:magenta)
     puts "Choose from one of the following categories to proceed:"
     puts "     Books".colorize(:magenta) + " - see all GoT books."
     puts "     Specific".colorize(:magenta) + " - search a specific book of the GoT Universe."
