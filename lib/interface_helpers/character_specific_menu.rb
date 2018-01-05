@@ -10,8 +10,10 @@ module CharacterSpecificMenu
     puts "\nDo you know which character you would like to search? Put 'Y' or 'N'."
     user_input = gets.downcase.chomp
     if user_input == 'y'
-      puts "\nPlease type character name to search:"
+      puts "\nGreat! Please put in a character name or first few letters of the character's name"
+      puts "and we will try to populate the closest matches for you to choose from:"
       character_choice = gets.chomp
+      puts "\nHere are the matches we could generate:"
       character = find_character(character_choice)
       character
     elsif user_input == 'n'

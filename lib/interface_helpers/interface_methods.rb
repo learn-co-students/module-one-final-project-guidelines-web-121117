@@ -126,7 +126,7 @@ W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::
     query = ["%",input,"%"].join
     characters = Character.where(["name LIKE ?", query])
     characters.each_with_index{|char, idx| puts "#{idx}. #{char.name}"}
-    puts "Enter the number of the matching character"
+    puts "\nEnter the number of the matching character"
     response = gets.chomp.to_i
     while !(response.integer?)
       puts "Try again."
