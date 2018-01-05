@@ -121,10 +121,18 @@ W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::
     puts "\nType selection here:"
   end
 
+#adjusting
   def find_character(input)
-    character = Character.all.find do |character|
-      character.name.downcase == input.downcase
+    query = ["%",input,"%"].join
+    characters = Character.where(["name LIKE ?", query])
+    characters.each_with_index{|char, idx| puts "#{idx}. #{char.name}"}
+    puts "Enter the number of the matching character"
+    response = gets.chomp.to_i
+    while !(response.integer?)
+      puts "Try again."
+      response = gets.chomp.to_i
     end
+    character = characters[response]
     while !character
       puts "This is not currently a character in the GoT Universe. Try again."
       pre_find_character

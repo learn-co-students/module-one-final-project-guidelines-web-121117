@@ -71,16 +71,16 @@ module ApiParse
   end
 
   def self.import_data
+    puts "Importing database... This will take a moment."
     self.import_characters_books_seasons
     self.import_houses_regions
-    "Import complete!"
+    puts "Import complete!"
   end
 
   def self.data_check
     `bundle exec rake db:migrate && clear`
     puts "Migrations: check!"
-    puts "Importing database... This will take a moment."
-    (!(Character.count == 2134) || !(Region.count == 12) || !(House.count == 444) || !(Book.count == 11) || !(Season.count == 7)) ? self.import_data : "Data already imported."
+    (!(Character.count == 2134) || !(Region.count == 12) || !(House.count == 444) || !(Book.count == 11) || !(Season.count == 7)) ? self.import_data : puts("Data already imported.")
     # find a way to make the below work?
     #   puts "Your database is incomplete. Recreating database."
     #   File.delete(File.open("./db/development.db"))
