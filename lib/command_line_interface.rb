@@ -63,7 +63,7 @@ class CommandLineInterface
   end
 
   def view_menu
-    puts "View playlists based on which parameter? ([A]ll or [Q]uit)"
+    puts "View playlists based on which parameter? ([A]ll [M]ain Menu [Q]uit)"
     print_categories
     input = gets.chomp
     if input == 'A' || input == 'a'
@@ -72,6 +72,9 @@ class CommandLineInterface
       make_playlist_table(relevant_playlists)
       selected_playlist = user_select_playlist
       print_songs_from_playlist_name(selected_playlist)
+    elsif input == 'M' || input == 'm'
+      greet
+      main_menu
     elsif input == 'Q' || input == 'q'
       return
     elsif input.to_i > 0 && input.to_i < 10
@@ -108,15 +111,22 @@ class CommandLineInterface
     end
     selected_playlist = nil
     until selected_playlist != nil
-      print "Enter name of playlist to delete: "
+      print "Enter name of playlist to delete (or [M]ain Menu): "
       name_input = get_string.titleize
-      selected_playlist = Playlist.find_by(name: name_input)
+      if name_input == 'M' || name_input == 'm'
+        greet
+        main_menu
+        return nil
+      else
+        selected_playlist = Playlist.find_by(name: name_input)
+      end
     end
     Playlist.destroy(selected_playlist.id)
     print_blank_lines(3)
     indent(40)
     puts "Playlist Deleted!" + "          (╯°□°）╯︵ ┻━┻"
-    print_blank_lines(5)
+    sleep(1)
+    main_menu
   end
 
 ####### OUTPUT TABLES
