@@ -40,7 +40,7 @@ class CommandLineInterface
       greet
       find_by_song_menu
     elsif user_input == 5
-      return
+      return nil
     end
   end
 
@@ -131,18 +131,25 @@ class CommandLineInterface
 
   def find_by_song_menu
     relevant_playlists = []
-    until relevant_playlists.length != 0
+    song_name = nil
+    until relevant_playlists.length != 0 || song_name == "M" || song_name == "m" || song_name == "Q" || song_name == "q"
       print "Please enter song title to search for (M for Main menu or Q to quit): "
       song_name = gets.chomp
       song_instance = Song.find_by_name(song_name)
       relevant_playlists = Playlist.find_by_song(song_instance)
     end
-    make_playlist_table(relevant_playlists)
-    selected_playlist = user_select_playlist
-    if selected_playlist == "M"
+    if song_name == "M" || song_name == "m"
+      selected_playlist = "m"
+    elsif song_name == "Q" || song_name == "q"
+      selected_playlist = "q"
+    else
+      make_playlist_table(relevant_playlists)
+      selected_playlist = user_select_playlist
+    end
+    if selected_playlist == "M" || selected_playlist == "m"
       greet
       main_menu
-    elsif selected_playlist == "Q"
+    elsif selected_playlist == "Q" || selected_playlist == "q"
       return
     else
       print_songs_from_playlist_name(selected_playlist)
@@ -272,7 +279,7 @@ class CommandLineInterface
 
   def get_user_input_main_menu
     input = gets.chomp.to_i
-    if input == 1 || input == 2 || input == 3 || input == 4
+    if input == 1 || input == 2 || input == 3 || input == 4 || input == 5
       input
     else
       puts "Please enter a valid choice!"
