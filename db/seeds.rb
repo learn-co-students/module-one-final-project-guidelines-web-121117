@@ -1,9 +1,9 @@
 require 'csv'
 require 'json'
-
+#
 # First seed
-
-
+#
+#
 # csv_credits = File.read('tmdb_5000_credits.csv')
 # csv_actors = CSV.parse(csv_credits, :headers => true)
 #
@@ -31,10 +31,10 @@ require 'json'
 #   end
 #
 # end
-
-
-#Second Seed - add average rating
-
+#
+#
+# Second Seed - add average rating
+#
 # csv_movies = File.read('tmdb_5000_movies.csv')
 # csv_ratings = CSV.parse(csv_movies, :headers => true)
 #

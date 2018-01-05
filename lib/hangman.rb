@@ -22,11 +22,12 @@ class Hangman
   def greet
     puts ""
     puts "Welcome to Movie Hangman!".colorize(:color=>:green, :mode=>:bold)
+    puts "Type 'exit' at any time to return to main menu"
+    puts ""
   end
 
   def turn
     while true
-      puts ""
       puts "You have #{@lives} lives remaining!".colorize(:color=>:red)
       puts "Used letters: " + @used_letters.map(&:upcase).join(" ").colorize(:color=>:red)
       puts ""
@@ -58,14 +59,15 @@ class Hangman
       @used_letters << letter unless @used_letters.include?(letter)
 
       if check_movie(@movie_name).count("#") == 0
+        character = "٩(◕‿◕｡)۶  ".colorize(:color=>:magenta, :mode=> :bold)
         puts ""
-        puts "٩(◕‿◕｡)۶".colorize(:color=>:magenta)
+        puts check_movie(@movie_name).colorize(:color=>:green, :mode=>:bold)
         puts ""
-        puts check_movie(@movie_name).colorize(:color=>:cyan, :mode=>:bold)
+        puts "C".colorize(:color=>:red, :mode=>:bold) +
+       "o".colorize(:color=>:light_red, :mode=>:bold) + "n".colorize(:color=>:light_yellow, :mode=>:bold) + "g".colorize(:color=>:green, :mode=>:bold) + "r".colorize(:color=>:blue, :mode=>:bold) + "a".colorize(:color=>:magenta, :mode=>:bold) + "t".colorize(:color=>:light_magenta, :mode=>:bold) + "s".colorize(:color=>:red, :mode=>:bold) +"!".colorize(:color=>:light_red, :mode=>:bold) + " Y".colorize(:color=>:light_red, :mode=>:bold) + "o".colorize(:color=>:light_yellow, :mode=>:bold) + "u".colorize(:color=>:green, :mode=>:bold) + " w".colorize(:color=>:blue, :mode=>:bold) + "i".colorize(:color=>:magenta, :mode=>:bold) + "n".colorize(:color=>:light_magenta, :mode=>:bold) + "!".colorize(:color=>:light_red, :mode=>:bold) + "!".colorize(:color=>:light_yellow, :mode=>:bold) + "!".colorize(:color=>:light_yellow, :mode=>:bold)
         puts ""
-        puts "Congrats! You win!!!".colorize(:color=>:magenta, :mode=>:bold)
+        3.times {print character}
         puts ""
-        puts "٩(◕‿◕｡)۶".colorize(:color=>:blue)
         return main_menu
       end
 
