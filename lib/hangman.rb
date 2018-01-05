@@ -45,7 +45,7 @@ class Hangman
       end
 
       if @used_letters.include?(letter)
-        puts "You already used this letter, please enter another one!"
+        puts "You already used this letter, please enter another one!".colorize(:color=>red)
         puts ""
       end
 
@@ -63,8 +63,7 @@ class Hangman
         puts ""
         puts check_movie(@movie_name).colorize(:color=>:green, :mode=>:bold)
         puts ""
-        puts "C".colorize(:color=>:red, :mode=>:bold) +
-       "o".colorize(:color=>:light_red, :mode=>:bold) + "n".colorize(:color=>:light_yellow, :mode=>:bold) + "g".colorize(:color=>:green, :mode=>:bold) + "r".colorize(:color=>:blue, :mode=>:bold) + "a".colorize(:color=>:magenta, :mode=>:bold) + "t".colorize(:color=>:light_magenta, :mode=>:bold) + "s".colorize(:color=>:red, :mode=>:bold) +"!".colorize(:color=>:light_red, :mode=>:bold) + " Y".colorize(:color=>:light_red, :mode=>:bold) + "o".colorize(:color=>:light_yellow, :mode=>:bold) + "u".colorize(:color=>:green, :mode=>:bold) + " w".colorize(:color=>:blue, :mode=>:bold) + "i".colorize(:color=>:magenta, :mode=>:bold) + "n".colorize(:color=>:light_magenta, :mode=>:bold) + "!".colorize(:color=>:light_red, :mode=>:bold) + "!".colorize(:color=>:light_yellow, :mode=>:bold) + "!".colorize(:color=>:light_yellow, :mode=>:bold)
+        puts rainbowize("Congrats! You Win!!!")
         puts ""
         3.times {print character}
         puts ""

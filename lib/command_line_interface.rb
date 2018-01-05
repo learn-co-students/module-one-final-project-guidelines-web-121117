@@ -60,8 +60,10 @@ class CommandLineInterface
   end
 
   def exit
-    goodbye = "G".colorize(:color=>:red, :mode=>:bold) + "o".colorize(:color=>:light_red, :mode=>:bold) + "o".colorize(:color=>:light_yellow, :mode=>:bold) + "d".colorize(:color=>:green, :mode=>:bold) + "b".colorize(:color=>:blue, :mode=>:bold) + "y".colorize(:color=>:magenta, :mode=>:bold) + "e".colorize(:color=>:light_magenta, :mode=>:bold)
-    character = "(ﾉ◕ヮ◕)ﾉ*:･ﾟ".colorize(:color=>:blue) + "✧ ".colorize(:color=>:light_yellow)
+    # goodbye = "G".colorize(:color=>:red, :mode=>:bold) + "o".colorize(:color=>:light_red, :mode=>:bold) + "o".colorize(:color=>:light_yellow, :mode=>:bold) + "d".colorize(:color=>:green, :mode=>:bold) + "b".colorize(:color=>:blue, :mode=>:bold) + "y".colorize(:color=>:magenta, :mode=>:bold) + "e".colorize(:color=>:light_magenta, :mode=>:bold)
+    # character = "(ﾉ◕ヮ◕)ﾉ*:･ﾟ".colorize(:color=>:blue) + "✧ ".colorize(:color=>:light_yellow)
+    character = rainbowize("(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ ")
+    goodbye = rainbowize("Goodbye")
     3.times {print character + " " + goodbye + " "}
     puts ""
     # url = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'

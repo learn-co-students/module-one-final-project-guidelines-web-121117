@@ -34,7 +34,7 @@ require 'json'
 #
 # end
 
-csv_movies = File.read('tmdb_5000_movies.csv')
-csv_ratings = CSV.parse(csv_movies, :headers => true)
-
-puts (csv_ratings[0].to_hash["vote_average"].to_f + 1)
+# csv_movies = File.read('tmdb_5000_movies.csv')
+# csv_ratings = CSV.parse(csv_movies, :headers => true)
+#
+# puts (csv_ratings[0].to_hash["vote_average"].to_f + 1)
