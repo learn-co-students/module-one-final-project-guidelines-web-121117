@@ -10,21 +10,21 @@ module BookSpecificMenu
     puts "\nDo you know which book you would like to search? Put 'Y' or 'N'."
     user_input = gets.downcase.chomp
     if user_input == 'y'
-      puts "\nPlease type book name to search:"
+      puts "\nGreat! Please put in a book title or first few letters of the book's title"
+      puts "and we will try to populate the closest matches for you to choose from:"
       book_choice = gets.chomp
       book = find_book(book_choice)
       book
     elsif user_input == 'n'
-      puts "\nWould you like to see a full list of books to select from, or search by first letter? Puts 'All' or 'First':"
+      puts "\nWould you like to see a full list of characters to select from? Put 'Y' or 'N':"
       user_search = gets.downcase.chomp
-      if user_search == 'all'
+      if user_search == 'y'
         book = user_book_selection
         book
-      elsif user_search == 'first'
-        book = user_book_selection
-        book
+      elsif user_search == 'n'
+        puts "\nAlright. Sending you back to the book menu."
+        books_menu
       else
-
         puts "\nThat is not an option. Going back to the book menu."
         books_menu
       end

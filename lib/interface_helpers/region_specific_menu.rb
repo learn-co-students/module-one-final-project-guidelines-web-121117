@@ -10,19 +10,20 @@ module RegionSpecificMenu
     puts "\nDo you know which region you would like to search? Put 'Y' or 'N'."
     user_input = gets.downcase.chomp
     if user_input == 'y'
-      puts "\nPlease type region name to search:"
+      puts "\nGreat! Please put in a region name or first few letters of the region's name"
+      puts "and we will try to populate the closest matches for you to choose from:"
       region_choice = gets.chomp
       region = find_region(region_choice)
       region
     elsif user_input == 'n'
-      puts "\nWould you like to see a full list of region to select from, or search by first letter? Puts 'All' or 'First':"
+      puts "\nWould you like to see a full list of regions to select from? Put 'Y' or 'N':"
       user_search = gets.downcase.chomp
-      if user_search == 'all'
+      if user_search == 'y'
         region = user_region_selection
         region
-      elsif user_search == 'first'
-        region = user_region_selection
-        region
+      elsif user_search == 'n'
+        puts "\nAlright. Sending you back to the region menu."
+        regions_menu
       else
         puts "\nThat is not an option. Going back to the region menu."
         regions_menu

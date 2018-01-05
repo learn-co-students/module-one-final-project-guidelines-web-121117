@@ -118,14 +118,14 @@ W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::
     puts "\nHere are all the characters in the GoT universe:"
     puts "\n"
     puts all_characters
-    puts "\nType which character you are looking for:"
+    puts "\nType which character you are looking for here:"
   end
 
   def find_character(input)
     query = ["%",input,"%"].join
     characters = Character.where(["name LIKE ?", query])
     while characters.empty?
-      puts"Not found. Try again."
+      puts "\nWe could not find the character you put in. Try again:"
       input = gets.chomp
       characters = Character.where(["name LIKE ?", query])
     end
@@ -134,7 +134,7 @@ W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::
     puts "\nEnter the number of the character you are looking for:"
     response = gets.chomp.to_i
     while !(response.integer?)
-      puts "Try again."
+      puts "\nThat did not match. Try again:"
       response = gets.chomp.to_i
     end
     character = characters[response]
@@ -160,22 +160,23 @@ W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::
   end
 
   def pre_find_house
-    puts "\nWhich house would you like to check out?"
+    puts "\nHere are all the houses in the GoT universe:"
     puts "\n"
     puts all_houses
-    puts "\nType selection here:"
+    puts "\nType which house you are looking for here:"
   end
 
   def find_house(input)
     query = ["%",input,"%"].join
     houses = House.where(["name LIKE ?", query])
     while houses.empty?
-      puts"Not found. Try again."
+      puts "\nWe could not find the house you put in. Try again:"
       input = gets.chomp
       houses = House.where(["name LIKE ?", query])
     end
+    puts "\nHere are the matches we could generate:"
     houses.each_with_index{|house, idx| puts "#{idx}. #{house.name}"}
-    puts "Enter the number of the matching house."
+    puts "\nEnter the number of the house you are looking for:"
     response = gets.chomp.to_i
     house = houses[response]
     while !house
@@ -197,22 +198,23 @@ W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::
   end
 
   def pre_find_book
-      puts "\nWhich book would you like to check out?"
+      puts "\nHere are all the houses written for the GoT universe:"
       puts "\n"
       puts all_books
-      puts "\nType selection here:"
+      puts "\nType which book you are looking for here:"
   end
 
   def find_book(input)
     query = ["%",input,"%"].join
     books = Book.where(["name LIKE ?", query])
     while books.empty?
-      puts"Not found. Try again."
+      puts "\nWe could not find the book you put in. Try again:"
       input = gets.chomp
       books = Book.where(["name LIKE ?", query])
     end
+    puts "\nHere are the matches we could generate:"
     books.each_with_index{|house, idx| puts "#{idx}. #{house.name}"}
-    puts "Enter the number of the matching house."
+    puts "\nEnter the number of the book you are looking for:"
     response = gets.chomp.to_i
     book = books[response]
     while !book
@@ -225,23 +227,23 @@ W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::
   end
 
   def pre_find_region
-      puts "\nWhich region would you like to check out?"
+      puts "\nHere are all the regions in the GoT universe:"
       puts "\n"
       puts all_regions
-      puts "\nType selection here:"
+      puts "\nType which region you are looking for here:"
   end
 
   def find_region(input)
     query = ["%",input,"%"].join
     regions = Region.where(["name LIKE ?", query])
-    binding.pry
     while regions.empty?
-      puts"Not found. Try again."
+      puts "\nWe could not find the region you put in. Try again:"
       input = gets.chomp
       regions = Region.where(["name LIKE ?", query])
     end
+    puts "\nHere are the matches we could generate:"
     regions.each_with_index{|house, idx| puts "#{idx}. #{house.name}"}
-    puts "Enter the number of the matching house."
+    puts "\nEnter the number of the book you are looking for:"
     response = gets.chomp.to_i
     region = regions[response]
     while region == nil
