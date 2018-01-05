@@ -27,7 +27,7 @@ G:::::G    GGGGG::::G    O:::::O     O:::::O          T:::::T
     b = "
 
 
-    
+
            WWWWWWWW                           WWWWWWWW iiii                            tttt
            W::::::W                           W::::::Wi::::i                        ttt:::t
            W::::::W                           W::::::W iiii                         t:::::t
@@ -121,7 +121,7 @@ G:::::G    GGGGG::::G    O:::::O     O:::::O          T:::::T
       characters = Character.where(["name LIKE ?", query])
     end
     puts "\nHere are the matches we could generate:"
-    characters.each_with_index{|char, idx| puts "#{idx}. #{char.name}"}
+    characters.each_with_index{|char, idx| puts "#{idx}.".colorize(:blue) + " #{char.name}"}
     puts "\nEnter the number of the character you are looking for:"
     response = gets.chomp.to_i
     while !(response.integer?)
@@ -166,7 +166,7 @@ G:::::G    GGGGG::::G    O:::::O     O:::::O          T:::::T
       houses = House.where(["name LIKE ?", query])
     end
     puts "\nHere are the matches we could generate:"
-    houses.each_with_index{|house, idx| puts "#{idx}. #{house.name}"}
+    houses.each_with_index{|house, idx| puts "#{idx}.".colorize(:green) + " #{house.name}"}
     puts "\nEnter the number of the house you are looking for:"
     response = gets.chomp.to_i
     house = houses[response]
@@ -204,7 +204,7 @@ G:::::G    GGGGG::::G    O:::::O     O:::::O          T:::::T
       books = Book.where(["name LIKE ?", query])
     end
     puts "\nHere are the matches we could generate:"
-    books.each_with_index{|house, idx| puts "#{idx}. #{house.name}"}
+    books.each_with_index{|house, idx| puts "#{idx}.".colorize(:magenta) + " #{house.name}"}
     puts "\nEnter the number of the book you are looking for:"
     response = gets.chomp.to_i
     book = books[response]
@@ -233,7 +233,7 @@ G:::::G    GGGGG::::G    O:::::O     O:::::O          T:::::T
       regions = Region.where(["name LIKE ?", query])
     end
     puts "\nHere are the matches we could generate:"
-    regions.each_with_index{|house, idx| puts "#{idx}. #{house.name}"}
+    regions.each_with_index{|house, idx| puts "#{idx}.".colorize(:cyan) + " #{house.name}"}
     puts "\nEnter the number of the book you are looking for:"
     response = gets.chomp.to_i
     region = regions[response]
