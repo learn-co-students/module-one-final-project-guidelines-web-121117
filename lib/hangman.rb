@@ -45,7 +45,7 @@ class Hangman
       end
 
       if @used_letters.include?(letter)
-        puts "You already used this letter, please enter another one!".colorize(:color=>red)
+        puts "You already used this letter, please enter another one!".colorize(:color=>:red)
         puts ""
       end
 
