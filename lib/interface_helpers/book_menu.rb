@@ -7,7 +7,7 @@ module BookMenu
     puts "Choose from one of the following categories to proceed:"
     puts "     Books".colorize(:magenta) + " - see all GoT books."
     puts "     Specific".colorize(:magenta) + " - search a specific book of the GoT Universe."
-    puts "     Facts".colorize(:magenta) + " - search a specific book of the GoT Universe."
+    puts "     Facts".colorize(:magenta) + " - see facts about the books that create the GoT Universe."
     puts "     Main Menu".colorize(:magenta) + " - back to the main menu."
     puts "\nPlease make a selection:"
     input = gets.downcase.chomp
