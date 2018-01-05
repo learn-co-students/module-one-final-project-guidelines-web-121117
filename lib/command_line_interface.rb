@@ -48,8 +48,7 @@ class CommandLineInterface
 
   def annoying_google
     puts "What would you like to google?"
-    input = gets.chomp
-    input = input.split.join("+")
+    input = gets.chomp.split.join("+")
     url = "http://lmgtfy.com/?q=#{input}"
     `open #{url}`
     character = "(๑˃ᴗ˂)ﻭ ".colorize(:magenta)
