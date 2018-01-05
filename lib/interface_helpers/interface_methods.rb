@@ -83,11 +83,13 @@ W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::
   end
 
   def all_characters
-    Character.all.collect do |character|
-      if character.name != nil
-        character.name
+    all_characters_arr = []
+    Character.all.select do |character|
+      if character.name != nil && character.name != ""
+        all_characters_arr << character.name
       end
-    end.sort!
+    end
+    all_characters_arr.sort!
   end
 
   def all_houses
@@ -125,7 +127,6 @@ W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::
     end
     while !character
       puts "This is not currently a character in the GoT Universe. Try again."
-      puts "\n"
       pre_find_character
       new_input = gets.chomp
       character = find_character(new_input)

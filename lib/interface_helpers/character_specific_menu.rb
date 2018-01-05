@@ -15,7 +15,7 @@ module CharacterSpecificMenu
       character = find_character(character_choice)
       character
     elsif user_input == 'n'
-      puts "\nWould you like to see a full list of characters to select from, or search by first letter? Puts 'All' or 'First':"
+      puts "\nWould you like to see a full list of characters to select from, or search by first letter? Put 'All' or 'First':"
       user_search = gets.downcase.chomp
       if user_search == 'all'
         character = user_character_selection

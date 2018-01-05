@@ -14,7 +14,7 @@ module CharacterMenu
     input = characters_menu_options
     if input == "characters"
       puts "\n"
-      puts all_characters
+      puts all_characters.uniq
       puts "\n"
       characters_menu
     elsif input == "specific"
