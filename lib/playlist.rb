@@ -41,16 +41,3 @@ class Playlist < ActiveRecord::Base
   end
 
 end
-
-
-
-
-
-
-
-
-# if SongPlaylist.find_by(song_id: song.id, playlist_id: self.id)
-#   puts "This song is already in your playlist"
-# else
-#   new_playlist.songs << song
-# end
