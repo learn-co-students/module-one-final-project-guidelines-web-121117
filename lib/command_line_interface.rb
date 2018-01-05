@@ -69,7 +69,7 @@ class CommandLineInterface
   end
 
   def view_menu
-    puts "View playlists based on which parameter? ([A]ll [M]ain Menu [Q]uit)"
+    puts "View playlists based on which parameter? ([A]ll | [M]ain Menu | [Q]uit)"
     print_categories
     input = gets.chomp
     if input == 'A' || input == 'a'
@@ -117,7 +117,7 @@ class CommandLineInterface
     end
     selected_playlist = nil
     until selected_playlist != nil
-      print "Enter name of playlist to delete (or [M]ain Menu): "
+      print "Enter name of playlist to delete (or M for Main Menu): "
       name_input = get_string.titleize
       if name_input == 'M' || name_input == 'm'
         greet
