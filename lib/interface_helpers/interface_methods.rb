@@ -119,10 +119,14 @@ W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::
     puts "\nType selection here:"
   end
 
-#adjusting
   def find_character(input)
     query = ["%",input,"%"].join
     characters = Character.where(["name LIKE ?", query])
+    while characters.empty?
+      puts"Not found. Try again."
+      input = gets.chomp
+      characters = Character.where(["name LIKE ?", query])
+    end
     characters.each_with_index{|char, idx| puts "#{idx}. #{char.name}"}
     puts "Enter the number of the matching character"
     response = gets.chomp.to_i
@@ -161,9 +165,17 @@ W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::
   end
 
   def find_house(input)
-    house = House.all.find do |house|
-      house.name.downcase == input.downcase
+    query = ["%",input,"%"].join
+    houses = House.where(["name LIKE ?", query])
+    while houses.empty?
+      puts"Not found. Try again."
+      input = gets.chomp
+      houses = House.where(["name LIKE ?", query])
     end
+    houses.each_with_index{|house, idx| puts "#{idx}. #{house.name}"}
+    puts "Enter the number of the matching house."
+    response = gets.chomp.to_i
+    house = houses[response]
     while !house
       puts "This is not currently a house in the GoT Universe. Try again."
       puts "\n"
