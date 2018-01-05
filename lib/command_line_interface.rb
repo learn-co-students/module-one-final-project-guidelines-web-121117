@@ -110,12 +110,6 @@ class CommandLineInterface
       else
         make_playlist_table(playlist_table_data)
         selected_playlist = user_select_playlist
-        # continue = true
-        # while continue
-        #   clear_screen
-        #   greet
-        #   continue = print_songs_from_playlist_name(selected_playlist)
-        # end
         if selected_playlist == "M"
           greet
           main_menu
