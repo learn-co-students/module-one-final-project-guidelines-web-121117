@@ -174,8 +174,10 @@ module CharacterSpecificMenu
 
   def character_specific_run
     character = search_character_options
-    puts "\nYou are now searching for #{character.name}"
-    character_specifics_menu(character)
+    if character
+      puts "\nYou are now searching for #{character.name}"
+      character_specifics_menu(character)
+    end
   end
 end
 

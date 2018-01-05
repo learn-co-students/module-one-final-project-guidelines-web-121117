@@ -114,8 +114,10 @@ module RegionSpecificMenu
 
   def region_specific_run
     region = search_region_options
-    puts "\nYou are now searching for #{region.name}"
-    region_specifics_menu(region)
+    if region
+      puts "\nYou are now searching for #{region.name}"
+      region_specifics_menu(region)
+    end
   end
 
 end

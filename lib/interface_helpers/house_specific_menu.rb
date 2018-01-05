@@ -131,8 +131,10 @@ module HouseSpecificMenu
 
   def house_specific_run
     house = search_house_options
-    puts "\nYou are now searching for #{house.name}"
-    house_specifics_menu(house)
+    if house
+      puts "\nYou are now searching for #{house.name}"
+      house_specifics_menu(house)
+    end
   end
 
 end

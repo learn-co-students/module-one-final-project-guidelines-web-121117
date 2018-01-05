@@ -114,8 +114,10 @@ module BookSpecificMenu
 
   def book_specific_run
     book = search_book_options
-    puts "\nYou are now searching for #{book.name}"
-    book_specifics_menu(book)
+    if book
+      puts "\nYou are now searching for #{book.name}"
+      book_specifics_menu(book)
+    end
   end
 
 end
