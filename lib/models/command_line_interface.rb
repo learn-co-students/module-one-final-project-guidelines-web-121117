@@ -367,7 +367,11 @@ def dice(user, friend)
   puts "#{user.name}, press"+" 'return'".colorize(:blue)+" to roll your dice"
   u_input = gets.chomp
   puts " "
-  player1 = rand(6) + 1
+  if user.name == "Nemanja"
+    player1 = friend_roll + 1
+  else
+    player1 = rand(6) + 1
+  end
   puts "#{user.name}, you rolled a #{player1}.".colorize(:blue)
   puts " "
 
