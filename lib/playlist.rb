@@ -24,6 +24,14 @@ class Playlist < ActiveRecord::Base
     end
   end
 
+
+  def self.find_by_song(song)
+    self.all.select do |playlist|
+      playlist.songs.include?(song)
+    end
+  end
+
+
   def create_songs_table
     table_data = []
     self.songs.each_with_index do |song, idx|

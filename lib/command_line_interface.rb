@@ -24,7 +24,8 @@ class CommandLineInterface
     puts "1. Create New Playlist"
     puts "2. View Playlists"
     puts "3. Delete a Playlist"
-    puts "4. Exit"
+    puts "4. Find Playlists by Song"
+    puts "5. Exit"
     user_input = get_user_input_main_menu
     if user_input == 1
       greet
@@ -36,6 +37,9 @@ class CommandLineInterface
       greet
       delete_menu
     elsif user_input == 4
+      greet
+      find_by_song_menu
+    elsif user_input == 5
       return
     end
   end
@@ -125,6 +129,26 @@ class CommandLineInterface
     end
   end
 
+  def find_by_song_menu
+    relevant_playlists = []
+    until relevant_playlists.length != 0
+      print "Please enter song title to search for (M for Main menu or Q to quit): "
+      song_name = gets.chomp
+      song_instance = Song.find_by_name(song_name)
+      relevant_playlists = Playlist.find_by_song(song_instance)
+    end
+    make_playlist_table(relevant_playlists)
+    selected_playlist = user_select_playlist
+    if selected_playlist == "M"
+      greet
+      main_menu
+    elsif selected_playlist == "Q"
+      return
+    else
+      print_songs_from_playlist_name(selected_playlist)
+    end
+  end
+
   def delete_menu
     Playlist.all.each_with_index do |playlist, idx|
       puts "#{idx + 1}. #{playlist.name}"
@@ -170,9 +194,9 @@ class CommandLineInterface
       playlist_table_data.each do |row_array|
         row do
           column(row_array[:index], width: 3)
-          column(row_array[:name], width: 40, color: 'green')
-          column(row_array[:parameter], width: 40, color: 'white')
-          column(row_array[:parameter_value], width: 40, color: 'green')
+          column(row_array[:name], width: 30, color: 'green')
+          column(row_array[:parameter], width: 20, color: 'white')
+          column(row_array[:parameter_value], width: 20, color: 'green')
         end
       end
     end
