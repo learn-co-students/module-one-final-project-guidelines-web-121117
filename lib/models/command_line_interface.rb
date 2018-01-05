@@ -249,7 +249,7 @@ def all_reviews(user)
 end
 ################################ 'LOGIN MENU' ###############################
 def login_menu
-  puts "Type your user name to log-in,\n"+"'list'".colorize(:light_blue)+" to list all users, or "+"'exit'".colorize(:light_blue)+" to quit:"
+  puts "\nType your user name to log-in,\n"+"'list'".colorize(:light_blue)+" to list all users, or "+"'exit'".colorize(:light_blue)+" to quit:"
   puts " "
   inp = user_input
   if User.user_names.include?(inp)
@@ -274,11 +274,9 @@ def login_menu
       puts "\nThe username can't contain numbers!"
       puts " "
       login_menu
-    elsif inp.match(/ /)
-      puts "\nThe username can't contain spaces"
-      puts " "
-      login_menu
     else
+      inp.strip!
+      inp = inp.split(" ").join(" ")
       puts "The user doesn't exists! Do you want to create a user with this username? (#{inp})(y/n)"
       inp2 = user_input
       if inp2 == 'y'
@@ -326,8 +324,9 @@ def game(user)
       game(user)
     else
       puts " "
-      puts "BOOOO #{user.name}! You lost... miserably...(ノಠ ∩ಠ)ノ彡( o°o) ".colorize(:yellow)
+      puts "BOOOO #{user.name}! You lost... miserably...".colorize(:yellow)
       puts " "
+      puts"    "+"▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄".colorize(:yellow)
       puts"    "+"████▌▄▌▄▐▐▌█████".colorize(:yellow)
       puts"    "+"████▌▄▌▄▐▐▌▀████".colorize(:yellow)
       puts"    "+"▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀".colorize(:yellow)
@@ -337,7 +336,20 @@ def game(user)
     print "\nInsert the name of your friend: "
     puts " "
     friend = gets.chomp.to_s
-    dice(user, friend)
+    if friend.split(" ").empty?
+      friend = "Unknown"
+      dice(user, friend)
+    elsif friend.match(/  /)
+      friend.strip!
+      friend = friend.split(" ").join(" ")
+      dice(user, friend)
+    elsif friend[0] == " " || friend[-1] == " "
+      friend.strip!
+      friend = friend.split(" ").join(" ")
+      dice(user, friend)
+    else
+      dice(user, friend)
+    end
   when 'back' then main_menu(user)
   else
     puts "Unknown option!"

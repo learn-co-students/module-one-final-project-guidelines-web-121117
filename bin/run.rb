@@ -5,5 +5,4 @@ require 'artii'
 # arter = Artii::Base.new
 
 welcome
-print "\nWelcome to the login menu. "
 login_menu
