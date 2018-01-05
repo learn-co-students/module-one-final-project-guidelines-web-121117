@@ -118,6 +118,7 @@ G:::::G    GGGGG::::G    O:::::O     O:::::O          T:::::T
     while characters.empty?
       puts "\nWe could not find the character you put in. Try again:"
       input = gets.chomp
+      query = ["%",input,"%"].join
       characters = Character.where(["name LIKE ?", query])
     end
     puts "\nHere are the matches we could generate:"
@@ -163,6 +164,7 @@ G:::::G    GGGGG::::G    O:::::O     O:::::O          T:::::T
     while houses.empty?
       puts "\nWe could not find the house you put in. Try again:"
       input = gets.chomp
+      query = ["%",input,"%"].join
       houses = House.where(["name LIKE ?", query])
     end
     puts "\nHere are the matches we could generate:"
@@ -201,6 +203,7 @@ G:::::G    GGGGG::::G    O:::::O     O:::::O          T:::::T
     while books.empty?
       puts "\nWe could not find the book you put in. Try again:"
       input = gets.chomp
+      query = ["%",input,"%"].join
       books = Book.where(["name LIKE ?", query])
     end
     puts "\nHere are the matches we could generate:"
@@ -230,6 +233,7 @@ G:::::G    GGGGG::::G    O:::::O     O:::::O          T:::::T
     while regions.empty?
       puts "\nWe could not find the region you put in. Try again:"
       input = gets.chomp
+      query = ["%",input,"%"].join
       regions = Region.where(["name LIKE ?", query])
     end
     puts "\nHere are the matches we could generate:"
