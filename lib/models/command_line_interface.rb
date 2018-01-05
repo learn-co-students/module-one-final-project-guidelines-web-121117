@@ -1,5 +1,6 @@
 require 'pry'
 require 'colorize'
+
 def welcome
   puts "Welcome to out Group project. We hope you enjoy!"
 end
@@ -10,24 +11,18 @@ def user_input
   input.to_s
 end
 
-def user_integer_input
-  print "Input Here: "
-  input = gets.chomp
-  input.to_i
-end
 ################################# MAIN MENU #################################
 def main_menu(user)
   puts "\n---------Main Menu---------"
   puts "Current User: #{user.name}"
   puts "\n1".colorize(:light_red)+".'Show all shows'".colorize(:light_blue)+" to display all shows"
-  puts "2".colorize(:light_red)+".'Find a show'".colorize(:light_blue)+" to search for a selected show by it's number"
-  puts "3".colorize(:light_red)+".'Write a review'".colorize(:light_blue)+" to write a review for a selected show"
-  puts "4".colorize(:light_red)+".'List my reviews'".colorize(:light_blue)+" to see all the reviews of all the shows that you've made"
-  puts "5".colorize(:light_red)+".'Recommended'".colorize(:light_blue)+" to show 5 recommended shows based on your reviews"
-  puts "6".colorize(:light_red)+".'Top Rated'".colorize(:light_blue)+" to view 10 of the top rated shows"
-  puts "7".colorize(:light_red)+".'Play'".colorize(:light_blue)+" to play a game"
-  puts "\n8".colorize(:light_red)+".'Log Out'".colorize(:light_blue)
-  puts "9".colorize(:light_red)+".'Exit'".colorize(:light_blue)
+  puts "2".colorize(:light_red)+".'Write a review'".colorize(:light_blue)+" to write a review for a selected show"
+  puts "3".colorize(:light_red)+".'List my reviews'".colorize(:light_blue)+" to see all the reviews of all the shows that you've made"
+  puts "4".colorize(:light_red)+".'Recommended'".colorize(:light_blue)+" to show 5 recommended shows based on your reviews"
+  puts "5".colorize(:light_red)+".'Top Rated'".colorize(:light_blue)+" to view 10 of the top rated shows"
+  puts "6".colorize(:light_red)+".'Play'".colorize(:light_blue)+" to play a game"
+  puts "\n7".colorize(:light_red)+".'Log Out'".colorize(:light_blue)
+  puts "8".colorize(:light_red)+".'Exit'".colorize(:light_blue)
 
   inp = user_input.downcase
 
@@ -41,41 +36,25 @@ def main_menu(user)
     list_all_tv_shows
     tv_show_menu(user)
   when "2"
-    tv_show_menu(user)
-  when "find a show"
-    tv_show_menu(user)
-  when "3"
     puts "\nAll Shows:"
-    list_all(all_tv_show_names)
+    list_all_tv_shows
     add_review(user)
   when "write a review"
     puts "\nAll Shows:"
-    list_all(all_tv_show_names)
+    list_all_tv_shows
     add_review(user)
-  when "4"
-    review_menu(user)
-  when "list my reviews"
-    review_menu(user)
-  when "5"
-    recommended_shows(user)
-  when "recommended"
-    recommended_shows(user)
-  when "6"
-    top_rated(user)
-  when "top rated"
-    top_rated(user)
-  when "7"
-    game_menu(user)
-  when 'play'
-    game_menu(user)
-  when "log out"
-    login_menu
-  when "8"
-    login_menu
-  when "exit"
-    puts "Goodbye!"
-  when "9"
-    puts "Goodbye!"
+  when "3" then review_menu(user)
+  when "list my reviews" then review_menu(user)
+  when "4" then recommended_shows(user)
+  when "recommended" then recommended_shows(user)
+  when "5" then top_rated(user)
+  when "top rated" then top_rated(user)
+  when "6" then game_menu(user)
+  when 'play' then game_menu(user)
+  when "log out" then login_menu
+  when "7" then login_menu
+  when "exit" then puts "Goodbye!"
+  when "8" then puts "Goodbye!"
   else
     puts "Unknown option! Please try again."
     main_menu(user)
@@ -88,6 +67,7 @@ def tv_show_menu(user)
   puts "\n'Back'".colorize(:light_blue)+" to go back to the main menu"
   puts "\nEnter a show's number to get it's information,\n"+"'list'".colorize(:light_blue)+" to list all shows, or "+"'back'".colorize(:light_blue)+" to go back to the menu"
   inp = user_input.downcase
+
   if inp == 'back'
     main_menu(user)
   elsif inp == 'list'
@@ -113,12 +93,7 @@ def tv_show_menu(user)
             puts "\nGet another show?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
             puts " "
             inp3 = user_input.downcase
-
-            if inp3 == 'y'
-              tv_show_menu(user)
-            else
-              main_menu(user)
-            end
+            inp3 == 'y' ? tv_show_menu(user) : main_menu(user)
           else
             puts " "
             puts "The show hasn't been rated yet."
@@ -132,24 +107,14 @@ def tv_show_menu(user)
           puts "\nGet another show?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
           puts " "
           inp3 = user_input.downcase
-
-          if inp3 == 'y'
-            tv_show_menu(user)
-          else
-            main_menu(user)
-          end
+          inp3 == 'y' ? tv_show_menu(user) : main_menu(user)
         elsif inp2 == 'status'
           puts " "
           puts show.status
           puts "\nGet another show?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
           puts " "
           inp3 = user_input.downcase
-
-          if inp3 == 'y'
-            tv_show_menu(user)
-          else
-            main_menu(user)
-          end
+          inp3 == 'y' ? tv_show_menu(user) : main_menu(user)
         elsif inp2 == 'reviews'
           count = 0
           if show.reviews.empty?
@@ -158,27 +123,14 @@ def tv_show_menu(user)
             puts "\nGet another show?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
             puts " "
             inp3 = user_input.downcase
-
-            if inp3 == 'y'
-              tv_show_menu(user)
-            else
-              main_menu(user)
-            end
+            inp3 == 'y' ? tv_show_menu(user) : main_menu(user)
           else
             puts " "
-            show.reviews.each do |rev|
-              count += 1
-              puts "#{count}.'#{rev.review}' by #{rev.user.name}"
-            end
+            show.reviews.each.with_index(1) {|rev, ind| puts "#{ind}.'#{rev.review}' by #{rev.user.name}"}
             puts "\nGet another show?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
             puts " "
             inp3 = user_input.downcase
-
-            if inp3 == 'y'
-              tv_show_menu(user)
-            else
-              main_menu(user)
-            end
+            inp3 == 'y' ? tv_show_menu(user) : main_menu(user)
           end
         else
           puts "Unknown option! Try again..."
@@ -205,15 +157,9 @@ def recommended_shows(user)
     recommended_array_names = recommended_by_rating.map {|show| "#{show.name}: #{show.rating}"}
     puts " "
     list_all(recommended_array_names)
-
     puts "\nGet 5 more recommendations?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
     inp = user_input.downcase
-
-    if inp == 'y'
-      recommended_shows(user)
-    else
-      main_menu(user)
-    end
+    inp == 'y' ? recommended_shows(user) : main_menu(user)
   else
     puts "\nThere are no recommendations for you! Do you want to pick a genre?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
     inp = user_input.downcase
@@ -285,26 +231,18 @@ def review_menu(user)
   puts "\nType "+"'back'".colorize(:light_blue)+" to go back to the main menu"
   puts " "
   inp = user_input.downcase
-  if inp == "back"
-    main_menu(user)
-  else
-    review_menu(user)
-  end
+  inp == "back" ? main_menu(user) : review_menu(user)
 end
 ################################ ARRAYS #############################
 def list_all(array)
-  array.each_with_index do |element, ind|
-    puts "#{ind + 1}. #{element}"
-  end
+  array.each_with_index {|element, ind| puts "#{ind + 1}. #{element}"}
 end
 
 def all_reviews(user)
   if user.reviews.empty?
     puts "You haven't rated anything yet"
   else
-    user.reviews.each do |review_instance|
-      puts "'#{review_instance.review}': #{review_instance.tv_show.name}"
-    end
+    user.reviews.each { |review_instance| puts "'#{review_instance.review}': #{review_instance.tv_show.name}" }
   end
 end
 
@@ -317,18 +255,7 @@ def all_tv_shows
 end
 
 def list_all_tv_shows
-  ind = 0
-  list = TvShow.all.collect do |show|
-    ind += 1
-    "#{ind}".colorize(:light_red)+".#{show.name}"
-  end
-  list.each {|show| puts show}
-  list
-  # TvShow.all.each_with_index {|show, ind| puts "#{ind + 1}.#{show.name}"}
-end
-
-def all_tv_show_names
-  TvShow.all.map {|show| show.name}
+  TvShow.all.each.with_index(1) {|show, ind| puts "#{ind}".colorize(:light_red)+".#{show.name}"}
 end
 
 def user_names
@@ -380,8 +307,8 @@ def login_menu
 end
 ################################ 'GAME MENU' ###############################
 def game_menu(user)
-  puts "\n------------Game Menu------------"
-  puts "\n1".colorize(:light_red)+"."+"'Dice'".colorize(:light_blue)+" to play dice"
+  puts "\n------------Game Menu------------".colorize(:yellow)
+  puts "\n1".colorize(:light_red)+". "+"Type "+"'dice'".colorize(:light_blue)+" to play dice"
   puts "\n'back'".colorize(:light_blue)+" to go back to the main menu"
   inp = user_input.downcase
 
@@ -454,28 +381,16 @@ def dice(user, friend)
     puts "\nCongratulations #{friend}! You ROCK!"
     puts "\nRematch!?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
     inp = user_input.downcase
-    if inp == 'y'
-      dice(user, friend)
-    else
-      play_dice(user)
-    end
+    inp == 'y' ? dice(user, friend) : play_dice(user)
   elsif friend_roll == player1
     puts "It's a DRAW! You both suck..."
     puts "\nRematch!?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
     inp = user_input.downcase
-    if inp == 'y'
-      dice(user, friend)
-    else
-      play_dice(user)
-    end
+    inp == 'y' ? dice(user, friend) : play_dice(user)
   else
     puts "\nGood job #{user.name}. Don't worry #{friend} you'll get him next time!"
     puts "\nRematch!?("+"y".colorize(:light_green)+"/"+"n".colorize(:light_red)+")"
     inp = user_input.downcase
-    if inp == 'y'
-      dice(user, friend)
-    else
-      play_dice(user)
-    end
+    inp == 'y' ? dice(user, friend) : play_dice(user)
   end
 end
