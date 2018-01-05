@@ -115,10 +115,10 @@ W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::
   end
 
   def pre_find_character
-    puts "\nWhich character would you like to check out?"
+    puts "\nHere are all the characters in the GoT universe:"
     puts "\n"
     puts all_characters
-    puts "\nType selection here:"
+    puts "\nType which character you are looking for:"
   end
 
   def find_character(input)
@@ -129,8 +129,9 @@ W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::
       input = gets.chomp
       characters = Character.where(["name LIKE ?", query])
     end
+    puts "\nHere are the matches we could generate:"
     characters.each_with_index{|char, idx| puts "#{idx}. #{char.name}"}
-    puts "\nEnter the number of the matching character"
+    puts "\nEnter the number of the character you are looking for:"
     response = gets.chomp.to_i
     while !(response.integer?)
       puts "Try again."

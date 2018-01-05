@@ -13,18 +13,17 @@ module CharacterSpecificMenu
       puts "\nGreat! Please put in a character name or first few letters of the character's name"
       puts "and we will try to populate the closest matches for you to choose from:"
       character_choice = gets.chomp
-      puts "\nHere are the matches we could generate:"
       character = find_character(character_choice)
       character
     elsif user_input == 'n'
-      puts "\nWould you like to see a full list of characters to select from, or search by first letter? Put 'All' or 'First':"
+      puts "\nWould you like to see a full list of characters to select from? Put 'Y' or 'N':"
       user_search = gets.downcase.chomp
-      if user_search == 'all'
+      if user_search == 'y'
         character = user_character_selection
         character
-      elsif user_search == 'first'
-        character = user_character_selection
-        character
+      elsif user_search == 'n'
+        puts "\nAlright. Sending you back to the character menu."
+        characters_menu
       else
         puts "\nThat is not an option. Going back to the character menu."
         characters_menu
@@ -82,42 +81,33 @@ module CharacterSpecificMenu
     character = character_specific
     if user_input == "gender"
       puts "\n#{character.name} currently identifies as #{character.gender}."
-      puts "\n"
       continue_with_character(character)
     elsif user_input == "birth"
       if character.birth_date == "<Unknown>"
         puts "\n#{character.name}'s birth date is unknown."
-        puts "\n"
       else
         puts "\n#{character.name} was born #{character.birth_date}."
-        puts "\n"
       end
       continue_with_character(character)
     elsif user_input == "death"
       if character.death_date == "<Alive or Unknown>"
         puts "\n#{character.name}'s death date is unknown."
-        puts "\n"
       else
         puts "\n#{character.name} died #{character.death_date}"
-        puts "\n"
       end
       continue_with_character(character)
     elsif user_input == "alive"
       if character.death_date == "<Alive or Unknown>"
         puts "\n#{character.name} is currently alive or assumed to be alive."
-        puts "\n"
       else
         puts "\n#{character.name} died #{character.death_date}."
-        puts "\n"
       end
       continue_with_character(character)
     elsif user_input == "aliases"
       if character.aliases == "<None>"
         puts "\n#{character.name} has no known aliases."
-        puts "\n"
       else
         puts "\n#{character.name} has also been known as #{character.aliases}."
-        puts "\n"
       end
       continue_with_character(character)
     elsif user_input == "allegiances"
@@ -127,7 +117,6 @@ module CharacterSpecificMenu
       else
         puts "\nHere are the house allegiances #{character.name} is a part of:"
         show_allegiances(houses)
-        puts "\n"
       end
       continue_with_character(character)
     elsif user_input == "books"
