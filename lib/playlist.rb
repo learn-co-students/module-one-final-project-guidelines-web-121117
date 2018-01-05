@@ -1,7 +1,3 @@
-
-
-
-
 class Playlist < ActiveRecord::Base
 
   has_many :song_playlists

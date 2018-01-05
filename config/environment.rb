@@ -5,7 +5,7 @@ ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: 'db/develo
 require_all 'lib'
 
 
-# turned off SQL Messages to console  must comment out while seeding
+# turned off SQL Messages to console
 ActiveRecord::Base.logger.level = 1
 
 
