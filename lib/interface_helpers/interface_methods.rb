@@ -259,6 +259,14 @@ W::::::W                           W::::::W  II::::::II  N:::::::::N     N::::::
     end
   end
 
+  def help_prompt
+    puts "\nWe are sorry to hear that the app is giving you problems. Most likely"
+    puts "it is due to the database not being downloaded properly. To fix this problem"
+    puts "please delete your development.db file located in the db folder of this program."
+    puts "Once deleted, you can rerun the program which will download a new database for you."
+    puts "\n"
+  end
+
 
 
 end

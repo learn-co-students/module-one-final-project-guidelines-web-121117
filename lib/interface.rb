@@ -15,7 +15,6 @@ module Interface
   include InterfaceMethods
 
   def run
-    greet
     ApiParse.data_check
     main_menu_run
   end
