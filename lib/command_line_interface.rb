@@ -41,24 +41,30 @@ class CommandLineInterface
   end
 
   def create_menu
-    print "Please enter a name for your new playlist: "
+    print "Please enter a name for your new playlist (or M for Main Menu): "
     name = get_string
-    puts "Please choose a parameter from the list to create #{name}:"
-    print_categories
-    parameter = get_user_input_for_playlist_parameter
-    give_parameter_specs(parameter)
-    value = gets_user_input_for_parameter_value(parameter)
-    new_playlist = Playlist.make_new_from(name, parameter, value)
-    print_blank_lines(2)
-    indent(40)
-    puts "Playlist Created!" + "       ♬ ♫  ᕦ(ò_óˇ)ᕤ ♬ ♫ "
-    sleep(1)
-    greet
-    continue = true
-    while continue
-      clear_screen
+    if name == 'M' || name_input == 'm'
       greet
-      continue = print_songs_from_playlist_name(new_playlist)
+      main_menu
+      return nil
+    else
+      puts "Please choose a parameter from the list to create #{name}:"
+      print_categories
+      parameter = get_user_input_for_playlist_parameter
+      give_parameter_specs(parameter)
+      value = gets_user_input_for_parameter_value(parameter)
+      new_playlist = Playlist.make_new_from(name, parameter, value)
+      print_blank_lines(2)
+      indent(40)
+      puts "Playlist Created!" + "       ♬ ♫  ᕦ(ò_óˇ)ᕤ ♬ ♫ "
+      sleep(1)
+      greet
+      continue = true
+      while continue
+        clear_screen
+        greet
+        continue = print_songs_from_playlist_name(new_playlist)
+      end
     end
   end
 
