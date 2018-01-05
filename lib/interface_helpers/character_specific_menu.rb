@@ -129,7 +129,7 @@ module CharacterSpecificMenu
       continue_with_character(character)
     elsif user_input == "tv"
       seasons = character.seasons
-      if character.seasons.empty?
+      if character.seasons[0].name == ""
         puts "\n#{character.name} does not appear on the GoT Show."
       else
         puts "\nHere are the seasons that #{character.name} appears in:"
