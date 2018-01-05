@@ -43,7 +43,7 @@ class CommandLineInterface
   def create_menu
     print "Please enter a name for your new playlist (or M for Main Menu): "
     name = get_string
-    if name == 'M' || name_input == 'm'
+    if name == 'M' || name == 'm'
       greet
       main_menu
       return nil
@@ -59,12 +59,17 @@ class CommandLineInterface
       puts "Playlist Created!" + "       ♬ ♫  ᕦ(ò_óˇ)ᕤ ♬ ♫ "
       sleep(1)
       greet
-      continue = true
-      while continue
         clear_screen
         greet
-        continue = print_songs_from_playlist_name(new_playlist)
-      end
+        if new_playlist.songs.length == 0
+          puts "There are no songs in #{new_playlist.name}"
+          sleep(1.5)
+          clear_screen
+          greet
+          main_menu
+        else
+        print_songs_from_playlist_name(new_playlist)
+        end
     end
   end
 
@@ -77,7 +82,14 @@ class CommandLineInterface
       relevant_playlists = Playlist.all
       make_playlist_table(relevant_playlists)
       selected_playlist = user_select_playlist
-      print_songs_from_playlist_name(selected_playlist)
+      if selected_playlist == "M"
+        greet
+        main_menu
+      elsif selected_playlist == "Q"
+        return
+      else
+        print_songs_from_playlist_name(selected_playlist)
+      end
     elsif input == 'M' || input == 'm'
       greet
       main_menu
@@ -98,11 +110,19 @@ class CommandLineInterface
       else
         make_playlist_table(playlist_table_data)
         selected_playlist = user_select_playlist
-        continue = true
-        while continue
-          clear_screen
+        # continue = true
+        # while continue
+        #   clear_screen
+        #   greet
+        #   continue = print_songs_from_playlist_name(selected_playlist)
+        # end
+        if selected_playlist == "M"
           greet
-          continue = print_songs_from_playlist_name(selected_playlist)
+          main_menu
+        elsif selected_playlist == "Q"
+          return
+        else
+          print_songs_from_playlist_name(selected_playlist)
         end
       end
     else
@@ -258,10 +278,10 @@ class CommandLineInterface
   def gets_user_input_for_parameter_value(parameter)
     input = gets.chomp
     if parameter == :key
-      input = translate_key_from_user_to_api(input)
-      until input >= 0 && input < 12
-        input = gets.chomp.to_i
+      until MUSICAL_KEYS.keys.include?(input)
+        input = gets.chomp
       end
+      input = translate_key_from_user_to_api(input.to_i)
     elsif parameter == :tempo
       input = input.to_f
       until input > 0.0 && input < 200.0
@@ -292,21 +312,28 @@ class CommandLineInterface
     until selected_playlist != nil
       print_blank_lines(2)
       indent(20)
-      print "Enter playlist name to see songs: "
+      print "Enter playlist name to see songs (M for Main Menu or Q to quit): "
       name_input = get_string.titleize
-      selected_playlist = Playlist.find_by(name: name_input)
+      if name_input == "M" || name_input == "Q"
+        return name_input
+      else
+        selected_playlist = Playlist.find_by(name: name_input)
+      end
     end
     selected_playlist
   end
 
   def get_song_choice_from_user(table_data)
     input = 0
-    until (input > 0 && input <= table_data.length) || (input == "q" or input == "Q")
+    until (input == "q" || input == "Q") || (input == "m" || input == "M") || (input > 0 && input <= table_data.length)
       print_blank_lines(2)
-      print "Enter Song Number to open in your browser (or Q to quit): "
+      print "Enter Song Number to open in your browser (M for Main Menu or Q to quit): "
       input = gets.chomp
       if input == "q" || input == "Q"
         return nil
+      elsif input == "m" || input == "M"
+        greet
+        main_menu
       else
         input = input.to_i
       end
